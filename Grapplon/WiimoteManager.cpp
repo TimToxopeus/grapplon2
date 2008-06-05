@@ -5,13 +5,15 @@
 #include <sdl.h>
 
 CWiimoteManager *CWiimoteManager::m_pInstance = 0;
+bool quit = false;
+bool wait = false;
 
 int WiimoteManagerThread(void *data)
 {
 	CWiimoteManager *pMan = CWiimoteManager::Instance();
 	pMan->Setup();
 	CCore *pCore = CCore::Instance();
-	while ( pCore->IsRunning() )
+	while ( !quit )
 	{
 		pMan->HandleWiimoteEvents();
 		//SDL_Delay( 10 );
@@ -148,11 +150,13 @@ int CWiimoteManager::CheckForWiimotes()
 bool CWiimoteManager::DispatchEvent( wiimote_t *pWiimoteEvent, int iWiimote )
 {
 	bool handled = false;
+	while ( wait ) {}
+	wait = true;
 	for ( unsigned int a = 0; a<m_vWiimoteListeners.size(); a++ )
 	{
 		CListenerCarrier *pListener = m_vWiimoteListeners[a];
 
-		//   Send to registered listeners						 Send to all	   Receives all events
+		//   Send to registered listeners			 Send to all	   Receives all events
 		if ( pListener->GetWiimote() == iWiimote || iWiimote == -1 || pListener->GetWiimote() == -1 )
 		{
 			bool result = pListener->GetListener()->HandleWiimoteEvent( pWiimoteEvent );
@@ -160,6 +164,7 @@ bool CWiimoteManager::DispatchEvent( wiimote_t *pWiimoteEvent, int iWiimote )
 				handled = true;
 		}
 	}
+	wait = false;
 	return handled;
 }
 
@@ -192,20 +197,34 @@ bool CWiimoteManager::UnregisterListener( IWiimoteListener *pListener )
 	if ( !pListener )
 		return false;
 
+	while ( wait ) {}
+	wait = true;
+
 	// Check all the objects
 	for ( unsigned int a = 0; a<m_vWiimoteListeners.size(); a++ )
 	{
 		if ( m_vWiimoteListeners[a]->GetListener() == pListener )
 		{
 			// Found it, remove it from the list.
-			delete m_vWiimoteListeners[a];
+			//delete m_vWiimoteListeners[a];
 			m_vWiimoteListeners.erase( m_vWiimoteListeners.begin() + a );
+			wait = false;
 			return true;
 		}
 	}
 
+	wait = false;
+
 	// This object is not registered.
 	return false;
+}
+
+void CWiimoteManager::UnregisterAll()
+{
+	while ( wait ) {}
+	wait = true;
+	m_vWiimoteListeners.clear();
+	wait = false;
 }
 
 void CWiimoteManager::StartEventThread()
@@ -216,6 +235,7 @@ void CWiimoteManager::StartEventThread()
 
 void CWiimoteManager::StopEventThread()
 {
+	quit = true;
 	if ( m_pThread )
 	{
 		int status;

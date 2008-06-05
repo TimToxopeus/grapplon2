@@ -244,7 +244,7 @@ CMenuState::CMenuState( int iState, int iScore1, int iScore2, int iScore3, int i
 	}
 	cursorX = cursorY = 0;
 
-	CSoundManager::Instance()->LoadSound( "media/music/exit.ogg" );
+	CSoundManager::Instance()->LoadSound( "media/music/music_menu.ogg" );
 }
 
 CMenuState::~CMenuState()

@@ -385,17 +385,21 @@ void CODEManager::HandleCollisions()
 
 		if ( sound && !HasRecentlyCollided(d1->body, d2->body, time) )
 		{
-			int r = rand()%4;
-			CSound *pSound;
-			if ( r == 0 )
-				pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/ship_collide1.wav", RT_SOUND);
-			if ( r == 1 )
-				pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/ship_collide2.wav", RT_SOUND);
-			if ( r == 2 )
-				pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/ship_collide3.wav", RT_SOUND);
-			if ( r == 3 )
-				pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/ship_collide4.wav", RT_SOUND);
-			pSound->Play();
+			CSound *pSound = NULL;
+			if ( d1->m_pOwner->getType() == SHIP && d2->m_pOwner->getType() == SHIP )
+			{
+				pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Collision_Schip_Schip.wav", RT_SOUND);
+			}
+			else if ( d1->m_pOwner->getType() == SHIP && d2->m_pOwner->getType() == ASTEROID )
+			{
+				pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Collision_Schip_Asteroid.wav", RT_SOUND);
+			}
+			else if ( d2->m_pOwner->getType() == SHIP && d1->m_pOwner->getType() == ASTEROID )
+			{
+				pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Collision_Schip_Asteroid.wav", RT_SOUND);
+			}
+			if ( pSound )
+				pSound->Play();
 
 			Collide collide;
 			collide.b1 = d1->body;
