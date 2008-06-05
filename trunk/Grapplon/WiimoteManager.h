@@ -52,4 +52,5 @@ public:
 
 	bool RegisterListener( IWiimoteListener *pListener, int iWiimote );
 	bool UnregisterListener( IWiimoteListener *pListener );
+	void UnregisterAll();
 };

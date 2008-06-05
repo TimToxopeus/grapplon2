@@ -202,52 +202,44 @@ void CCore::Run()
 
 		if ( !ShouldQuit() )
 		{
+			m_pRenderer->UnregisterAll();
+			CODEManager::Destroy();
+			m_pODEManager = CODEManager::Instance();
+
+			CParticleSystemManager::DestroyNear();
+			CParticleSystemManager::DestroyFar();
+			m_pParticleSystemManagerNear = CParticleSystemManager::InstanceNear();
+			m_pParticleSystemManagerFar = CParticleSystemManager::InstanceFar();
+
+			m_pWiimoteManager->UnregisterAll();
+
 			if ( m_bMenu )
 			{
-				m_bRunningValid = false;
-
 				int players = ((CMenuState *)m_pActiveState)->GetPlayersSelected();
 				std::string selectedLevel = ((CMenuState *)m_pActiveState)->GetSelectedLevel();
 
-				m_pWiimoteManager->UnregisterListener( m_pActiveState );
+				m_bRunningValid = false;
 				delete m_pActiveState;
-				m_pRenderer->UnregisterAll();
-				m_pODEManager = CODEManager::Instance();
-
-				CParticleSystemManager::DestroyNear();
-				CParticleSystemManager::DestroyFar();
-				m_pParticleSystemManagerNear = CParticleSystemManager::InstanceNear();
-				m_pParticleSystemManagerFar = CParticleSystemManager::InstanceFar();
-
 				m_pActiveState = new CGameState();
 				m_bRunningValid = true;
-				m_pWiimoteManager->RegisterListener( m_pActiveState, -1 );
+
 				((CGameState *)m_pActiveState)->Init( players, selectedLevel );
 				m_pODEManager->m_pUniverse = ((CGameState *)m_pActiveState)->GetUniverse();
 			}
 			else
 			{
-				m_bRunningValid = false;
-				m_pRenderer->UnregisterAll();
-				CODEManager::Destroy();
-				m_pODEManager = NULL;
-
-				CParticleSystemManager::DestroyNear();
-				CParticleSystemManager::DestroyFar();
-				m_pParticleSystemManagerNear = CParticleSystemManager::InstanceNear();
-				m_pParticleSystemManagerFar = CParticleSystemManager::InstanceFar();
-
 				CGameState *pGameState = ((CGameState *)m_pActiveState);
 				int iScores[4];
 				for ( int i = 0; i<4; i++ )
 					iScores[i] = pGameState->GetScore( i );
 
-				m_pWiimoteManager->UnregisterListener( m_pActiveState );
+				m_bRunningValid = false;
 				delete m_pActiveState;
 				m_pActiveState = new CMenuState(SCORE, iScores[0], iScores[1], iScores[2], iScores[3]);
-				m_pWiimoteManager->RegisterListener( m_pActiveState, -1 );
 				m_bRunningValid = true;
 			}
+
+			m_pWiimoteManager->RegisterListener( m_pActiveState, -1 );
 			m_bMenu = !m_bMenu;
 		}
 	}

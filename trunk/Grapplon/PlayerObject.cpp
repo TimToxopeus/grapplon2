@@ -2,6 +2,7 @@
 #include "PlayerObject.h"
 #include "ResourceManager.h"
 #include "AnimatedTexture.h"
+#include "Sound.h"
 #include "Hook.h"
 #include "GameSettings.h"
 #include "Asteroid.h"
@@ -373,6 +374,19 @@ void CPlayerObject::OnDie( CBaseObject *m_pKiller )
 	// Spawn emitter
 	Vector direction = m_pKiller->GetPosition() - GetPosition();
 	direction.Normalize();
+
+	int r = rand()%4;
+	CSound *pSound = NULL;
+	if ( r == 0 )
+		pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Explosion1.wav", RT_SOUND);
+	if ( r == 1 )
+		pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Explosion2.wav", RT_SOUND);
+	if ( r == 2 )
+		pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Explosion3.wav", RT_SOUND);
+	if ( r == 3 )
+		pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Explosion4.wav", RT_SOUND);
+	if ( pSound )
+		pSound->Play();
 
 	if ( m_pThrusterLeft )
 		m_pThrusterLeft->ToggleSpawn(true, false);

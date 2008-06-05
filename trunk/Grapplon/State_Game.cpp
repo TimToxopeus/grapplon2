@@ -38,7 +38,7 @@ bool CGameState::Init( int iPlayers, std::string level )
 {
 //	CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/xpstart.wav", RT_SOUND);
 //	pSound->Play();
-	CSoundManager::Instance()->LoadSound( "media/music/exit.ogg" );
+	CSoundManager::Instance()->LoadSound( "media/music/music_game.ogg" );
 
 	m_pUniverse = new CUniverse();
 	if ( level == "" )
@@ -196,6 +196,11 @@ int CGameState::HandleSDLEvent(SDL_Event event)
 		if ( event.key.keysym.sym == SDLK_SPACE )
 		{
 			m_bRunning = false;
+		}
+		if ( event.key.keysym.sym == SDLK_ESCAPE )
+		{
+			m_bRunning = false;
+			m_bQuit = true;
 		}
 	}
 	return 0;
