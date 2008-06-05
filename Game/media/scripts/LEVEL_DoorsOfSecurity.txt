@@ -1,0 +1,404 @@
+--------------------------------------------------------------------------------------------------------------------
+GENERAL
+--------------------------------------------------------------------------------------------------------------------
+
+[universe]
+width = 4000
+height = 3000
+boundaryforce = 20000000
+initspawn1 = 2600 2200
+initspawn2 = -2600 -2200
+initspawn3 = -2600 2200
+initspawn4 = 2600 -2200
+
+--------------------------------------------------------------------------------------------------------------------
+MAIN SUN
+--------------------------------------------------------------------------------------------------------------------
+
+[sun]
+name = sun_Center
+mass = 1000000
+image = sun
+imageglow = sun_glow
+grav = 150
+radius = 440
+tempradius = 575
+pos = 0 0
+scale = 3.0
+emitter = "media/scripts/particle_fire_emitter.txt", far, 0, 0
+damagemult = 1.1
+
+--------------------------------------------------------------------------------------------------------------------
+FIRE CIRCLE
+--------------------------------------------------------------------------------------------------------------------
+
+[sun]
+name = Fire_Planets_Center
+mass = 1
+image = fire_planet
+imageglow = fire_glow
+grav = 500
+radius = 440
+tempradius = 575
+pos = 1840 1050
+scale = 0.01
+emitter = "media/scripts/particle_fireplanet1_emitter.txt", far, 0, 0
+damagemult = 1.1
+
+[ordinary]
+name = fire_planet_1
+orbit = Fire_Planets_Center 1050 500
+mass = 100000
+image = fire_planet
+imageglow = fire_glow
+imageorbit = orbit_circle
+grav = 0
+angle = 300
+scale = 1
+radius = 0
+tempradius = 250
+emitter = "media/scripts/particle_fireplanet1_emitter.txt", far, 0, 0
+damagemult = 0.2
+
+[ordinary]
+name = fire_planet_2
+orbit = Fire_Planets_Center 1040 500
+mass = 100000
+image = fire_planet
+imageglow = fire_glow
+imageorbit = orbit_circle
+grav = 0
+angle = 330
+scale = 1
+radius = 0
+tempradius = 250
+emitter = "media/scripts/particle_fireplanet1_emitter.txt", far, 0, 0
+damagemult = 0.2
+
+[ordinary]
+name = fire_planet_3
+orbit = Fire_Planets_Center 1030 500
+mass = 100000
+image = fire_planet
+imageglow = fire_glow
+imageorbit = orbit_circle
+grav = 0
+angle = 360
+scale = 1
+radius = 0
+tempradius = 250
+emitter = "media/scripts/particle_fireplanet1_emitter.txt", far, 0, 0
+damagemult = 0.2
+
+[ordinary]
+name = fire_planet_4
+orbit = Fire_Planets_Center 1020 500
+mass = 100000
+image = fire_planet
+imageglow = fire_glow
+imageorbit = orbit_circle
+grav = 0
+angle = 390
+scale = 1
+radius = 0
+tempradius = 250
+emitter = "media/scripts/particle_fireplanet1_emitter.txt", far, 0, 0
+damagemult = 0.2
+
+[ordinary]
+name = fire_planet_5
+orbit = Fire_Planets_Center 1010 500
+mass = 100000
+image = fire_planet
+imageglow = fire_glow
+imageorbit = orbit_circle
+grav = 0
+angle = 420
+scale = 1
+radius = 0
+tempradius = 250
+emitter = "media/scripts/particle_fireplanet1_emitter.txt", far, 0, 0
+damagemult = 0.2
+
+
+[ordinary]
+name = fire_planet_6
+orbit = Fire_Planets_Center 1000 500
+mass = 100000
+image = fire_planet
+imageglow = fire_glow
+imageorbit = orbit_circle
+grav = 0
+angle = 450
+scale = 1
+radius = 0
+tempradius = 250
+emitter = "media/scripts/particle_fireplanet1_emitter.txt", far, 0, 0
+damagemult = 0.2
+
+--------------------------------------------------------------------------------------------------------------------
+ICE CIRCLE
+--------------------------------------------------------------------------------------------------------------------
+
+[sun]
+name = Ice_Planets_Center
+mass = 1
+image = ice_planet
+imageglow = ice_planet_glow
+grav = 500
+radius = 440
+tempradius = 575
+pos = -1840 -1050
+scale = 0.01
+emitter = "media/scripts/particle_iceplanet2_emitter.txt", far, 0, 0
+damagemult = 1.1
+
+[ice]
+name = Ice_Planet_1
+orbit = Ice_Planets_Center -1000 -500
+mass = 300000
+image = ice_planet
+imageglow = ice_planet_glow
+imageorbit = orbit_circle
+grav = 0
+angle = 300
+scale = 1
+radius = 0
+tempradius = 320
+emitter = "media/scripts/particle_iceplanet2_emitter.txt", far, 0, 0
+damagemult = 0.1
+
+[ice]
+name = Ice_Planet_2
+orbit = Ice_Planets_Center -1000 -500
+mass = 300000
+image = ice_planet
+imageglow = ice_planet_glow
+imageorbit = orbit_circle
+grav = 0
+angle = 330
+scale = 1
+radius = 0
+tempradius = 320
+emitter = "media/scripts/particle_iceplanet2_emitter.txt", far, 0, 0
+damagemult = 0.1
+
+[ice]
+name = Ice_Planet_3
+orbit = Ice_Planets_Center -1000 -500
+mass = 300000
+image = ice_planet
+imageglow = ice_planet_glow
+imageorbit = orbit_circle
+grav = 0
+angle = 360
+scale = 1
+radius = 0
+tempradius = 320
+emitter = "media/scripts/particle_iceplanet2_emitter.txt", far, 0, 0
+damagemult = 0.1
+
+[ice]
+name = Ice_Planet_4
+orbit = Ice_Planets_Center -1000 -500
+mass = 300000
+image = ice_planet
+imageglow = ice_planet_glow
+imageorbit = orbit_circle
+grav = 0
+angle = 390
+scale = 1
+radius = 0
+tempradius = 320
+emitter = "media/scripts/particle_iceplanet2_emitter.txt", far, 0, 0
+damagemult = 0.1
+
+[ice]
+name = Ice_Planet_5
+orbit = Ice_Planets_Center -1000 -500
+mass = 300000
+image = ice_planet
+imageglow = ice_planet_glow
+imageorbit = orbit_circle
+grav = 0
+angle = 420
+scale = 1
+radius = 0
+tempradius = 320
+emitter = "media/scripts/particle_iceplanet2_emitter.txt", far, 0, 0
+damagemult = 0.1
+
+[ice]
+name = Ice_Planet_6
+orbit = Ice_Planets_Center -1000 -500
+mass = 300000
+image = ice_planet
+imageglow = ice_planet_glow
+imageorbit = orbit_circle
+grav = 0
+angle = 450
+scale = 1
+radius = 0
+tempradius = 320
+emitter = "media/scripts/particle_iceplanet2_emitter.txt", far, 0, 0
+damagemult = 0.1
+
+--------------------------------------------------------------------------------------------------------------------
+BLACK HOLE RIGHT
+--------------------------------------------------------------------------------------------------------------------
+
+[sun]
+name = Black_Hole_R1
+mass = 100000
+image = black_hole
+imageglow = black_hole_glow
+grav = 500
+radius = 10
+pos = 850 0
+scale = 2.5
+damagemult = 100
+rotation = 40
+emitter = "media/scripts/particle_black_emitter.txt", far, 0, 0
+
+[sun]
+name = Black_Hole_R2
+mass = 100000
+image = black_hole
+imageglow = black_hole_glow
+grav = 500
+radius = 10
+pos = 2800 0
+scale = 2.5
+damagemult = 100
+rotation = 40
+emitter = "media/scripts/particle_black_emitter.txt", far, 0, 0
+
+[sun]
+name = Black_Hole_R3
+mass = 100000
+image = black_hole
+imageglow = black_hole_glow
+grav = 500
+radius = 10
+pos = 3450 0
+scale = 2.5
+damagemult = 100
+rotation = 40
+emitter = "media/scripts/particle_black_emitter.txt", far, 0, 0
+
+--------------------------------------------------------------------------------------------------------------------
+BLACK HOLE LEFT
+--------------------------------------------------------------------------------------------------------------------
+
+[sun]
+name = Black_Hole_L1
+mass = 100000
+image = black_hole
+imageglow = black_hole_glow
+grav = 500
+radius = 10
+pos = -850 0
+scale = 2.5
+damagemult = 100
+rotation = 40
+emitter = "media/scripts/particle_black_emitter.txt", far, 0, 0
+
+[sun]
+name = Black_Hole_L2
+mass = 100000
+image = black_hole
+imageglow = black_hole_glow
+grav = 500
+radius = 10
+pos = -2800 0
+scale = 2.5
+damagemult = 100
+rotation = 40
+emitter = "media/scripts/particle_black_emitter.txt", far, 0, 0
+
+[sun]
+name = Black_Hole_L3
+mass = 100000
+image = black_hole
+imageglow = black_hole_glow
+grav = 500
+radius = 10
+pos = -3450 0
+scale = 2.5
+damagemult = 100
+rotation = 40
+emitter = "media/scripts/particle_black_emitter.txt", far, 0, 0
+
+--------------------------------------------------------------------------------------------------------------------
+ASTEROIDS FIRE
+--------------------------------------------------------------------------------------------------------------------
+
+[asteroid]
+name = Asteroid_1F
+orbit = Fire_Planets_Center 50 50
+mass = 40
+image = asteroid02
+grav = 0
+angle = 50
+rotation = 15
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = Asteroid_2F
+orbit = Fire_Planets_Center 50 50
+mass = 40
+image = asteroid02
+grav = 0
+angle = 150
+rotation = 15
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = Asteroid_3F
+orbit = Fire_Planets_Center 50 50
+mass = 40
+image = asteroid02
+grav = 0
+angle = 550
+rotation = 15
+radius = 50
+damagemult = 3.5
+
+--------------------------------------------------------------------------------------------------------------------
+ASTEROIDS ICE
+--------------------------------------------------------------------------------------------------------------------
+
+[asteroid]
+name = Asteroid_1I
+orbit = Ice_Planets_Center -50 -50
+mass = 40
+image = asteroid02
+grav = 0
+angle = 50
+rotation = 15
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = Asteroid_2I
+orbit = Ice_Planets_Center -50 -50
+mass = 40
+image = asteroid02
+grav = 0
+angle = 150
+rotation = 15
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = Asteroid_3I
+orbit = Ice_Planets_Center -50 -50
+mass = 40
+image = asteroid02
+grav = 0
+angle = 550
+rotation = 15
+radius = 50
+damagemult = 3.5
