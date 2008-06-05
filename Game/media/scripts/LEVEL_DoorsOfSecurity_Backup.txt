@@ -43,8 +43,8 @@ name = Fire_Planets_Center
 mass = 1
 image = fire_planet
 imageglow = fire_glow
-grav = 0
-radius = 100
+grav = 500
+radius = 440
 tempradius = 575
 pos = 1840 1050
 scale = 0.01
@@ -53,7 +53,7 @@ damagemult = 1.1
 
 [ordinary]
 name = fire_planet_1
-orbit = Fire_Planets_Center 1000 500
+orbit = Fire_Planets_Center 1050 500
 mass = 100000
 image = fire_planet
 imageglow = fire_glow
@@ -68,7 +68,7 @@ damagemult = 0.2
 
 [ordinary]
 name = fire_planet_2
-orbit = Fire_Planets_Center 1000 500
+orbit = Fire_Planets_Center 1040 500
 mass = 100000
 image = fire_planet
 imageglow = fire_glow
@@ -83,7 +83,7 @@ damagemult = 0.2
 
 [ordinary]
 name = fire_planet_3
-orbit = Fire_Planets_Center 1000 500
+orbit = Fire_Planets_Center 1030 500
 mass = 100000
 image = fire_planet
 imageglow = fire_glow
@@ -98,7 +98,7 @@ damagemult = 0.2
 
 [ordinary]
 name = fire_planet_4
-orbit = Fire_Planets_Center 1000 500
+orbit = Fire_Planets_Center 1020 500
 mass = 100000
 image = fire_planet
 imageglow = fire_glow
@@ -113,7 +113,7 @@ damagemult = 0.2
 
 [ordinary]
 name = fire_planet_5
-orbit = Fire_Planets_Center 1000 500
+orbit = Fire_Planets_Center 1010 500
 mass = 100000
 image = fire_planet
 imageglow = fire_glow
@@ -151,8 +151,9 @@ name = Ice_Planets_Center
 mass = 1
 image = ice_planet
 imageglow = ice_planet_glow
-grav = 0
-radius = 100
+grav = 500
+radius = 440
+tempradius = 575
 pos = -1840 -1050
 scale = 0.01
 emitter = "media/scripts/particle_iceplanet2_emitter.txt", far, 0, 0
@@ -169,6 +170,7 @@ grav = 0
 angle = 300
 scale = 1
 radius = 0
+tempradius = 320
 emitter = "media/scripts/particle_iceplanet2_emitter.txt", far, 0, 0
 damagemult = 0.1
 
@@ -183,6 +185,7 @@ grav = 0
 angle = 330
 scale = 1
 radius = 0
+tempradius = 320
 emitter = "media/scripts/particle_iceplanet2_emitter.txt", far, 0, 0
 damagemult = 0.1
 
@@ -197,6 +200,7 @@ grav = 0
 angle = 360
 scale = 1
 radius = 0
+tempradius = 320
 emitter = "media/scripts/particle_iceplanet2_emitter.txt", far, 0, 0
 damagemult = 0.1
 
@@ -211,6 +215,7 @@ grav = 0
 angle = 390
 scale = 1
 radius = 0
+tempradius = 320
 emitter = "media/scripts/particle_iceplanet2_emitter.txt", far, 0, 0
 damagemult = 0.1
 
@@ -225,6 +230,7 @@ grav = 0
 angle = 420
 scale = 1
 radius = 0
+tempradius = 320
 emitter = "media/scripts/particle_iceplanet2_emitter.txt", far, 0, 0
 damagemult = 0.1
 
@@ -239,90 +245,92 @@ grav = 0
 angle = 450
 scale = 1
 radius = 0
+tempradius = 320
 emitter = "media/scripts/particle_iceplanet2_emitter.txt", far, 0, 0
 damagemult = 0.1
 
 --------------------------------------------------------------------------------------------------------------------
-ELECTRI PLANET RIGHT
+BLACK HOLE RIGHT
 --------------------------------------------------------------------------------------------------------------------
 
 [sun]
-name = Electric_R1
+name = Black_Hole_R1
 mass = 100000
-image = electric_planet
-imageglow = windglow
+image = black_hole
+imageglow = black_hole_glow
 grav = 500
 radius = 10
 pos = 850 0
-scale = 3
+scale = 2.5
 damagemult = 100
 rotation = 40
+emitter = "media/scripts/particle_black_emitter.txt", far, 0, 0
 
 [sun]
-name = Electric_R2
+name = Black_Hole_R2
 mass = 100000
-image = electric_planet
-imageglow = windglow
+image = black_hole
+imageglow = black_hole_glow
 grav = 500
 radius = 10
 pos = 2800 0
-scale = 3
+scale = 2.5
 damagemult = 100
 rotation = 40
 emitter = "media/scripts/particle_black_emitter.txt", far, 0, 0
 
 [sun]
-name = Electric_R3
+name = Black_Hole_R3
 mass = 100000
-image = electric_planet
-imageglow = windglow
+image = black_hole
+imageglow = black_hole_glow
 grav = 500
 radius = 10
 pos = 3450 0
-scale = 3
+scale = 2.5
 damagemult = 100
 rotation = 40
 emitter = "media/scripts/particle_black_emitter.txt", far, 0, 0
 
 --------------------------------------------------------------------------------------------------------------------
-ELECTRIC PLANET LEFT
+BLACK HOLE LEFT
 --------------------------------------------------------------------------------------------------------------------
 
 [sun]
-name = Electric_L1
+name = Black_Hole_L1
 mass = 100000
-image = electric_planet
-imageglow = windglow
+image = black_hole
+imageglow = black_hole_glow
 grav = 500
 radius = 10
 pos = -850 0
-scale = 3
+scale = 2.5
 damagemult = 100
 rotation = 40
 emitter = "media/scripts/particle_black_emitter.txt", far, 0, 0
 
 [sun]
-name = Electric_L2
+name = Black_Hole_L2
 mass = 100000
-image = electric_planet
-imageglow = windglow
+image = black_hole
+imageglow = black_hole_glow
 grav = 500
 radius = 10
 pos = -2800 0
-scale = 3
+scale = 2.5
 damagemult = 100
 rotation = 40
 emitter = "media/scripts/particle_black_emitter.txt", far, 0, 0
 
 [sun]
-name = Electric_L3
+name = Black_Hole_L3
 mass = 100000
-image = electric_planet
-imageglow = windglow
+image = black_hole
+imageglow = black_hole_glow
 grav = 500
 radius = 10
 pos = -3450 0
-scale = 3
+scale = 2.5
 damagemult = 100
 rotation = 40
 emitter = "media/scripts/particle_black_emitter.txt", far, 0, 0
@@ -333,9 +341,9 @@ ASTEROIDS FIRE
 
 [asteroid]
 name = Asteroid_1F
+orbit = Fire_Planets_Center 50 50
 mass = 40
-orbit = Fire_Planets_Center 350 150
-image = asteroid01_fire
+image = asteroid02
 grav = 0
 angle = 50
 rotation = 15
@@ -344,9 +352,9 @@ damagemult = 3.5
 
 [asteroid]
 name = Asteroid_2F
+orbit = Fire_Planets_Center 50 50
 mass = 40
-orbit = Fire_Planets_Center 300 125
-image = asteroid01_fire
+image = asteroid02
 grav = 0
 angle = 150
 rotation = 15
@@ -355,33 +363,11 @@ damagemult = 3.5
 
 [asteroid]
 name = Asteroid_3F
+orbit = Fire_Planets_Center 50 50
 mass = 40
-orbit = Fire_Planets_Center 250 100
-image = asteroid01_fire
+image = asteroid02
 grav = 0
 angle = 550
-rotation = 15
-radius = 50
-damagemult = 3.5
-
-[asteroid]
-name = Asteroid_4F
-mass = 40
-orbit = Fire_Planets_Center 200 75
-image = asteroid01_fire
-grav = 0
-angle = 1050
-rotation = 15
-radius = 50
-damagemult = 3.5
-
-[asteroid]
-name = Asteroid_5F
-mass = 40
-orbit = Fire_Planets_Center 150 50
-image = asteroid01_fire
-grav = 0
-angle = 1200
 rotation = 15
 radius = 50
 damagemult = 3.5
@@ -392,9 +378,9 @@ ASTEROIDS ICE
 
 [asteroid]
 name = Asteroid_1I
+orbit = Ice_Planets_Center -50 -50
 mass = 40
-orbit = Ice_Planets_Center -350 150
-image = asteroid01_ice
+image = asteroid02
 grav = 0
 angle = 50
 rotation = 15
@@ -403,9 +389,9 @@ damagemult = 3.5
 
 [asteroid]
 name = Asteroid_2I
+orbit = Ice_Planets_Center -50 -50
 mass = 40
-orbit = Ice_Planets_Center -300 125
-image = asteroid01_ice
+image = asteroid02
 grav = 0
 angle = 150
 rotation = 15
@@ -414,33 +400,11 @@ damagemult = 3.5
 
 [asteroid]
 name = Asteroid_3I
+orbit = Ice_Planets_Center -50 -50
 mass = 40
-orbit = Ice_Planets_Center -250 100
-image = asteroid01_ice
+image = asteroid02
 grav = 0
 angle = 550
-rotation = 15
-radius = 50
-damagemult = 3.5
-
-[asteroid]
-name = Asteroid_4I
-mass = 40
-orbit = Ice_Planets_Center -200 75
-image = asteroid01_ice
-grav = 0
-angle = 1050
-rotation = 15
-radius = 50
-damagemult = 3.5
-
-[asteroid]
-name = Asteroid_5I
-mass = 40
-orbit = Ice_Planets_Center -150 50
-image = asteroid01_ice
-grav = 0
-angle = 1200
 rotation = 15
 radius = 50
 damagemult = 3.5
