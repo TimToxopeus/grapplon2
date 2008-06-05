@@ -11,6 +11,11 @@ CHUD::CHUD()
 	SetDepth( 100.0f );
 	m_eType = HUD;
 
+	m_pCountDown[0] = new CAnimatedTexture("media/scripts/texture_countdown_3.txt");
+	m_pCountDown[1] = new CAnimatedTexture("media/scripts/texture_countdown_2.txt");
+	m_pCountDown[2] = new CAnimatedTexture("media/scripts/texture_countdown_1.txt");
+	m_pCountDown[3] = new CAnimatedTexture("media/scripts/texture_countdown_go.txt");
+
 	m_pBorders = new CAnimatedTexture( "media/scripts/texture_hud_border.txt" );
 	m_pHealth = new CAnimatedTexture( "media/scripts/texture_hud_bar.txt" );
 	m_pNumbers = new CAnimatedTexture( "media/scripts/texture_numbers.txt" );
@@ -19,6 +24,14 @@ CHUD::CHUD()
 CHUD::~CHUD()
 {
 	delete m_pNumbers;
+	for ( int i = 0; i<4; i++ )
+	{
+		if ( m_pCountDown[i] )
+		{
+			delete m_pCountDown[i];
+			m_pCountDown[i] = NULL;
+		}
+	}
 
 	delete m_pBorders;
 	delete m_pHealth;
@@ -43,6 +56,9 @@ void CHUD::Update( float fTime )
 				m_vScores.erase( m_vScores.begin() + i );
 		}
 	}
+
+	for ( int i = 0; i<4; i++ )
+		m_pCountDown[i]->UpdateFrame( fTime );
 }
 
 void CHUD::Render()
@@ -84,6 +100,92 @@ void CHUD::Render()
 	{
 		DrawHitpointBar( 680, 580, 3, ((float)m_pPlayers[3]->GetHitpoints() / (float)m_pPlayers[3]->GetMaxHitpoints()) );
 		DrawScoreBar( 850, 630, 3, m_pPlayers[3]->m_iScore, true );
+	}
+
+	if ( m_fCountdown > -1.0f )
+	{
+		SDL_Rect target;
+		if ( m_fCountdown > 2.0f )
+		{
+			float delta = 3.0f - m_fCountdown;
+
+			// Render 0
+			target = m_pCountDown[0]->GetSize();
+			target.w = (int)(target.w * (1.0f + delta));
+			target.h = (int)(target.h * (1.0f + delta));
+			target.x = -(target.w / 2);
+			target.y = -(target.h / 2);
+			RenderQuad(target, m_pCountDown[0], 0, 1.0f - (0.5f * delta));
+		}
+		else if ( m_fCountdown > 1.0f )
+		{
+			float delta = 2.0f - m_fCountdown;
+
+			// Render 0 and 1
+			target = m_pCountDown[1]->GetSize();
+			target.w = (int)(target.w * (1.0f + delta));
+			target.h = (int)(target.h * (1.0f + delta));
+			target.x = -(target.w / 2);
+			target.y = -(target.h / 2);
+			RenderQuad(target, m_pCountDown[1], 0, 1.0f - (0.5f * delta));
+
+			target = m_pCountDown[0]->GetSize();
+			target.w = (int)(target.w * (2.0f + delta));
+			target.h = (int)(target.h * (2.0f + delta));
+			target.x = -(target.w / 2);
+			target.y = -(target.h / 2);
+			RenderQuad(target, m_pCountDown[0], 0, 0.5f - (0.5f * delta));
+		}
+		else if ( m_fCountdown > 0.0f )
+		{
+			float delta = 1.0f - m_fCountdown;
+
+			// Render 1 and 2
+			target = m_pCountDown[2]->GetSize();
+			target.w = (int)(target.w * (1.0f + delta));
+			target.h = (int)(target.h * (1.0f + delta));
+			target.x = -(target.w / 2);
+			target.y = -(target.h / 2);
+			RenderQuad(target, m_pCountDown[2], 0, 1.0f - (0.5f * delta));
+
+			target = m_pCountDown[1]->GetSize();
+			target.w = (int)(target.w * (2.0f + delta));
+			target.h = (int)(target.h * (2.0f + delta));
+			target.x = -(target.w / 2);
+			target.y = -(target.h / 2);
+			RenderQuad(target, m_pCountDown[1], 0, 0.5f - (0.5f * delta));
+		}
+		else if ( m_fCountdown > -1.0f )
+		{
+			float delta = 0.0f - m_fCountdown;
+
+			// Render 2 and Go
+			target = m_pCountDown[3]->GetSize();
+			target.w = (int)(target.w * (1.0f + delta));
+			target.h = (int)(target.h * (1.0f + delta));
+			target.x = -(target.w / 2);
+			target.y = -(target.h / 2);
+			RenderQuad(target, m_pCountDown[3], 0, 1.0f - (0.5f * delta));
+
+			target = m_pCountDown[2]->GetSize();
+			target.w = (int)(target.w * (2.0f + delta));
+			target.h = (int)(target.h * (2.0f + delta));
+			target.x = -(target.w / 2);
+			target.y = -(target.h / 2);
+			RenderQuad(target, m_pCountDown[2], 0, 0.5f - (0.5f * delta));
+		}
+		else if ( m_fCountdown > -2.0f )
+		{
+			float delta = -1.0f - m_fCountdown;
+
+			// Render Go
+			target = m_pCountDown[3]->GetSize();
+			target.w = (int)(target.w * (2.0f + delta));
+			target.h = (int)(target.h * (2.0f + delta));
+			target.x = -(target.w / 2);
+			target.y = -(target.h / 2);
+			RenderQuad(target, m_pCountDown[3], 0, 0.5f - (0.5f * delta));
+		}
 	}
 
 	DrawTimer( 0, -750, m_fMatchTimeLeft );

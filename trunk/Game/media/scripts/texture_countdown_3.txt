@@ -1,0 +1,9 @@
+[object]
+width = 300
+height = 300
+animations = idle
+
+[idle]
+file = "media/images/countdown_3.png"
+frames = 1
+speed = 1
