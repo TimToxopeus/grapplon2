@@ -34,6 +34,9 @@ public:
 	float		HOOK_AIR_DRAG;
 	float		HOOK_MASS;
 	float		AUTO_AIM_ANGLE;
+	int			PLAYER_AIR_DRAG;
+	int			PLAYER_MASS;
+
 
 	int			WALL_BOUNCES;
 	float		W_BOUNCE_TOGGLE_TIME;
@@ -64,6 +67,9 @@ public:
 	int			PU_SPEED_MULT;
 	int			PU_JELLY_TIME;
 	int			PU_SHIELD_TIME;
+
+	float		PH_STEP_TIME;
+	int			PH_NR_IT;
 
 	bool  Init();
 	

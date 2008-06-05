@@ -54,6 +54,8 @@ CODEManager::CODEManager()
 	// Create world and space
 	m_oWorld = dWorldCreate();
 
+	dWorldSetQuickStepNumIterations(m_oWorld, SETS->PH_NR_IT);
+
 	dVector3 extentsv3, centerv;
 	extentsv3[0] = extentsv3[1] = extentsv3[2] = 1000;
 	centerv[0] = centerv[1] = centerv[2] = 0;

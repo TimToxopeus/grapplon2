@@ -48,9 +48,9 @@ CPlayerObject::CPlayerObject( int iPlayer )
 
 	CODEManager* ode = CODEManager::Instance(); 
 	ode->CreatePhysicsData(this, &m_oPhysicsData, 30.0f);
-	SetMass( 1000.0f );
+	SetMass( (float) SETS->PLAYER_MASS );
 	m_oPhysicsData.m_bAffectedByGravity = true;
-	m_oPhysicsData.m_fAirDragConst = 3000.0f;
+	m_oPhysicsData.m_fAirDragConst = (float) SETS->PLAYER_AIR_DRAG;
 
 	m_pHook = new CHook( this );
 	
