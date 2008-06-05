@@ -492,6 +492,10 @@ void CPlayerObject::CollideWith( CBaseObject *pOther)
 				mult = SETS->ICE_DAMAGE_MULT;
 				m_fFreezeTime = SETS->FREEZE_TIME;
 				m_fPUJellyTime = 0;
+
+				CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/freeze_object.wav", RT_SOUND);
+				if ( pSound )
+					pSound->Play();
 			}
 
 			int score = 0;

@@ -1,4 +1,6 @@
 #include "PowerUp.h"
+#include "ResourceManager.h"
+#include "Sound.h"
 #include "AnimatedTexture.h"
 #include "ODEManager.h"
 #include "Renderer.h"
@@ -39,8 +41,10 @@ void CPowerUp::CollideWith(CBaseObject *pOther)
 
 		CODEManager::Instance()->m_pUniverse->RemovePowerUp(this);
 
+		CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/powerup_pickup.wav", RT_SOUND);
+		if ( pSound )
+			pSound->Play();
 	}
-
 }
 
 void CPowerUp::Respawn()
@@ -62,5 +66,8 @@ void CPowerUp::Respawn()
 	SetForce(n);
 	this->m_bIsGrabable = true;
 	this->m_oPhysicsData.m_bHasCollision = true;
-	
+
+	CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/powerup_spawn.wav", RT_SOUND);
+	if ( pSound )
+		pSound->Play();
 }

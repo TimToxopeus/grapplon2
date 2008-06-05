@@ -2,6 +2,8 @@
 #include "ODEManager.h"
 #include "PlayerObject.h"
 #include "GameSettings.h"
+#include "ResourceManager.h"
+#include "Sound.h"
 #include "AnimatedTexture.h"
 
 CFreezePowerUp::CFreezePowerUp(void)
@@ -28,5 +30,8 @@ void CFreezePowerUp::CollideWith(CBaseObject* pOther)
 		}
 	}
 
+	CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/freeze_object.wav", RT_SOUND);
+	if ( pSound )
+		pSound->Play();
 	CPowerUp::CollideWith(pOther);
 }
