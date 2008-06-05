@@ -33,11 +33,7 @@ public:
 	float		ERP;
 	float		HOOK_AIR_DRAG;
 	float		HOOK_MASS;
-	float		CHAIN_MASS;
 	float		AUTO_AIM_ANGLE;
-	int			PLAYER_AIR_DRAG;
-	int			PLAYER_MASS;
-
 
 	int			WALL_BOUNCES;
 	float		W_BOUNCE_TOGGLE_TIME;
@@ -61,7 +57,6 @@ public:
 	int			MAX_STARS;
 	bool		PARTICLES_ON;
 	bool		MENU_ON;
-	bool		THREAD_ON;
 
 	int			SCORE_STEAL;
 
@@ -69,9 +64,6 @@ public:
 	int			PU_SPEED_MULT;
 	int			PU_JELLY_TIME;
 	int			PU_SHIELD_TIME;
-
-	float		PH_STEP_TIME;
-	int			PH_NR_IT;
 
 	bool  Init();
 	
