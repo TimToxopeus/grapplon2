@@ -246,8 +246,8 @@ void CPlayerObject::Render()
 	if(this->m_fPUShieldTime > 0.01f)
 	{
 		size = m_pShieldImage->GetSize();
-		target.w = (int)((float)size.w * m_fSecondaryScale * GetScale());
-		target.h = (int)((float)size.h * m_fSecondaryScale * GetScale());
+		target.w = (int)((float)size.w * m_fSecondaryScale * GetScale()) * 2;
+		target.h = (int)((float)size.h * m_fSecondaryScale * GetScale()) * 2;
 		target.x = (int)GetX() - (target.w / 2);
 		target.y = (int)GetY() - (target.h / 2);
 
@@ -404,7 +404,7 @@ void CPlayerObject::Respawn()
 	{
 		x = rand()%4000 - 2000;
 		y = rand()%3000 - 1500;
-	} while ( pRenderer->ObjectsInRange( x, y, 100 ) );
+	} while ( pRenderer->ObjectsInRange( x, y, 200 ) );
 
 	Vector v = Vector( (float)x, (float)y, 0.0f );
 	SetPosition( v );
