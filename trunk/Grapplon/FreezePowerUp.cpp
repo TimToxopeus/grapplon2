@@ -28,10 +28,11 @@ void CFreezePowerUp::CollideWith(CBaseObject* pOther)
 				dynamic_cast<CPlayerObject*>((*it)->m_pOwner)->m_fFreezeTime = SETS->FREEZE_TIME;
 			}
 		}
+
+		CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/freeze_object.wav", RT_SOUND);
+		if ( pSound )
+			pSound->Play();
 	}
 
-	CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/freeze_object.wav", RT_SOUND);
-	if ( pSound )
-		pSound->Play();
 	CPowerUp::CollideWith(pOther);
 }

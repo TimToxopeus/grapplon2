@@ -13,6 +13,7 @@
 #include "SpeedUpPowerUp.h"
 #include "GellyPowerUp.h"
 #include "ShieldPowerUp.h"
+#include "WormHole.h"
 
 extern std::string itoa2(const int x);
 
@@ -57,6 +58,7 @@ bool CUniverse::Load( std::string file )
 			else if ( in == "[asteroid]" )	{	ReadPlanet(ASTEROID);	}
 			else if ( in == "[ice]" )		{	ReadPlanet(ICE);	}
 			else if ( in == "[broken]" )	{	ReadPlanet(BROKEN);	}
+			else if ( in == "[wormhole]")	{	ReadPlanet(WORMHOLE);	}
 			else if ( in == "[universe]")	{	ReadUniverse();	}
 		}
 		fclose( pFile );
@@ -68,16 +70,41 @@ bool CUniverse::Load( std::string file )
 			else if ( m_vUniverse[i].planetType == ICE )		{	m_vPlanets.push_back( new CIce( m_vUniverse[i] ) );	}
 			else if ( m_vUniverse[i].planetType == BROKEN )		{	m_vPlanets.push_back( new COrdinaryPlanet( m_vUniverse[i] ) );	}
 			else if ( m_vUniverse[i].planetType == ORDINARY )	{	m_vPlanets.push_back( new COrdinaryPlanet( m_vUniverse[i] ) );	}
+			else if ( m_vUniverse[i].planetType == WORMHOLE )	{	
+				CWormHole* wh1 = new CWormHole( m_vUniverse[i], 1 );
+				CWormHole* wh2 = new CWormHole( m_vUniverse[i], 2 );
+				
+				m_vPlanets.push_back(wh1);	
+				m_vPlanets.push_back(wh2);	
+
+				wh1->twin = wh2;
+				wh2->twin = wh1;
+			
+			}
 		}
 
 		// Calculate positions
 		for ( unsigned int i = 0; i<m_vUniverse.size(); i++ )
 		{
 			PlanetaryData& d = m_vUniverse[i];
-			if ( d.planetType == SUN || d.orbit == "") continue;
 
-			CPlanet* orbitted = m_vPlanets[IndexByName( d.orbit )];
-			SetUpOrbit(m_vPlanets[i], orbitted);
+			if(d.orbit != "")
+			{
+				CPlanet* orbitted = m_vPlanets[IndexByName( d.orbit )];
+				SetUpOrbit(m_vPlanets[i], orbitted);
+
+				if( d.planetType == WORMHOLE){
+					i++;
+					if(d.orbit2 != ""){
+						CPlanet* orbitted = m_vPlanets[IndexByName( d.orbit2 )];
+						SetUpOrbit(m_vPlanets[i], orbitted);
+					}
+				}
+			} else if (d.planetType == WORMHOLE){
+				i++;
+			}
+
+
 		}
 
 		// Create objects and set up orbits
@@ -160,15 +187,22 @@ void CUniverse::ReadPlanet(ObjectType planType)
 	planetData.imageFrozen = "";
 
 	planetData.orbitLength = 0;
+	planetData.orbitLength2 = 0;
 	planetData.orbitSpeed = 1000;
+	planetData.orbitSpeed2 = 1000;
 	planetData.asteroidcount = 0;
 	planetData.orbitJoint = 0;
+	planetData.orbitJoint2 = 0;
 	planetData.rotation = 0;
 	planetData.scale = 1.0f;
 	planetData.emitter = "";
 	planetData.orbit = "";
+	planetData.orbit2 = "";
 	planetData.position = Vector(0, 0, 0);
 	planetData.damageMult = -1.0;
+	planetData.exitVector1 = Vector(0, 0, 0);
+	planetData.exitVector2 = Vector(0, 0, 0);
+
 
 	planetData.planetType = planType;
 
@@ -184,6 +218,11 @@ void CUniverse::ReadPlanet(ObjectType planType)
 													planetData.orbitLength		= atoi(tokens[3].c_str());
 													planetData.orbitSpeed		= (float)atof(tokens[4].c_str());
 													}
+		else if ( tokens[0] == "orbit2" )			{
+													planetData.orbit2			= tokens[2];
+													planetData.orbitLength2		= atoi(tokens[3].c_str());
+													planetData.orbitSpeed2		= (float)atof(tokens[4].c_str());
+													}
 		else if ( tokens[0] == "mass" )				planetData.mass				= atoi(tokens[2].c_str());
 		else if ( tokens[0] == "grav" )				planetData.gravconst		= (float)atof(tokens[2].c_str());
 		else if ( tokens[0] == "image" )			planetData.image			= tokens[2];
@@ -193,6 +232,7 @@ void CUniverse::ReadPlanet(ObjectType planType)
 		else if ( tokens[0] == "imagefrozen" )		planetData.imageFrozen		= tokens[2];
 		else if ( tokens[0] == "asteroids" )		planetData.asteroidcount	= atoi(tokens[2].c_str());
 		else if ( tokens[0] == "angle" )			planetData.orbitAngle		= atoi(tokens[2].c_str());
+		else if ( tokens[0] == "angle2" )			planetData.orbitAngle2		= atoi(tokens[2].c_str());
 		else if ( tokens[0] == "radius" )			planetData.radius			= atoi(tokens[2].c_str());
 		else if ( tokens[0] == "damagemult" )		planetData.damageMult		= (float) atof(tokens[2].c_str());
 		else if ( tokens[0] == "tempradius" )		planetData.tempradius		= atoi(tokens[2].c_str());
@@ -200,6 +240,21 @@ void CUniverse::ReadPlanet(ObjectType planType)
 		{
 			planetData.position[0]												= (float)atof(tokens[2].c_str());
 			planetData.position[1]												= (float)atof(tokens[3].c_str());
+		}
+		else if ( tokens[0] == "pos2" )	
+		{
+			planetData.position2[0]												= (float)atof(tokens[2].c_str());
+			planetData.position2[1]												= (float)atof(tokens[3].c_str());
+		}
+		else if ( tokens[0] == "exit1" )	
+		{
+			planetData.exitVector1[0]											= (float)atof(tokens[2].c_str());
+			planetData.exitVector1[1]											= (float)atof(tokens[3].c_str());
+		}
+		else if ( tokens[0] == "exit2" )	
+		{
+			planetData.exitVector2[0]											= (float)atof(tokens[2].c_str());
+			planetData.exitVector2[1]											= (float)atof(tokens[3].c_str());
 		}
 		else if ( tokens[0] == "rotation" )	planetData.rotation					= atoi(tokens[2].c_str());
 		else if ( tokens[0] == "scale" )	planetData.scale					= (float)atof(tokens[2].c_str());

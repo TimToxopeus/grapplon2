@@ -22,11 +22,12 @@ void CHealthPowerUp::CollideWith(CBaseObject* pOther)
 	if(pOther->getType() == SHIP)
 	{
 		dynamic_cast<CPlayerObject*>(pOther)->TookHealthPowerUp();
-	}
 
-	CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/powerup_pickup.wav", RT_SOUND);
-	if ( pSound )
-		pSound->Play();
+		CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/powerup_pickup.wav", RT_SOUND);
+		if ( pSound )
+			pSound->Play();
+
+	}
 
 	CPowerUp::CollideWith(pOther);
 }

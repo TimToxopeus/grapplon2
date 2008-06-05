@@ -10,8 +10,7 @@ class CPlayerObject;
 
 class CPlanet : public CBaseObject
 {
-private:
-//	PlanetaryData *data;
+protected:
 	CParticleEmitter *m_pEmitter;
 	float m_fRespawnTime;
 
@@ -19,7 +18,7 @@ private:
 	CAnimatedTexture *m_pGlow;
 
 public:
-	CPlanet(PlanetaryData &data);
+	CPlanet(PlanetaryData &data, int index = 1);
 	virtual ~CPlanet();
 
 	CPlanet* m_pOrbitOwner;
