@@ -1,0 +1,196 @@
+[universe]
+width = 3400
+height = 3000
+boundaryforce = 20000000
+initspawn1 = 1400 200
+initspawn2 = -1400 200
+initspawn3 = -1400 -200
+initspawn4 = 1400 -200
+max_power_up = 3
+pu_freeze  = 20
+pu_speed  = 35
+pu_health  = 20
+pu_gelly = 15
+pu_shield = 10
+
+[sun]
+name = sun
+mass = 1000000
+image = sun
+imageglow = sun_glow
+grav = 300
+radius = 340
+tempradius = 575
+pos = 0 150
+scale = 2.0
+emitter = "media/scripts/particle_fire_emitter.txt", far, 0, 0
+damagemult = 1.1
+
+[sun]
+name = black_hole
+mass = 1000000
+pos = -1200 -1000
+image = black_hole
+imageglow = black_hole_glow
+grav = 500
+angle = 10
+scale = 3
+radius = 10
+damagemult = 100
+rotation = 40
+emitter = "media/scripts/particle_black_emitter.txt", far, 0, 0
+
+[sun]
+name = black_hole2
+mass = 1000000
+pos = 1200 -1000
+image = black_hole
+imageglow = black_hole_glow
+grav = 500
+angle = 10
+scale = 3
+radius = 10
+damagemult = 100
+rotation = 40
+emitter = "media/scripts/particle_black_emitter.txt", far, 0, 0
+
+[sun]
+name = ice_planet1
+pos = 0 1400
+mass = 300000
+image = ice_planet_02
+imageglow = ice_planet_glow
+imageorbit = orbit_circle
+grav = 100
+angle = 90
+scale = 1
+radius = 125
+tempradius = 250
+emitter = "media/scripts/particle_iceplanet1_emitter.txt", far, 0, 0
+damagemult = 0.1
+
+[sun]
+name = ice_planet2
+pos = 750 1300
+mass = 300000
+image = ice_planet_02
+imageglow = ice_planet_glow
+imageorbit = orbit_circle
+grav = 100
+angle = 90
+scale = 1
+radius = 125
+tempradius = 250
+emitter = "media/scripts/particle_iceplanet1_emitter.txt", far, 0, 0
+damagemult = 0.1
+
+[sun]
+name = ice_planet3
+pos = -750 1300
+mass = 300000
+image = ice_planet_02
+imageglow = ice_planet_glow
+imageorbit = orbit_circle
+grav = 100
+angle = 90
+scale = 1
+radius = 125
+tempradius = 250
+emitter = "media/scripts/particle_iceplanet1_emitter.txt", far, 0, 0
+damagemult = 0.1
+
+[sun]
+name = ice_planet6
+pos = -1500 1000
+mass = 300000
+image = ice_planet_02
+imageglow = ice_planet_glow
+imageorbit = orbit_circle
+grav = 100
+angle = 90
+scale = 1
+radius = 125
+tempradius = 250
+emitter = "media/scripts/particle_iceplanet1_emitter.txt", far, 0, 0
+damagemult = 0.1
+
+[sun]
+name = ice_planet7
+pos = 1500 1000
+mass = 300000
+image = ice_planet_02
+imageglow = ice_planet_glow
+imageorbit = orbit_circle
+grav = 100
+angle = 90
+scale = 1
+radius = 125
+tempradius = 250
+emitter = "media/scripts/particle_iceplanet1_emitter.txt", far, 0, 0
+damagemult = 0.1
+
+[asteroid]
+name = asteroid1
+pos = -2500 -100
+mass = 40
+image = asteroid02
+grav = 0
+angle = 50
+rotation = 15
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = asteroid2
+pos = 2500 -100
+mass = 40
+image = asteroid02
+grav = 0
+angle = 50
+rotation = 15
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = asteroid3
+pos = -2500 400
+mass = 40
+image = asteroid02
+grav = 0
+angle = 50
+rotation = 15
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = asteroid4
+pos = 2500 400
+mass = 40
+image = asteroid02
+grav = 0
+angle = 50
+rotation = 15
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = asteroid5
+pos = 350 -2000
+mass = 40
+image = asteroid02
+grav = 0
+angle = 50
+rotation = 15
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = asteroid5
+pos = -350 -2000
+mass = 40
+image = asteroid02
+grav = 0
+angle = 50
+rotation = 15
+radius = 50
+damagemult = 3.5
