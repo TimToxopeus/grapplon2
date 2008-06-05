@@ -411,8 +411,8 @@ void CHook::ApplyForceFront()
 		
 		}
 
-		//dBodyAddForce(m_oPhysicsData.body, tangent[0] * 300.0f, tangent[1] * 300.0f, 0.0f);
-		AddForce( Vector( tangent[0] * 300.0f, tangent[1] * 300.0f, 0 ) );
+		dBodyAddForce(m_oPhysicsData.body, tangent[0] * 300.0f, tangent[1] * 300.0f, 0.0f);
+		//AddForce( Vector( tangent[0] * 300.0f, tangent[1] * 300.0f, 0 ) );
 
 
 	} else if (m_eHookState == HOMING) {
