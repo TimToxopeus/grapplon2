@@ -92,6 +92,7 @@ bool CGameState::Init( int iPlayers, std::string level )
 
 
 	m_fMatchTimeLeft = SETS->MATCH_TIME;
+	m_fCountDown = 3.0f;
 
 	return true;
 }
@@ -156,13 +157,20 @@ void CGameState::Render()
 		zoom = SETS->MIN_ZOOM;
 	if ( zoom > SETS->MAX_ZOOM )
 		zoom = SETS->MAX_ZOOM;
+
 	CRenderer::Instance()->SetCamera( playerCenter, zoom );
 }
 
 void CGameState::Update(float fTime)
 {
-	m_fMatchTimeLeft -= fTime;
+	if ( m_fCountDown > -2.0f )
+		m_fCountDown -= fTime;
+	m_pHUD->SetCountdown( m_fCountDown );
+
+	if ( m_fCountDown <= 0.0f )
+		m_fMatchTimeLeft -= fTime;
 	m_pHUD->SetMatchTimeLeft( m_fMatchTimeLeft );
+
 	m_pUniverse->Update( fTime );
 
 	if ( m_fMatchTimeLeft <= 0.0f )

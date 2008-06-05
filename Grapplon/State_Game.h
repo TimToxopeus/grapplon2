@@ -18,6 +18,8 @@ private:
 	CUniverse *m_pUniverse;
 
 	float m_fMatchTimeLeft;
+	float m_fCountDown;
+
 	CBackground *m_pBackground;
 	CHUD *m_pHUD;
 
@@ -35,4 +37,5 @@ public:
 
 	int GetScore( int iPlayer );
 	CUniverse *GetUniverse() { return m_pUniverse; }
+	bool CountingDown() { return (m_fCountDown > 0.0f); }
 };
