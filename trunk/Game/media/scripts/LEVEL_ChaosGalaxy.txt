@@ -6,8 +6,11 @@ initspawn1 = 2000 2000
 initspawn2 = -2000 -2000
 initspawn3 = -2000 2000
 initspawn4 = 2000 -2000
-max_power_up = 3
+max_power_up = 5
 pu_freeze  = 10
+pu_freeze  = 10
+pu_freeze  = 10
+pu_speed  = 30
 pu_speed  = 30
 pu_gelly = 10
 pu_shield = 5
@@ -26,6 +29,167 @@ radius = 100
 damagemult = 100
 rotation = 40
 emitter = "media/scripts/particle_black2_emitter.txt", far, 0, 0
+
+[ordinary]
+name = generic_planet
+orbit = black_hole 900 -100
+mass = 750000
+image = generic_planet
+imageorbit = orbit_circle
+imageglow = generic_planet_glow
+grav = 50
+scale = 2
+radius = 160
+angle = 10
+damagemult = 0
+
+[ordinary]
+name = generic_planet
+orbit = black_hole 900 -100
+mass = 750000
+image = generic_planet
+imageorbit = orbit_circle
+imageglow = generic_planet_glow
+grav = 50
+scale = 2
+radius = 160
+angle = 130
+damagemult = 0
+
+[ordinary]
+name = generic_planet
+orbit = black_hole 900 -100
+mass = 750000
+image = generic_planet
+imageorbit = orbit_circle
+imageglow = generic_planet_glow
+grav = 50
+scale = 2
+radius = 160
+angle = 250
+damagemult = 0
+
+
+[ordinary]
+name = generic_planet
+orbit = black_hole 1800 75
+mass = 750000
+image = generic_planet
+imageorbit = orbit_circle
+imageglow = generic_planet_glow
+grav = 50
+scale = 2
+radius = 160
+angle = 50
+damagemult = 0
+
+[ordinary]
+name = generic_planet
+orbit = black_hole 1800 75
+mass = 750000
+image = generic_planet
+imageorbit = orbit_circle
+imageglow = generic_planet_glow
+grav = 50
+scale = 2
+radius = 160
+angle = 140
+damagemult = 0
+
+[ordinary]
+name = generic_planet
+orbit = black_hole 1800 75
+mass = 750000
+image = generic_planet
+imageorbit = orbit_circle
+imageglow = generic_planet_glow
+grav = 50
+scale = 2
+radius = 160
+angle = 230
+damagemult = 0
+
+[ordinary]
+name = generic_planet
+orbit = black_hole 1800 75
+mass = 750000
+image = generic_planet
+imageorbit = orbit_circle
+imageglow = generic_planet_glow
+grav = 50
+scale = 2
+radius = 160
+angle = 320
+damagemult = 0
+
+
+
+[ordinary]
+name = generic_planet
+orbit = black_hole 2500 -300
+mass = 750000
+image = generic_planet
+imageorbit = orbit_circle
+imageglow = generic_planet_glow
+grav = 0
+scale = 2
+radius = 160
+angle = 0
+damagemult = 0
+
+[ordinary]
+name = generic_planet
+orbit = black_hole 2500 -300
+mass = 750000
+image = generic_planet
+imageorbit = orbit_circle
+imageglow = generic_planet_glow
+grav = 50
+scale = 2
+radius = 160
+angle = 72
+damagemult = 0
+
+[ordinary]
+name = generic_planet
+orbit = black_hole 2500 -300
+mass = 750000
+image = generic_planet
+imageorbit = orbit_circle
+imageglow = generic_planet_glow
+grav = 50
+scale = 2
+radius = 160
+angle = 144
+damagemult = 0
+
+[ordinary]
+name = generic_planet
+orbit = black_hole 2500 -300
+mass = 750000
+image = generic_planet
+imageorbit = orbit_circle
+imageglow = generic_planet_glow
+grav = 50
+scale = 2
+radius = 160
+angle = 216
+damagemult = 0
+
+[ordinary]
+name = generic_planet
+orbit = black_hole 2500 -300
+mass = 750000
+image = generic_planet
+imageorbit = orbit_circle
+imageglow = generic_planet_glow
+grav = 50
+scale = 2
+radius = 160
+angle = 288
+damagemult = 0
+
+
 
 [asteroid]
 name = asteroid1
