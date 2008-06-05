@@ -2,10 +2,10 @@
 width = 3400
 height = 3000
 boundaryforce = 20000000
-initspawn1 = 1900 200
-initspawn2 = -1900 200
-initspawn3 = -1900 -200
-initspawn4 = 1900 -200
+initspawn1 = 1700 200
+initspawn2 = -1700 200
+initspawn3 = -1700 -200
+initspawn4 = 1700 -200
 max_power_up = 3
 pu_freeze  = 20
 pu_speed  = 35
@@ -37,6 +37,7 @@ angle = 10
 scale = 3
 radius = 10
 damagemult = 100
+tempradius = 1
 rotation = 40
 emitter = "media/scripts/particle_black_emitter.txt", far, 0, 0
 
@@ -51,10 +52,11 @@ angle = 10
 scale = 3
 radius = 10
 damagemult = 100
+tempradius = 1
 rotation = 40
 emitter = "media/scripts/particle_black_emitter.txt", far, 0, 0
 
-[sun]
+[ice]
 name = ice_planet1
 pos = 0 1400
 mass = 300000
@@ -69,7 +71,7 @@ tempradius = 320
 emitter = "media/scripts/particle_iceplanet2_emitter.txt", far, 0, 0
 damagemult = 0.1
 
-[sun]
+[ice]
 name = ice_planet2
 pos = 750 1300
 mass = 300000
@@ -84,7 +86,7 @@ tempradius = 320
 emitter = "media/scripts/particle_iceplanet2_emitter.txt", far, 0, 0
 damagemult = 0.1
 
-[sun]
+[ice]
 name = ice_planet3
 pos = -750 1300
 mass = 300000
@@ -99,7 +101,7 @@ tempradius = 320
 emitter = "media/scripts/particle_iceplanet2_emitter.txt", far, 0, 0
 damagemult = 0.1
 
-[sun]
+[ice]
 name = ice_planet6
 pos = -1500 1000
 mass = 300000
@@ -114,7 +116,7 @@ tempradius = 320
 emitter = "media/scripts/particle_iceplanet2_emitter.txt", far, 0, 0
 damagemult = 0.1
 
-[sun]
+[ice]
 name = ice_planet7
 pos = 1500 1000
 mass = 300000
@@ -130,7 +132,7 @@ emitter = "media/scripts/particle_iceplanet2_emitter.txt", far, 0, 0
 damagemult = 0.1
 
 [asteroid]
-name = asteroid1
+name = asteroid5
 orbit = sun 3200 100
 mass = 40
 image = asteroid02
@@ -142,7 +144,7 @@ damagemult = 3.5
 
 [asteroid]
 name = asteroid1
-orbit = sun 3200 100
+orbit = sun 3100 100
 mass = 40
 image = asteroid02
 grav = 0
@@ -153,7 +155,7 @@ damagemult = 3.5
 
 [asteroid]
 name = asteroid2
-orbit = sun 3200 100
+orbit = sun 3000 100
 mass = 40
 image = asteroid02
 grav = 0
@@ -164,7 +166,7 @@ damagemult = 3.5
 
 [asteroid]
 name = asteroid3
-orbit = sun 3200 100
+orbit = sun 3000 100
 mass = 40
 image = asteroid02
 grav = 0
@@ -175,11 +177,22 @@ damagemult = 3.5
 
 [asteroid]
 name = asteroid4
-orbit = sun 3200 100
+orbit = sun 2900 100
 mass = 40
 image = asteroid02
 grav = 0
 angle = 330
+rotation = 10
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = asteroid4
+orbit = sun 2900 100
+mass = 40
+image = asteroid02
+grav = 0
+angle = 30
 rotation = 10
 radius = 50
 damagemult = 3.5
