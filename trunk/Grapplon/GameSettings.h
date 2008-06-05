@@ -33,6 +33,7 @@ public:
 	float		ERP;
 	float		HOOK_AIR_DRAG;
 	float		HOOK_MASS;
+	float		CHAIN_MASS;
 	float		AUTO_AIM_ANGLE;
 	int			PLAYER_AIR_DRAG;
 	int			PLAYER_MASS;
@@ -60,6 +61,7 @@ public:
 	int			MAX_STARS;
 	bool		PARTICLES_ON;
 	bool		MENU_ON;
+	bool		THREAD_ON;
 
 	int			SCORE_STEAL;
 

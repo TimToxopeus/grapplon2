@@ -70,6 +70,7 @@ CODEManager::CODEManager()
 	m_bBuffer = true;
 	m_bInWorldStep = false;
 	m_bOnHold = false;
+	m_bODEThread = SETS->THREAD_ON;
 }
 
 CODEManager::~CODEManager()
@@ -513,8 +514,10 @@ bool CODEManager::HasRecentlyCollided( dBodyID b1, dBodyID b2, unsigned int curT
 void CODEManager::StartEventThread()
 {
 	m_bForceThreadStop = false;
-	if ( m_pThread == NULL )
+	if ( m_pThread == NULL && m_bODEThread )
+	{
 		m_pThread = SDL_CreateThread( ODEManagerThread, NULL );
+	}
 }
 
 void CODEManager::StopEventThread()

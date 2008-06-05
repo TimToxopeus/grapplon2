@@ -73,6 +73,8 @@ private:
 	bool m_bInWorldStep;
 	bool m_bOnHold;
 
+	bool m_bODEThread;
+
 public:
 
 	std::vector<PhysicsData *> m_vAsteroids;
@@ -118,4 +120,5 @@ public:
 	void ThreadContinue() { m_bOnHold = false; }
 	void SetWorldStep( bool bWorldStep ) { m_bInWorldStep = bWorldStep; }
 	void WaitOnHold();
+	bool IsThreaded() { return m_bODEThread; }
 };
