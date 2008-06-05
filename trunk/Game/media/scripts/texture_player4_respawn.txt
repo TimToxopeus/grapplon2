@@ -1,0 +1,10 @@
+[object]
+width = 470
+height = 410
+animations = idle
+
+[idle]
+file = "media/images/ship_respawn_purple.png"
+frames = 9
+speed = 10
+rows = 3
