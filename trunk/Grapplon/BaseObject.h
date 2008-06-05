@@ -36,7 +36,7 @@ public:
 	dBodyID GetBody() { return m_oPhysicsData.body; };
 	PhysicsData *GetPhysicsData() { return &m_oPhysicsData; }
 
-	void SetMass( float fMass, bool permanent = true );
+	void SetMass( float fMass, bool perminent = true );
 	void ResetMass();
 	float GetMass();
 

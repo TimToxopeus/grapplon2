@@ -38,7 +38,7 @@ bool CGameState::Init( int iPlayers, std::string level )
 {
 //	CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/xpstart.wav", RT_SOUND);
 //	pSound->Play();
-//	CSoundManager::Instance()->LoadSound( "media/music/exit.ogg" );
+	CSoundManager::Instance()->LoadSound( "media/music/exit.ogg" );
 
 	m_pUniverse = new CUniverse();
 	if ( level == "" )

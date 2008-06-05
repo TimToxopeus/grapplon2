@@ -19,7 +19,6 @@ extern std::string itoa2(const int x);
 CUniverse::CUniverse()
 {
 	totalChance = 100;
-	m_iMaxPowerUp = 4;
 }
 
 CUniverse::~CUniverse()
@@ -83,7 +82,7 @@ bool CUniverse::Load( std::string file )
 
 		// Create objects and set up orbits
 
-		//PlacePowerUps();
+		PlacePowerUps();
 
 		return true;
 	

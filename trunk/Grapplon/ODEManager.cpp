@@ -7,9 +7,7 @@
 #include <sstream>
 #include "Hook.h"
 #include "Universe.h"
-#include "Core.h"
-
-#include <sdl.h>
+#include "PowerUp.h"
 
 #include "ResourceManager.h"
 #include "Sound.h"
@@ -21,26 +19,7 @@
 
 CODEManager *CODEManager::m_pInstance = NULL;
 
-int ODEManagerThread(void *data)
-{
-	CCore *pCore = CCore::Instance();
-	CODEManager *pODE = CODEManager::Instance();
-	Uint32 time, lastUpdate;
-	time = lastUpdate = SDL_GetTicks();
-	while ( pCore->IsRunning() && pODE->ShouldThreadStop() == false )
-	{
-		time = SDL_GetTicks();
-		float timeSinceLastUpdate = (float)(time - lastUpdate) / 1000.0f;
-		pODE->ProcessBuffer();
-		pODE->SetWorldStep(true);
-		pODE->Update(timeSinceLastUpdate);
-		pODE->SetWorldStep(false);
- 		SDL_Delay( 5 );
-		lastUpdate = time;
-		pODE->WaitOnHold();
-	}
-	return 0;
-}
+
 
 void collideCallback (void *data, dGeomID o1, dGeomID o2)
 {
@@ -54,8 +33,6 @@ CODEManager::CODEManager()
 	// Create world and space
 	m_oWorld = dWorldCreate();
 
-	dWorldSetQuickStepNumIterations(m_oWorld, SETS->PH_NR_IT);
-
 	dVector3 extentsv3, centerv;
 	extentsv3[0] = extentsv3[1] = extentsv3[2] = 1000;
 	centerv[0] = centerv[1] = centerv[2] = 0;
@@ -64,25 +41,11 @@ CODEManager::CODEManager()
 	m_oContactgroup = dJointGroupCreate(MAX_CONTACTS);
 	m_oJointgroup = dJointGroupCreate(MAX_HINGES);
 
-	m_pUniverse = NULL;
-	m_pThread = NULL;
-	m_bForceThreadStop = false;
-	m_bBuffer = true;
-	m_bInWorldStep = false;
-	m_bOnHold = false;
-	m_bODEThread = SETS->THREAD_ON;
 }
 
 CODEManager::~CODEManager()
 {
 	CLogManager::Instance()->LogMessage("Terminating ODE manager.");
-
-	if ( m_pThread )
-	{
-		int status;
-		SDL_WaitThread( m_pThread, &status );
-		m_pThread = NULL;
-	}
 
 	dJointGroupDestroy(m_oJointgroup);
 	dJointGroupDestroy( m_oContactgroup );
@@ -124,17 +87,15 @@ CODEManager::~CODEManager()
 
 void CODEManager::Update( float fTime )
 {
-	if ( fTime == 0 )
-		return;
-	float nbSecondsByStep = SETS->PH_STEP_TIME;
+	float nbSecondsByStep = 0.0005f;
 
 	// Find the corresponding number of steps that must be taken 
 	int nbStepsToPerform = static_cast<int>(fTime/nbSecondsByStep); 
 	
 	// Make these steps to advance world time 
-	for (int i = 0; i < nbStepsToPerform; i++)
+	for (int i = 0; i < nbStepsToPerform; i++) 
 	{
-		ApplyGravity(nbSecondsByStep);//nbSecondsByStep);
+		ApplyGravity(nbSecondsByStep);
 		ApplyMotorForceAndDrag();
 
 		m_iContacts = 0;
@@ -143,7 +104,7 @@ void CODEManager::Update( float fTime )
 		HandleCollisions();
 
 		// Step world
-		dWorldQuickStep(m_oWorld, nbSecondsByStep);//nbSecondsByStep); 
+		dWorldQuickStep(m_oWorld, nbSecondsByStep); 
 		//dWorldStepFast1(m_oWorld, nbSecondsByStep / 10.0f, nbStepsToPerform * 10.0f); 
 		
 		// Remove all temporary collision joints now that the world has been stepped 
@@ -408,12 +369,18 @@ void CODEManager::HandleCollisions()
 			CHook* hook = dynamic_cast<CHook*>( (d1IsHook ? d1 : d2)->m_pOwner );
 			PhysicsData* grabbee = (d1IsHook ? d2 : d1);
 			
-			if(grabbee->m_pOwner->getType() != ASTEROID) continue;
-			CAsteroid* asteroid = dynamic_cast<CAsteroid*>(grabbee->m_pOwner);
-			
-
-			if ( hook->m_eHookState == HOMING && asteroid->m_bIsGrabable )		// Nothing grabbed yet && not a planet or ship
-				hook->SetGrasped(grabbee);
+			if(grabbee->m_pOwner->getType() == ASTEROID)
+			{
+				CAsteroid* asteroid = dynamic_cast<CAsteroid*>(grabbee->m_pOwner);
+				if ( hook->m_eHookState == HOMING && asteroid->m_bIsGrabable )		// Nothing grabbed yet && not a planet or ship
+					hook->SetGrasped(grabbee);
+			}
+			else if (grabbee->m_pOwner->getType() == POWERUP)
+			{
+				CPowerUp* powerup = dynamic_cast<CPowerUp*>(grabbee->m_pOwner);
+				if ( hook->m_eHookState == HOMING && powerup->m_bIsGrabable )		// Nothing grabbed yet && not a planet or ship
+					hook->SetGrasped(grabbee);
+			}
 		}
 
 		if ( sound && !HasRecentlyCollided(d1->body, d2->body, time) )
@@ -450,6 +417,7 @@ void CODEManager::AddData( PhysicsData *pData )
 	if(oType == SHIP )															list = &m_vPlayers;
 	if(oType == ORDINARY || oType == ICE || oType == BROKEN || oType == SUN)	list = &m_vPlanets;
 	if(oType == ASTEROID)														list = &m_vAsteroids;
+	if(oType == POWERUP)														list = &m_vPowerUps;
 	if(list == NULL)															list = &m_vOthers;
 
 	for ( unsigned int i = 0; i < (*list).size(); i++ )
@@ -509,239 +477,4 @@ bool CODEManager::HasRecentlyCollided( dBodyID b1, dBodyID b2, unsigned int curT
 		}
 	}
 	return false;
-}
-
-void CODEManager::StartEventThread()
-{
-	m_bForceThreadStop = false;
-	if ( m_pThread == NULL && m_bODEThread )
-	{
-		m_pThread = SDL_CreateThread( ODEManagerThread, NULL );
-	}
-}
-
-void CODEManager::StopEventThread()
-{
-	m_bForceThreadStop = true;
-	if ( m_pThread )
-	{
-		int status;
-		SDL_WaitThread( m_pThread, &status );
-		m_pThread = NULL;
-	}
-}
-
-void CODEManager::ProcessBuffer()
-{
-	m_bBuffer = !m_bBuffer;
-	if ( m_bBuffer )
-	{
-		while ( m_iWritingToBuffer == 2 ) {}
-//		for ( int i = m_vBuffer2.size() - 1; i>=0; i-- )
-		for ( unsigned int i = 0; i<m_vBuffer2.size(); i++ )
-		{
-			HandleEvent( m_vBuffer2[i] );
-			//m_vBuffer2.erase( m_vBuffer2.begin() + i );
-		}
-		m_vBuffer2.clear();
-	}
-	else
-	{
-		while ( m_iWritingToBuffer == 1 ) {}
-//		for ( int i = m_vBuffer1.size() - 1; i>=0; i-- )
-		for ( unsigned int i = 0; i<m_vBuffer1.size(); i++ )
-		{
-			HandleEvent( m_vBuffer1[i] );
-//			m_vBuffer1.erase( m_vBuffer1.begin() + i );
-		}
-		m_vBuffer1.clear();
-	}
-}
-
-void CODEManager::HandleEvent( ODEEvent ode_event )
-{
-	if ( ode_event.type == 1 )
-		dBodyAddForce( ode_event.body1, ode_event.force[0], ode_event.force[1], ode_event.force[2] );
-	if ( ode_event.type == 2 )
-		dBodySetForce( ode_event.body1, ode_event.force[0], ode_event.force[1], ode_event.force[2] );
-	if ( ode_event.type == 3 )
-		dBodySetPosition( ode_event.body1, ode_event.pos[0], ode_event.pos[1], ode_event.pos[2] );
-	if ( ode_event.type == 4 )
-		dJointAttach( ode_event.joint, ode_event.body1, ode_event.body2 );
-	if ( ode_event.type == 5 )
-		dJointSetHingeAnchor( ode_event.joint, ode_event.pos[0], ode_event.pos[1], ode_event.pos[2] );
-	if ( ode_event.type == 6 )
-		dBodySetLinearVel( ode_event.body1, ode_event.force[0], ode_event.force[1], ode_event.force[2] );
-	if ( ode_event.type == 7 )
-		dBodySetAngularVel( ode_event.body1, ode_event.force[0], ode_event.force[1], ode_event.force[2] );
-	if ( ode_event.type == 8 )
-		dBodySetMass( ode_event.body1, &ode_event.mass );
-}
-
-void CODEManager::AddToBuffer( ODEEvent ode_event )
-{
-	if ( m_bBuffer )
-	{
-		m_iWritingToBuffer = 1;
-		//m_vBuffer1.insert( m_vBuffer1.begin(), ode_event );
-		m_vBuffer1.push_back( ode_event );
-	}
-	else
-	{
-		m_iWritingToBuffer = 2;
-//		m_vBuffer2.insert( m_vBuffer2.begin(), ode_event );
-		m_vBuffer2.push_back( ode_event );
-	}
-	m_iWritingToBuffer = 0;
-}
-
-void CODEManager::BodyAddForce(dBodyID body, Vector force )
-{
-	if ( m_pThread )
-	{
-		ODEEvent ode_event;
-		ode_event.type = 1;
-		ode_event.body1 = body;
-		ode_event.force = force;
-
-		AddToBuffer( ode_event );
-	}
-	else
-	{
-		dBodyAddForce( body, force[0], force[1], force[2] );
-	}
-}
-
-void CODEManager::BodySetForce(dBodyID body, Vector force )
-{
-	if ( m_pThread )
-	{
-		ODEEvent ode_event;
-		ode_event.type = 2;
-		ode_event.body1 = body;
-		ode_event.force = force;
-
-		AddToBuffer( ode_event );
-	}
-	else
-	{
-		dBodySetForce( body, force[0], force[1], force[2] );
-	}
-}
-
-void CODEManager::BodySetPosition( dBodyID body, Vector position )
-{
-	if ( m_pThread )
-	{
-		ODEEvent ode_event;
-		ode_event.type = 3;
-		ode_event.body1 = body;
-		ode_event.pos = position;
-
-		AddToBuffer( ode_event );
-	}
-	else
-	{
-		dBodySetPosition( body, position[0], position[1], position[2] );
-	}
-}
-
-void CODEManager::JointAttach( dJointID joint, dBodyID body1, dBodyID body2 )
-{
-	if ( m_pThread )
-	{
-		ODEEvent ode_event;
-		ode_event.type = 4;
-		ode_event.joint = joint;
-		ode_event.body1 = body1;
-		ode_event.body2 = body2;
-
-		AddToBuffer( ode_event );
-	}
-	else
-	{
-		dJointAttach( joint, body1, body2 );
-	}
-}
-
-void CODEManager::JointSetHingeAnchor( dJointID joint, Vector pos )
-{
-	if ( m_pThread )
-	{
-		ODEEvent ode_event;
-		ode_event.type = 5;
-		ode_event.joint = joint;
-		ode_event.pos = pos;
-
-		AddToBuffer( ode_event );
-	}
-	else
-	{
-		dJointSetHingeAnchor( joint, pos[0], pos[1], pos[2] );
-	}
-}
-
-void CODEManager::BodySetLinVel( dBodyID body, Vector velocity )
-{
-	if ( m_pThread )
-	{
-		ODEEvent ode_event;
-		ode_event.type = 6;
-		ode_event.body1 = body;
-		ode_event.force = velocity;
-
-		AddToBuffer( ode_event );
-	}
-	else
-	{
-		dBodySetLinearVel( body, velocity[0], velocity[1], velocity[2] );
-	}
-}
-
-void CODEManager::BodySetAngVel( dBodyID body, Vector velocity )
-{
-	if ( m_pThread )
-	{
-		ODEEvent ode_event;
-		ode_event.type = 7;
-		ode_event.body1 = body;
-		ode_event.force = velocity;
-
-		AddToBuffer( ode_event );
-	}
-	else
-	{
-		dBodySetAngularVel( body, velocity[0], velocity[1], velocity[2] );
-	}
-}
-
-void CODEManager::BodySetMass( dBodyID body, dMass mass )
-{
-	if ( m_pThread )
-	{
-		ODEEvent ode_event;
-		ode_event.type = 8;
-		ode_event.body1 = body;
-		ode_event.mass = mass;
-
-		AddToBuffer( ode_event );
-	}
-	else
-	{
-		dBodySetMass( body, &mass );
-	}
-}
-
-void CODEManager::WaitUntilWorldstepOver( bool putOnHold )
-{
-	return;
-	m_bOnHold = putOnHold;
-	while ( m_bInWorldStep ) {}
-}
-
-void CODEManager::WaitOnHold()
-{
-	return;
-	m_bInWorldStep = false;
-	while ( m_bOnHold ) {}
 }

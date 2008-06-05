@@ -48,9 +48,9 @@ CPlayerObject::CPlayerObject( int iPlayer )
 
 	CODEManager* ode = CODEManager::Instance(); 
 	ode->CreatePhysicsData(this, &m_oPhysicsData, 30.0f);
-	SetMass( (float) SETS->PLAYER_MASS );
+	SetMass( 1000.0f );
 	m_oPhysicsData.m_bAffectedByGravity = true;
-	m_oPhysicsData.m_fAirDragConst = (float) SETS->PLAYER_AIR_DRAG;
+	m_oPhysicsData.m_fAirDragConst = 3000.0f;
 
 	m_pHook = new CHook( this );
 	
@@ -73,8 +73,7 @@ void CPlayerObject::SetPosition( float fX, float fY ){
 }
 
 void CPlayerObject::SetPosition( Vector pos ){
-	if ( m_pHook )
-		this->m_pHook->adjustPos( pos - this->GetPosition() );
+	this->m_pHook->adjustPos( pos - this->GetPosition() );
 	CBaseObject::SetPosition(pos);
 }
 
@@ -100,23 +99,17 @@ bool CPlayerObject::HandleWiimoteEvent( wiimote_t* pWiimoteEvent )
 			wiiuse_motion_sensing(pWiimoteEvent, 0);
 		if (IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_A) || (SETS->PITCH_ACCEL_OUT != 0.0f && m_fPitchAccel > SETS->PITCH_ACCEL_OUT) )
 		{
-			if ( m_pHook )
+			if ( m_pHook->m_eHookState == CONNECTED )
 			{
-				if ( m_pHook->m_eHookState == CONNECTED )
-				{
-					m_pHook->m_eHookState = EJECTING;
-				}
+				m_pHook->m_eHookState = EJECTING;
 			}
 		}
 		if (IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_B) || (SETS->PITCH_ACCEL_IN != 0.0f && m_fPitchAccel < SETS->PITCH_ACCEL_IN) )
 		{
-			if ( m_pHook )
-			{
-				if ( m_pHook->m_eHookState == HOMING )
-					m_pHook->m_eHookState = RETRACTING;
-				else if( m_pHook->m_eHookState == SWINGING)
-					m_pHook->m_eHookState = THROWING;
-			}
+			if ( m_pHook->m_eHookState == HOMING )
+				m_pHook->m_eHookState = RETRACTING;
+			else if( m_pHook->m_eHookState == SWINGING)
+				m_pHook->m_eHookState = THROWING;
 		}
 
 		if (WIIUSE_USING_ACC(pWiimoteEvent))
@@ -125,12 +118,10 @@ bool CPlayerObject::HandleWiimoteEvent( wiimote_t* pWiimoteEvent )
 
 			if( abs(m_fXAccel) > SETS->MIN_ACCEL_FOR_PROCESS || abs(m_fZAccel) > SETS->MIN_ACCEL_FOR_PROCESS )
 			{
-				if ( m_pHook )
-					m_pHook->AddChainForce(m_fXAccel, m_fZAccel);
+				m_pHook->AddChainForce(m_fXAccel, m_fZAccel);
 			} else
 			{
-				if ( m_pHook )
-					m_pHook->AddChainForce(0, 0);
+				m_pHook->AddChainForce(0, 0);
 			}
 
 			y = pWiimoteEvent->orient.yaw;
@@ -297,11 +288,9 @@ void CPlayerObject::Update( float fTime )
 			}
 
 			SetScale( 1.0f + 3.0f * m_fRespawnTime );
-			if ( m_pHook )
-				m_pHook->SetScale( 1.0f + 3.0f * m_fRespawnTime );
+			m_pHook->SetScale( 1.0f + 3.0f * m_fRespawnTime );
 			SetAlpha( 1.0f - (1.0f * m_fRespawnTime) );
-			if ( m_pHook )
-				m_pHook->SetAlpha( 1.0f - (1.0f * m_fRespawnTime) );
+			m_pHook->SetAlpha( 1.0f - (1.0f * m_fRespawnTime) );
 		}
 
 		if ( m_fRespawnTime <= 0.0f )
@@ -309,8 +298,7 @@ void CPlayerObject::Update( float fTime )
 			m_bHandleWiiMoteEvents = true;
 			SetDepth( -1.0f );
 			m_fInvincibleTime = 2.0f;
-			if ( m_pHook )
-				m_pHook->SetInvincibleTime( 2.0f );
+			m_pHook->SetInvincibleTime( 2.0f );
 			m_fAlpha = 1.0f;
 
 			if ( m_pThrusterLeft )
@@ -365,8 +353,7 @@ void CPlayerObject::OnDie( CBaseObject *m_pKiller )
 	m_fExplosionAngle = m_fAngle;
 
 	Vector nullVec;
-	if ( m_pHook )
-		m_pHook->HandlePlayerDied();
+	m_pHook->HandlePlayerDied();
 	m_bHandleWiiMoteEvents = false;
 	SetForceFront(nullVec);
 	SetLinVelocity(nullVec);
@@ -378,12 +365,10 @@ void CPlayerObject::OnDie( CBaseObject *m_pKiller )
 	m_fPUShieldTime = 0;
 	m_fPUSpeedTime = 0;
 
-	if ( m_pHook )
-		m_pHook->SetInvincibleTime( 4.0f );
+	m_pHook->SetInvincibleTime( 4.0f );
 	m_fRespawnTime = 2.0f;
 	SetAlpha( 0.0f );
-	if ( m_pHook )
-		m_pHook->SetAlpha( 0.0f );
+	m_pHook->SetAlpha( 0.0f );
 
 	// Spawn emitter
 	Vector direction = m_pKiller->GetPosition() - GetPosition();
