@@ -93,6 +93,9 @@ bool CGameState::Init( int iPlayers, std::string level )
 
 	m_fMatchTimeLeft = SETS->MATCH_TIME;
 	m_fCountDown = 3.0f;
+	CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/321-3.wav", RT_SOUND);
+	if ( pSound )
+		pSound->Play();
 
 	return true;
 }
