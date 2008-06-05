@@ -6,6 +6,11 @@ initspawn1 = 400 200
 initspawn2 = -400 -200
 initspawn3 = -400 200
 initspawn4 = 400 -200
+max_power_up = 2
+pu_speed  = 35
+pu_health  = 20
+pu_gelly = 35
+pu_shield = 10
 
 [sun]
 name = sun1
