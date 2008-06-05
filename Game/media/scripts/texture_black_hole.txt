@@ -1,0 +1,9 @@
+[object]
+width = 449
+height = 449
+animations = idle
+
+[idle]
+file = "media/images/black_hole.png"
+frames = 1
+speed = 1

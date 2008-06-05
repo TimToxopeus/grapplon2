@@ -1,0 +1,11 @@
+[object]
+width = 400
+height = 400
+animations = idle
+
+[idle]
+file = "media/images/ice_sun_spin.png"
+frames = 50
+speed = 10
+rows = 5
+

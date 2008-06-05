@@ -1,0 +1,9 @@
+[object]
+width = 112
+height = 112
+animations = idle
+
+[idle]
+file = "media/images/level_cursor.png"
+frames = 1
+speed = 1

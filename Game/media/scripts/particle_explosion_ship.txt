@@ -1,0 +1,26 @@
+[emitter]
+direction = none
+maxparticles = 400
+particles = particle1 50, particle2 50
+lifespan = 2000
+spawnrate = 0
+radius = 20
+
+[particle]
+name = "particle1"
+colour1 = 255 255 255
+lifespan = 1000
+size = 10
+behave = forward
+
+[particle]
+name = "particle2"
+colour1 = 255 255 0
+lifespan = 1000
+size = 8
+behave = forward
+
+[behaviour]
+name = "forward"
+velocity = 90
+move = 0

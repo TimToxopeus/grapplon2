@@ -1,0 +1,10 @@
+[object]
+width = 157
+height = 157
+animations = idle
+
+[idle]
+file = "media/images/wind_planet_spin.png"
+frames = 50
+rows = 5
+speed = 15

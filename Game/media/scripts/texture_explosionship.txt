@@ -1,0 +1,10 @@
+[object]
+width = 156
+height = 156
+animations = idle
+
+[idle]
+file = "media/images/explosion_small.png"
+frames = 30
+speed = 10
+rows = 5

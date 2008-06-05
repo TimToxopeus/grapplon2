@@ -1,0 +1,56 @@
+[universe]
+width = 3000
+height = 3000
+boundaryforce = 20000000
+respawnarea = 1000 1000 1300 1300 15
+respawnarea = -1300 -1300 -1000 -1000 15
+initspawn1 = 500 500
+initspawn2 = -500 -500
+initspawn3 = -400 900
+initspawn4 = -600 -800
+max_power_up = 3
+pu_freeze  = 15
+pu_speed  = 15
+pu_health  = 15
+pu_gelly = 15
+pu_shield = 15
+
+[ice]
+name = sun
+mass = 1000000
+image = sun_old
+imageglow = sun_glow
+grav = 300
+radius = 340
+tempradius = 550
+pos = 0 0
+scale = 1.0
+rotation = 16
+damagemult = 1.0
+
+[asteroid]
+name = asteroid1
+orbit = sun 1000 500
+mass = 200
+image = asteroid1
+imagefire = asteroid01_fire
+imagefrozen = asteroid01_ice
+grav = 0
+angle = 123
+rotation = 20
+radius = 50
+damagemult = 10.0
+
+[asteroid]
+name = asteroid2
+orbit = sun 600 50
+mass = 200
+image = asteroid1
+imagefire = asteroid01_fire
+imagefrozen = asteroid01_ice
+grav = 0
+angle = 160
+rotation = 15
+radius = 50
+damagemult = 10.0
+

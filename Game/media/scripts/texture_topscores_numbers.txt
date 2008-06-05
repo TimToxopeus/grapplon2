@@ -1,0 +1,9 @@
+[object]
+width = 24
+height = 24
+animations = idle
+
+[idle]
+file = "media/images/topscores_numbers.png"
+frames = 10
+speed = 1

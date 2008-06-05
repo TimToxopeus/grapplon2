@@ -1,0 +1,3 @@
+texture_level_black_hole.txt texture_level_info_black_hole.txt 115 81 level_blackholemayhem.txt
+texture_level_moon.txt texture_level_info_moon.txt 610 320 level_dodgeball.txt
+texture_level_wind.txt texture_level_info_wind.txt 424 62 level_WindGalaxy.txt

@@ -1,0 +1,9 @@
+[object]
+width = 484
+height = 46
+animations = idle
+
+[idle]
+file = "media/images/select_howmany.png"
+frames = 1
+speed = 1

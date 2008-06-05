@@ -1,0 +1,9 @@
+[object]
+width = 179
+height = 58
+animations = idle
+
+[idle]
+file = "media/images/menu_nintendo.png"
+frames = 1
+speed = 1

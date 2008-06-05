@@ -1,0 +1,9 @@
+[object]
+width = 128
+height = 128
+animations = idle
+
+[idle]
+file = "media/images/asteroid01_fire.png"
+frames = 1
+speed = 1

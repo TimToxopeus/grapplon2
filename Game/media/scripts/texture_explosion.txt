@@ -1,0 +1,25 @@
+[object]
+width = 166
+height = 166
+animations = large, small
+
+[vaporize]
+file = "media/images/explosion_vaporize.png"
+frames = 30
+rows = 5
+speed = 20
+loop = 0
+
+[large]
+file = "media/images/explosion_large.png"
+frames = 30
+rows = 5
+speed = 20
+loop = 0
+
+[small]
+file = "media/images/explosion_small.png"
+frames = 30
+rows = 5
+speed = 20
+loop = 0

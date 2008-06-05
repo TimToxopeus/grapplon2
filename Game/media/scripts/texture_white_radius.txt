@@ -1,0 +1,9 @@
+[object]
+width = 600
+height = 600
+animations = idle
+
+[idle]
+file = "media/images/white_radius.png"
+frames = 1
+speed = 1

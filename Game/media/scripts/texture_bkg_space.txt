@@ -1,0 +1,9 @@
+[object]
+width = 1024
+height = 1024
+animations = idle
+
+[idle]
+file = "media/images/bkg_space.png"
+frames = 1
+speed = 1

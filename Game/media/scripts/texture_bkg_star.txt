@@ -1,0 +1,9 @@
+[object]
+width = 91
+height = 91
+animations = idle
+
+[idle]
+file = "media/images/bkg_starblink.png"
+frames = 1
+speed = 1

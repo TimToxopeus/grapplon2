@@ -1,0 +1,19 @@
+[object]
+width = 275
+height = 250
+animations = two, three, four
+
+[two]
+file = "media/images/select_2.png"
+frames = 1
+speed = 1
+
+[three]
+file = "media/images/select_3.png"
+frames = 1
+speed = 1
+
+[four]
+file = "media/images/select_4.png"
+frames = 1
+speed = 1

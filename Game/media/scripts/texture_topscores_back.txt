@@ -1,0 +1,9 @@
+[object]
+width = 150
+height = 46
+animations = idle
+
+[idle]
+file = "media/images/topscores_back.png"
+frames = 1
+speed = 1

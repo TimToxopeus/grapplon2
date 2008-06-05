@@ -1,0 +1,9 @@
+[object]
+width = 400
+height = 400
+animations = idle
+
+[idle]
+file = "media/images/fire_glow.png"
+frames = 1
+speed = 1

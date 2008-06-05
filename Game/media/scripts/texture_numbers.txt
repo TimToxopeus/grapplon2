@@ -1,0 +1,29 @@
+[object]
+width = 28
+height = 28
+animations = green, red, blue, purple, white
+
+[red]
+file = "media/images/text_red.png"
+frames = 11
+speed = 1
+
+[green]
+file = "media/images/text_green.png"
+frames = 11
+speed = 1
+
+[blue]
+file = "media/images/text_blue.png"
+frames = 11
+speed = 1
+
+[purple]
+file = "media/images/text_purple.png"
+frames = 11
+speed = 1
+
+[white]
+file = "media/images/text_white.png"
+frames = 11
+speed = 1

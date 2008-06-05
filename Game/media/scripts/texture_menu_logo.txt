@@ -1,0 +1,9 @@
+[object]
+width = 746
+height = 143
+animations = idle
+
+[idle]
+file = "media/images/menu_logo.png"
+frames = 1
+speed = 1

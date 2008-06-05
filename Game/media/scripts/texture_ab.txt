@@ -1,0 +1,9 @@
+[object]
+width = 450
+height = 61
+animations = idle
+
+[idle]
+file = "media/images/ab.png"
+frames = 1
+speed = 1

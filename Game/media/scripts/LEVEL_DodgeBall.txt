@@ -1,0 +1,184 @@
+[universe]
+width = 1600
+height = 1000
+boundaryforce = 20000000
+initspawn1 = -800 500
+initspawn2 = 800 -500
+initspawn3 = 800 500
+initspawn4 = -800 -500
+
+[sun]
+name = wind_planet1
+mass = 100000
+image = wind_planet
+imageglow = windglow
+imageorbit = orbit_circle
+grav = -1000
+scale = 1.5
+radius = 140
+damagemult = 0.2
+pos = 0 0
+tempradius = 1
+
+[sun]
+name = wind_planet2
+mass = 100000
+image = wind_planet
+imageglow = windglow
+imageorbit = orbit_circle
+grav = -2000
+scale = 2
+radius = 140
+damagemult = 0.2
+pos = 0 -700
+tempradius = 1
+
+[sun]
+name = wind_planet3
+mass = 100000
+image = wind_planet
+imageglow = windglow
+imageorbit = orbit_circle
+grav = -2000
+scale = 2
+radius = 140
+damagemult = 0.2
+pos = 0 700
+tempradius = 1
+
+[sun]
+name = astroidPlanet1
+mass = 100000
+image = astroidPlanet
+imageorbit = orbit_circle
+grav = 10
+scale = 1.5
+radius = 140
+damagemult = 0.05
+pos = -1400 -800
+tempradius = 1
+
+[sun]
+name = astroidPlanet2
+mass = 100000
+image = astroidPlanet
+imageorbit = orbit_circle
+grav = 10
+scale = 1.5
+radius = 140
+damagemult = 0.05
+pos = -1400 800
+tempradius = 1
+
+[sun]
+name = astroidPlanet3
+mass = 100000
+image = astroidPlanet
+imageorbit = orbit_circle
+grav = 10
+scale = 1.5
+radius = 140
+damagemult = 0.05
+pos = 1400 -800
+tempradius = 1
+
+[sun]
+name = astroidPlanet4
+mass = 100000
+image = astroidPlanet
+imageorbit = orbit_circle
+grav = 10
+scale = 1.5
+radius = 140
+damagemult = 0.05
+pos = 1400 800
+tempradius = 1
+
+[asteroid]
+name = asteroid1-1
+orbit = astroidPlanet1 190 75
+mass = 40
+image = asteroid1
+grav = 0
+angle = 100
+rotation = 33
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = asteroid1-2
+orbit = astroidPlanet1 190 75
+mass = 40
+image = asteroid02
+grav = 0
+angle = 220
+rotation = 33
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = asteroid2-2
+orbit = astroidPlanet2 190 -75
+mass = 40
+image = asteroid02
+grav = 0
+angle = 220
+rotation = 33
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = asteroid2-3
+orbit = astroidPlanet2 190 -75
+mass = 40
+image = asteroid03
+grav = 0
+angle = 340
+rotation = 33
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = asteroid3-1
+orbit = astroidPlanet3 190 -75
+mass = 40
+image = asteroid1
+grav = 0
+angle = 100
+rotation = 33
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = asteroid3-2
+orbit = astroidPlanet3 190 -75
+mass = 40
+image = asteroid02
+grav = 0
+angle = 220
+rotation = 33
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = asteroid4-1
+orbit = astroidPlanet4 190 75
+mass = 40
+image = asteroid1
+grav = 0
+angle = 100
+rotation = 33
+radius = 50
+damagemult = 3.5
+
+
+[asteroid]
+name = asteroid4-3
+orbit = astroidPlanet4 190 75
+mass = 40
+image = asteroid03
+grav = 0
+angle = 340
+rotation = 33
+radius = 50
+damagemult = 3.5

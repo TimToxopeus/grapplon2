@@ -1,0 +1,9 @@
+[object]
+width = 10
+height = 10
+animations = idle
+
+[idle]
+file = "media/images/chain_ice.png"
+frames = 1
+speed = 1

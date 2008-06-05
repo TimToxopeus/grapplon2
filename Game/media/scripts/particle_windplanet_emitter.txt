@@ -1,0 +1,28 @@
+[emitter]
+direction = arc -60
+maxparticles = 100
+particles = large 50, medium 50
+lifespan = 0
+spawnrate = 1
+radius = 70
+
+[particle]
+name = "large"
+colour1 = 255 200 0
+lifespan = 1500
+size = 4
+behave = forward
+
+[particle]
+name = "medium"
+colour1 = 255 255 0
+lifespan = 1500
+size = 2
+behave = forward
+
+[behaviour]
+name = "forward"
+velocity = 20
+move = 160	
+
+

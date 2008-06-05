@@ -1,0 +1,9 @@
+[object]
+width = 1024
+height = 768
+animations = idle
+
+[idle]
+file = "media/images/splash01.png"
+frames = 1
+speed = 1
