@@ -2,12 +2,10 @@
 width = 2500
 height = 2500
 boundaryforce = 20000000
-initspawn1 = 1250 1250
-initspawn2 = -1250 -1250
-initspawn3 = -1250 1250
-initspawn4 = 1250 -1250
-respawnarea = -1500 -750 1300 1300 15
-respawnarea = -1300 -1300 -1000 -1000 15
+initspawn1 = 1500 450
+initspawn2 = -1500 -450
+initspawn3 = -1500 450
+initspawn4 = 1500 -450
 max_power_up = 3
 pu_freeze  = 10
 pu_speed  = 30
@@ -109,35 +107,35 @@ damagemult = 1.1
 
 [asteroid]
 name = asteroid7
-orbit = sin1 550 10
+orbit = sun1 520 50
 mass = 40
 image = asteroid1
 grav = 0
-angle = 50
-rotation = 33
+angle = 40
+rotation = 20
 radius = 50
 damagemult = 3.5
 
 [asteroid]
 name = asteroid8
-orbit = sin1 550 10
+orbit = sun1 520 50
 mass = 40
 image = asteroid1
 grav = 0
-angle = 170
-rotation = 33
+angle = 160
+rotation = 20
 radius = 50
 damagemult = 3.5
 
 [asteroid]
 name = asteroid9
-orbit = sin1 550 10
+orbit = sun1 520 50
 mass = 40
 image = asteroid1
 grav = 0
-angle = 50
-rotation = 33
-radius = 290
+angle = 280
+rotation = 20
+radius = 50
 damagemult = 3.5
 
 [ice]
@@ -199,35 +197,35 @@ damagemult = 1.1
 
 [asteroid]
 name = asteroid10
-orbit = sin1 550 10
+orbit = sun2 520 50
 mass = 40
 image = asteroid1
 grav = 0
-angle = 50
-rotation = 33
+angle = 40
+rotation = 20
 radius = 50
 damagemult = 3.5
 
 [asteroid]
 name = asteroid11
-orbit = sin1 550 10
+orbit = sun2 520 50
 mass = 40
 image = asteroid1
 grav = 0
-angle = 170
-rotation = 33
+angle = 160
+rotation = 20
 radius = 50
 damagemult = 3.5
 
 [asteroid]
 name = asteroid12
-orbit = sin1 550 10
+orbit = sun2 520 50
 mass = 40
 image = asteroid1
 grav = 0
-angle = 50
-rotation = 33
-radius = 290
+angle = 280
+rotation = 20
+radius = 50
 damagemult = 3.5
 
 [ice]
