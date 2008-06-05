@@ -11,6 +11,7 @@
 
 #include "ODEManager.h"
 #include "ResourceManager.h"
+#include "Sound.h"
 #include "AnimatedTexture.h"
 #include "Renderer.h"
 #include "GameSettings.h"
@@ -146,6 +147,10 @@ void CHook::Grasp()
 	m_pGrabbedObject->m_pOwner->SetMass(0.5f, false);				// Remove movement lag
 	m_pGrabbedObject->ToggleIgnore(m_pOwner->GetPhysicsData());		// Ignore colission with ship
 
+	CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/hook_attach.wav", RT_SOUND);
+	if ( pSound )
+		pSound->Play();
+
 	m_eHookState = SWINGING;
 }
 
@@ -162,12 +167,21 @@ void CHook::Eject()
 	Vector shipFor = m_pOwner->GetForwardVector() * 6000000.0f;
 	dBodyAddForce(m_oPhysicsData.body, shipFor[0], shipFor[1], 0.0f);
 
-	m_eHookState = HOMING;
+	CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/hook_throw.wav", RT_SOUND);
+	if ( pSound )
+		pSound->Play();
 
+	m_eHookState = HOMING;
 }
 
 void CHook::Retract()
 {
+	if ( m_eHookState != RETRACTING )
+	{
+		CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/hook_retract.wav", RT_SOUND);
+		if ( pSound )
+			pSound->Play();
+	}
 	m_eHookState = RETRACTING;
 
 	Vector shipPos = m_pOwner->GetPosition();
