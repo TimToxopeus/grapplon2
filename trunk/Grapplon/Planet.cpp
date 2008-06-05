@@ -113,7 +113,8 @@ void CPlanet::Update( float fTime )
 		Vector dir = Vector( cos(angle), sin(angle), 0 );
 		dir.Normalize();
 		dir *= m_fOrbitSpeed;
-		dBodySetLinearVel( m_oPhysicsData.body, dir[0], dir[1], 0 );
+		//dBodySetLinearVel( m_oPhysicsData.body, dir[0], dir[1], 0 );
+		SetLinVelocity( dir );
 	}
 
 	if ( m_pEmitter )

@@ -81,10 +81,12 @@ void CPlayerObject::SetPosition( Vector pos ){
 void inline CPlayerObject::ApplyForceFront()
 {
 	if(this->m_fPUSpeedTime > 0.001){
-		int mult = SETS->PU_SPEED_MULT;
-		dBodyAddForceAtRelPos(m_oPhysicsData.body, frontForce[0]*mult, frontForce[1]*mult, 0.0f, 0.0f, 0.0f, 0.0f);
+		float mult = (float)SETS->PU_SPEED_MULT;
+		//dBodyAddForceAtRelPos(m_oPhysicsData.body, frontForce[0]*mult, frontForce[1]*mult, 0.0f, 0.0f, 0.0f, 0.0f);
+		AddForce( frontForce * mult );
 	} else {
-		dBodyAddForceAtRelPos(m_oPhysicsData.body, frontForce[0], frontForce[1], 0.0f, 0.0f, 0.0f, 0.0f);
+		//dBodyAddForceAtRelPos(m_oPhysicsData.body, frontForce[0], frontForce[1], 0.0f, 0.0f, 0.0f, 0.0f);
+		AddForce( frontForce );
 	}
 }
 

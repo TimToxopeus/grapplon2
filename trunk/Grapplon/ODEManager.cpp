@@ -8,6 +8,7 @@
 #include "Hook.h"
 #include "Universe.h"
 #include "PowerUp.h"
+#include "Core.h"
 
 #include "ResourceManager.h"
 #include "Sound.h"
@@ -19,7 +20,23 @@
 
 CODEManager *CODEManager::m_pInstance = NULL;
 
-
+int ODEManagerThread(void *data)
+{
+	CCore *pCore = CCore::Instance();
+	CODEManager *pODE = CODEManager::Instance();
+	Uint32 time, lastUpdate;
+	time = lastUpdate = SDL_GetTicks();
+	while ( pCore->IsRunning() && pODE->ShouldThreadStop() == false )
+	{
+		time = SDL_GetTicks();
+		float timeSinceLastUpdate = (float)(time - lastUpdate) / 1000.0f;
+		pODE->ProcessBuffer();
+		pODE->Update(timeSinceLastUpdate);
+ 		SDL_Delay( 5 );
+		lastUpdate = time;
+	}
+	return 0;
+}
 
 void collideCallback (void *data, dGeomID o1, dGeomID o2)
 {
@@ -41,6 +58,10 @@ CODEManager::CODEManager()
 	m_oContactgroup = dJointGroupCreate(MAX_CONTACTS);
 	m_oJointgroup = dJointGroupCreate(MAX_HINGES);
 
+	m_pThread = NULL;
+	m_bForceThreadStop = false;
+	m_bBuffer = true;
+	m_iWritingToBuffer = 0;
 }
 
 CODEManager::~CODEManager()
@@ -484,4 +505,223 @@ bool CODEManager::HasRecentlyCollided( dBodyID b1, dBodyID b2, unsigned int curT
 		}
 	}
 	return false;
+}
+
+void CODEManager::StartEventThread()
+{
+	m_bForceThreadStop = false;
+	if ( m_pThread == NULL )
+		m_pThread = SDL_CreateThread( ODEManagerThread, NULL );
+}
+
+void CODEManager::StopEventThread()
+{
+	m_bForceThreadStop = true;
+	if ( m_pThread )
+	{
+		int status;
+		SDL_WaitThread( m_pThread, &status );
+		m_pThread = NULL;
+	}
+}
+
+void CODEManager::ProcessBuffer()
+{
+	m_bBuffer = !m_bBuffer;
+	if ( m_bBuffer )
+	{
+		while ( m_iWritingToBuffer == 2 ) {}
+//		for ( int i = m_vBuffer2.size() - 1; i>=0; i-- )
+		for ( unsigned int i = 0; i<m_vBuffer2.size(); i++ )
+		{
+			HandleEvent( m_vBuffer2[i] );
+			//m_vBuffer2.erase( m_vBuffer2.begin() + i );
+		}
+		m_vBuffer2.clear();
+	}
+	else
+	{
+		while ( m_iWritingToBuffer == 1 ) {}
+//		for ( int i = m_vBuffer1.size() - 1; i>=0; i-- )
+		for ( unsigned int i = 0; i<m_vBuffer1.size(); i++ )
+		{
+			HandleEvent( m_vBuffer1[i] );
+//			m_vBuffer1.erase( m_vBuffer1.begin() + i );
+		}
+		m_vBuffer1.clear();
+	}
+}
+
+void CODEManager::HandleEvent( ODEEvent ode_event )
+{
+	if ( ode_event.type == 1 )
+		dBodyAddForce( ode_event.body1, ode_event.force[0], ode_event.force[1], ode_event.force[2] );
+	if ( ode_event.type == 2 )
+		dBodySetForce( ode_event.body1, ode_event.force[0], ode_event.force[1], ode_event.force[2] );
+	if ( ode_event.type == 3 )
+		dBodySetPosition( ode_event.body1, ode_event.pos[0], ode_event.pos[1], ode_event.pos[2] );
+	if ( ode_event.type == 4 )
+		dJointAttach( ode_event.joint, ode_event.body1, ode_event.body2 );
+	if ( ode_event.type == 5 )
+		dJointSetHingeAnchor( ode_event.joint, ode_event.pos[0], ode_event.pos[1], ode_event.pos[2] );
+	if ( ode_event.type == 6 )
+		dBodySetLinearVel( ode_event.body1, ode_event.force[0], ode_event.force[1], ode_event.force[2] );
+	if ( ode_event.type == 7 )
+		dBodySetAngularVel( ode_event.body1, ode_event.force[0], ode_event.force[1], ode_event.force[2] );
+	if ( ode_event.type == 8 )
+		dBodySetMass( ode_event.body1, &ode_event.mass );
+}
+
+void CODEManager::AddToBuffer( ODEEvent ode_event )
+{
+	if ( m_bBuffer )
+	{
+		m_iWritingToBuffer = 1;
+		//m_vBuffer1.insert( m_vBuffer1.begin(), ode_event );
+		m_vBuffer1.push_back( ode_event );
+	}
+	else
+	{
+		m_iWritingToBuffer = 2;
+//		m_vBuffer2.insert( m_vBuffer2.begin(), ode_event );
+		m_vBuffer2.push_back( ode_event );
+	}
+	m_iWritingToBuffer = 0;
+}
+
+void CODEManager::BodyAddForce(dBodyID body, Vector force )
+{
+	if ( m_pThread )
+	{
+		ODEEvent ode_event;
+		ode_event.type = 1;
+		ode_event.body1 = body;
+		ode_event.force = force;
+
+		AddToBuffer( ode_event );
+	}
+	else
+	{
+		dBodyAddForce( body, force[0], force[1], force[2] );
+	}
+}
+
+void CODEManager::BodySetForce(dBodyID body, Vector force )
+{
+	if ( m_pThread )
+	{
+		ODEEvent ode_event;
+		ode_event.type = 2;
+		ode_event.body1 = body;
+		ode_event.force = force;
+
+		AddToBuffer( ode_event );
+	}
+	else
+	{
+		dBodySetForce( body, force[0], force[1], force[2] );
+	}
+}
+
+void CODEManager::BodySetPosition( dBodyID body, Vector position )
+{
+	if ( m_pThread )
+	{
+		ODEEvent ode_event;
+		ode_event.type = 3;
+		ode_event.body1 = body;
+		ode_event.pos = position;
+
+		AddToBuffer( ode_event );
+	}
+	else
+	{
+		dBodySetPosition( body, position[0], position[1], position[2] );
+	}
+}
+
+void CODEManager::JointAttach( dJointID joint, dBodyID body1, dBodyID body2 )
+{
+	if ( m_pThread )
+	{
+		ODEEvent ode_event;
+		ode_event.type = 4;
+		ode_event.joint = joint;
+		ode_event.body1 = body1;
+		ode_event.body2 = body2;
+
+		AddToBuffer( ode_event );
+	}
+	else
+	{
+		dJointAttach( joint, body1, body2 );
+	}
+}
+
+void CODEManager::JointSetHingeAnchor( dJointID joint, Vector pos )
+{
+	if ( m_pThread )
+	{
+		ODEEvent ode_event;
+		ode_event.type = 5;
+		ode_event.joint = joint;
+		ode_event.pos = pos;
+
+		AddToBuffer( ode_event );
+	}
+	else
+	{
+		dJointSetHingeAnchor( joint, pos[0], pos[1], pos[2] );
+	}
+}
+
+void CODEManager::BodySetLinVel( dBodyID body, Vector velocity )
+{
+	if ( m_pThread )
+	{
+		ODEEvent ode_event;
+		ode_event.type = 6;
+		ode_event.body1 = body;
+		ode_event.force = velocity;
+
+		AddToBuffer( ode_event );
+	}
+	else
+	{
+		dBodySetLinearVel( body, velocity[0], velocity[1], velocity[2] );
+	}
+}
+
+void CODEManager::BodySetAngVel( dBodyID body, Vector velocity )
+{
+	if ( m_pThread )
+	{
+		ODEEvent ode_event;
+		ode_event.type = 7;
+		ode_event.body1 = body;
+		ode_event.force = velocity;
+
+		AddToBuffer( ode_event );
+	}
+	else
+	{
+		dBodySetAngularVel( body, velocity[0], velocity[1], velocity[2] );
+	}
+}
+
+void CODEManager::BodySetMass( dBodyID body, dMass mass )
+{
+	if ( m_pThread )
+	{
+		ODEEvent ode_event;
+		ode_event.type = 8;
+		ode_event.body1 = body;
+		ode_event.mass = mass;
+
+		AddToBuffer( ode_event );
+	}
+	else
+	{
+		dBodySetMass( body, &mass );
+	}
 }
