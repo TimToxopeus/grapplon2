@@ -2,10 +2,10 @@
 width = 3400
 height = 3000
 boundaryforce = 20000000
-initspawn1 = 1400 200
-initspawn2 = -1400 200
-initspawn3 = -1400 -200
-initspawn4 = 1400 -200
+initspawn1 = 1900 200
+initspawn2 = -1900 200
+initspawn3 = -1900 -200
+initspawn4 = 1900 -200
 max_power_up = 3
 pu_freeze  = 20
 pu_speed  = 35
@@ -152,7 +152,7 @@ radius = 50
 damagemult = 3.5
 
 [asteroid]
-name = asteroid1
+name = asteroid2
 orbit = sun 3200 100
 mass = 40
 image = asteroid02
@@ -163,7 +163,7 @@ radius = 50
 damagemult = 3.5
 
 [asteroid]
-name = asteroid1
+name = asteroid3
 orbit = sun 3200 100
 mass = 40
 image = asteroid02
@@ -174,7 +174,7 @@ radius = 50
 damagemult = 3.5
 
 [asteroid]
-name = asteroid1
+name = asteroid4
 orbit = sun 3200 100
 mass = 40
 image = asteroid02

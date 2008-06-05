@@ -1,0 +1,222 @@
+[universe]
+width = 3400
+height = 2500
+boundaryforce = 20000000
+initspawn1 = 2200 200
+initspawn2 = -2200 200
+initspawn3 = -2200 -200
+initspawn4 = 2200 -200
+max_power_up = 3
+pu_freeze  = 20
+pu_speed  = 35
+pu_health  = 20
+pu_gelly = 15
+pu_shield = 10
+
+[sun]
+name = sun
+mass = 1000000
+image = sun
+imageglow = sun_glow
+grav = 300
+radius = 340
+tempradius = 575
+pos = 900 0
+scale = 2.0
+emitter = "media/scripts/particle_fire_emitter.txt", far, 0, 0
+damagemult = 1.1
+
+[sun]
+name = sun2
+mass = 1000000
+image = sun
+imageglow = sun_glow
+grav = 300
+radius = 340
+tempradius = 575
+pos = -900 0
+scale = 2.0
+emitter = "media/scripts/particle_fire_emitter.txt", far, 0, 0
+damagemult = 1.1
+
+[ordinary]
+name = wind_planet
+orbit = sun 900 100
+mass = 350000
+image = wind_planet
+imageglow = windglow
+imageorbit = orbit_circle
+grav = 100
+angle = 0
+scale = 1.5
+radius = 140
+damagemult = 0.2
+
+[ordinary]
+name = wind_planet2
+orbit = sun 900 100
+mass = 350000
+image = wind_planet
+imageglow = windglow
+imageorbit = orbit_circle
+grav = 100
+angle = 180
+scale = 1.5
+radius = 140
+damagemult = 0.2
+
+[ordinary]
+name = wind_planet3
+orbit = sun2 900 -100
+mass = 350000
+image = wind_planet
+imageglow = windglow
+imageorbit = orbit_circle
+grav = 100
+angle = 270
+scale = 1.5
+radius = 140
+damagemult = 0.2
+
+[ordinary]
+name = wind_planet4
+orbit = sun2 900 -100
+mass = 350000
+image = wind_planet
+imageglow = windglow
+imageorbit = orbit_circle
+grav = 100
+angle = 90
+scale = 1.5
+radius = 140
+damagemult = 0.2
+
+[asteroid]
+name = asteroid1
+orbit = sun 600 100
+mass = 40
+image = asteroid02
+grav = 0
+angle = 180
+rotation = 5
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = asteroid2
+orbit = sun 600 100
+mass = 40
+image = asteroid02
+grav = 0
+angle = 0
+rotation = 5
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = asteroid3
+orbit = sun2 600 -100
+mass = 40
+image = asteroid02
+grav = 0
+angle = 90
+rotation = 5
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = asteroid4
+orbit = sun2 600 -100
+mass = 40
+image = asteroid02
+grav = 0
+angle = 270
+rotation = 5
+radius = 50
+damagemult = 3.5
+
+[ice]
+name = ice_planet1
+pos = 0 -1800
+mass = 300000
+image = ice_sun
+imageglow = ice_sun_glow
+imageorbit = orbit_circle
+grav = 100
+angle = 270
+scale = 2
+radius = 245
+tempradius = 320
+emitter = "media/scripts/particle_ice_emitter.txt", far, 0, 0
+damagemult = 0.1
+
+[ice]
+name = ice_planet2
+pos = 0 1800
+mass = 300000
+image = ice_sun
+imageglow = ice_sun_glow
+imageorbit = orbit_circle
+grav = 100
+angle = 270
+scale = 2
+radius = 245
+tempradius = 320
+emitter = "media/scripts/particle_ice_emitter.txt", far, 0, 0
+damagemult = 0.1
+
+[sun]
+name = black_hole1
+mass = 1000000
+pos = 3000 -1800
+image = black_hole
+imageglow = black_hole_glow
+grav = 500
+angle = 80
+scale = 2
+radius = 10
+damagemult = 100
+rotation = 40
+emitter = "media/scripts/particle_black_emitter.txt", far, 0, 0
+
+[sun]
+name = black_hole2
+mass = 1000000
+pos = -3000 -1800
+image = black_hole
+imageglow = black_hole_glow
+grav = 500
+angle = 80
+scale = 2
+radius = 10
+damagemult = 100
+rotation = 40
+emitter = "media/scripts/particle_black_emitter.txt", far, 0, 0
+
+[sun]
+name = black_hole3
+mass = 1000000
+pos = 3000 1800
+image = black_hole
+imageglow = black_hole_glow
+grav = 500
+angle = 80
+scale = 2
+radius = 10
+damagemult = 100
+rotation = 40
+emitter = "media/scripts/particle_black_emitter.txt", far, 0, 0
+
+[sun]
+name = black_hole4
+mass = 1000000
+pos = -3000 -1800
+image = black_hole
+imageglow = black_hole_glow
+grav = 500
+angle = 80
+scale = 2
+radius = 10
+damagemult = 100
+rotation = 40
+emitter = "media/scripts/particle_black_emitter.txt", far, 0, 0
