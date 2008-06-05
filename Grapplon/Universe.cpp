@@ -258,6 +258,12 @@ std::string CUniverse::ReadLine()
 
 void CUniverse::Update( float fTime )
 {
+	m_fPowerUpSpawnTimeLeft -= fTime;
+	if ( m_fPowerUpSpawnTimeLeft <= 0.0f )
+	{
+		PlacePowerUps();
+		m_fPowerUpSpawnTimeLeft = 2.0f;
+	}
 }
 
 void CUniverse::RemovePowerUp(CPowerUp* powerup)
@@ -280,9 +286,6 @@ void CUniverse::RemovePowerUp(CPowerUp* powerup)
 	m_lPlacedPowerUps.erase(delIt);
 	m_lIdlePowerUps.push_back(curPU);
 	totalChance += curPU.chance;
-
-	PlacePowerUps();
-
 }
 
 

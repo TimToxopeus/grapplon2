@@ -486,6 +486,10 @@ void CPlayerObject::CollideWith( CBaseObject *pOther)
 			{
 				mult = SETS->FIRE_DAMAGE_MULT;
 				m_fPUJellyTime = 0;
+
+				CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/combust_object.wav", RT_SOUND);
+				if ( pSound )
+					pSound->Play();
 			}
 			else if(asteroid->m_eAsteroidState == FROZEN)
 			{

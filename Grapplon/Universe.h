@@ -47,6 +47,8 @@ private:
 	std::string ReadLine();
 	void PlacePowerUps();
 
+	float m_fPowerUpSpawnTimeLeft;
+
 public:
 	CUniverse();
 	~CUniverse();
