@@ -125,15 +125,15 @@ void CODEManager::Update( float fTime )
 {
 	if ( fTime == 0 )
 		return;
-	float nbSecondsByStep = 0.005f;
+	float nbSecondsByStep = SETS->PH_STEP_TIME;
 
 	// Find the corresponding number of steps that must be taken 
 	int nbStepsToPerform = static_cast<int>(fTime/nbSecondsByStep); 
 	
 	// Make these steps to advance world time 
-//	for (int i = 0; i < nbStepsToPerform; i++)
-//	{
-		ApplyGravity(fTime);//nbSecondsByStep);
+	for (int i = 0; i < nbStepsToPerform; i++)
+	{
+		ApplyGravity(nbSecondsByStep);//nbSecondsByStep);
 		ApplyMotorForceAndDrag();
 
 		m_iContacts = 0;
@@ -142,12 +142,12 @@ void CODEManager::Update( float fTime )
 		HandleCollisions();
 
 		// Step world
-		dWorldQuickStep(m_oWorld, fTime);//nbSecondsByStep); 
+		dWorldQuickStep(m_oWorld, nbSecondsByStep);//nbSecondsByStep); 
 		//dWorldStepFast1(m_oWorld, nbSecondsByStep / 10.0f, nbStepsToPerform * 10.0f); 
 		
 		// Remove all temporary collision joints now that the world has been stepped 
 		dJointGroupEmpty(m_oContactgroup);
-//	}
+	}
 
 	unsigned int time = SDL_GetTicks();
 	unsigned int i = m_vCollisions.size();
