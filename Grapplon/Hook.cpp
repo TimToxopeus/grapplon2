@@ -163,7 +163,7 @@ void CHook::Eject()
 	CODEManager::Instance()->JointSetHingeAnchor(m_pLastChainJoint, hookPos);
 
 	// Shoot the hook forward
-	Vector shipFor = m_pOwner->GetForwardVector() * 600000.0f;
+	Vector shipFor = m_pOwner->GetForwardVector() * SETS->EJECT_FORCE;
 //	CODEManager::Instance()->BodyAddForce( m_oPhysicsData.body, shipFor );
 	dBodyAddForce(m_oPhysicsData.body, shipFor[0], shipFor[1], 0.0f);
 

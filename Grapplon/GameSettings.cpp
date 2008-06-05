@@ -47,6 +47,8 @@ CGameSettings::CGameSettings()
 	W_BOUNCE_TOGGLE_TIME	= -1;
 	PLAYERS					= -1;
 	DAMAGE_MULT				= -1;
+	PLAYER_AIR_DRAG			= -1;
+	PLAYER_MASS				= -1;
 
 	BUFFERS					= 2;
 	BUFFER_SIZE				= 49600;
@@ -64,6 +66,9 @@ CGameSettings::CGameSettings()
 	PU_SPEED_MULT			= -1;
 	PU_JELLY_TIME			= -1;
 	PU_SHIELD_TIME			= -1;
+	PH_STEP_TIME			= -1;
+
+	PH_NR_IT				= -1;
 
 	SCORE_STEAL				= 1000;
 
@@ -132,7 +137,12 @@ bool CGameSettings::Init()
 		else if ( tokens[0] == "PUSpeedMult" )			{ PU_SPEED_MULT			=		 atoi( tokens[2].c_str() );	}
 		else if ( tokens[0] == "PUJellyTime" )			{ PU_JELLY_TIME			=		 atoi( tokens[2].c_str() );	}
 		else if ( tokens[0] == "PUShieldTime" )			{ PU_SHIELD_TIME		=		 atoi( tokens[2].c_str() );	}
+		else if ( tokens[0] == "PhysicsStepTime" )		{ PH_STEP_TIME			= (float)atof( tokens[2].c_str() );	}
+		else if ( tokens[0] == "PlayerMass" )			{ PLAYER_MASS			=		 atoi( tokens[2].c_str() );	}
+		else if ( tokens[0] == "PlayerAirDrag" )		{ PLAYER_AIR_DRAG		=		 atoi( tokens[2].c_str() );	}
+		else if ( tokens[0] == "PhysicsIterations" )	{ PH_NR_IT				=		 atoi( tokens[2].c_str() );	}
 
+		
 		in = ReadLine();
 	}
 
