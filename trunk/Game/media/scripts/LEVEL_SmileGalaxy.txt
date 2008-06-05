@@ -63,10 +63,10 @@ imageglow = ice_planet_glow
 imageorbit = orbit_circle
 grav = 100
 angle = 90
-scale = 1
-radius = 125
-tempradius = 250
-emitter = "media/scripts/particle_iceplanet1_emitter.txt", far, 0, 0
+scale = 1.2
+radius = 145
+tempradius = 320
+emitter = "media/scripts/particle_iceplanet2_emitter.txt", far, 0, 0
 damagemult = 0.1
 
 [sun]
@@ -78,10 +78,10 @@ imageglow = ice_planet_glow
 imageorbit = orbit_circle
 grav = 100
 angle = 90
-scale = 1
-radius = 125
-tempradius = 250
-emitter = "media/scripts/particle_iceplanet1_emitter.txt", far, 0, 0
+scale = 1.2
+radius = 145
+tempradius = 320
+emitter = "media/scripts/particle_iceplanet2_emitter.txt", far, 0, 0
 damagemult = 0.1
 
 [sun]
@@ -93,10 +93,10 @@ imageglow = ice_planet_glow
 imageorbit = orbit_circle
 grav = 100
 angle = 90
-scale = 1
-radius = 125
-tempradius = 250
-emitter = "media/scripts/particle_iceplanet1_emitter.txt", far, 0, 0
+scale = 1.2
+radius = 145
+tempradius = 320
+emitter = "media/scripts/particle_iceplanet2_emitter.txt", far, 0, 0
 damagemult = 0.1
 
 [sun]
@@ -108,10 +108,10 @@ imageglow = ice_planet_glow
 imageorbit = orbit_circle
 grav = 100
 angle = 90
-scale = 1
-radius = 125
-tempradius = 250
-emitter = "media/scripts/particle_iceplanet1_emitter.txt", far, 0, 0
+scale = 1.2
+radius = 145
+tempradius = 320
+emitter = "media/scripts/particle_iceplanet2_emitter.txt", far, 0, 0
 damagemult = 0.1
 
 [sun]
@@ -123,15 +123,15 @@ imageglow = ice_planet_glow
 imageorbit = orbit_circle
 grav = 100
 angle = 90
-scale = 1
-radius = 125
-tempradius = 250
-emitter = "media/scripts/particle_iceplanet1_emitter.txt", far, 0, 0
+scale = 1.2
+radius = 145
+tempradius = 320
+emitter = "media/scripts/particle_iceplanet2_emitter.txt", far, 0, 0
 damagemult = 0.1
 
 [asteroid]
 name = asteroid1
-pos = -2500 -100
+orbit = sun 3200 100
 mass = 40
 image = asteroid02
 grav = 0
@@ -141,56 +141,45 @@ radius = 50
 damagemult = 3.5
 
 [asteroid]
-name = asteroid2
-pos = 2500 -100
+name = asteroid1
+orbit = sun 3200 100
 mass = 40
 image = asteroid02
 grav = 0
-angle = 50
+angle = 0
 rotation = 15
 radius = 50
 damagemult = 3.5
 
 [asteroid]
-name = asteroid3
-pos = -2500 400
+name = asteroid1
+orbit = sun 3200 100
 mass = 40
 image = asteroid02
 grav = 0
-angle = 50
-rotation = 15
+angle = 170
+rotation = 35
 radius = 50
 damagemult = 3.5
 
 [asteroid]
-name = asteroid4
-pos = 2500 400
+name = asteroid1
+orbit = sun 3200 100
 mass = 40
 image = asteroid02
 grav = 0
-angle = 50
-rotation = 15
+angle = 250
+rotation = 5
 radius = 50
 damagemult = 3.5
 
 [asteroid]
-name = asteroid5
-pos = 350 -2000
+name = asteroid1
+orbit = sun 3200 100
 mass = 40
 image = asteroid02
 grav = 0
-angle = 50
-rotation = 15
-radius = 50
-damagemult = 3.5
-
-[asteroid]
-name = asteroid5
-pos = -350 -2000
-mass = 40
-image = asteroid02
-grav = 0
-angle = 50
-rotation = 15
+angle = 330
+rotation = 10
 radius = 50
 damagemult = 3.5
