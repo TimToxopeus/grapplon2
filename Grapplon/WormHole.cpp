@@ -53,10 +53,12 @@ void CWormHole::Update(float fTime ){
 			float angle = (float) (rand() % 360);
 			throwVector = Vector(1.0f, 0.0f, 0.0f).Rotate2(angle) * m_pExitForce[1];
 			m_pToThrow->SetLinVelocity(nullVec);
-			dBodyAddForce(m_pToThrow->GetBody(), throwVector[0] * m_pToThrow->GetMass(), throwVector[1] * m_pToThrow->GetMass(), 0.0f);
+			//dBodyAddForce(m_pToThrow->GetBody(), throwVector[0] * m_pToThrow->GetMass(), throwVector[1] * m_pToThrow->GetMass(), 0.0f);
+			CODEManager::Instance()->BodyAddForce( m_pToThrow->GetBody(), throwVector * m_pToThrow->GetMass() );
 		} else if (m_pExitForce[0] != 0 || m_pExitForce[1] != 0) {		// Vector is fixed
 			m_pToThrow->SetLinVelocity(nullVec);
-			dBodyAddForce(m_pToThrow->GetBody(), m_pExitForce[0] * m_pToThrow->GetMass(), m_pExitForce[1] * m_pToThrow->GetMass(), 0.0f);
+			//dBodyAddForce(m_pToThrow->GetBody(), m_pExitForce[0] * m_pToThrow->GetMass(), m_pExitForce[1] * m_pToThrow->GetMass(), 0.0f);
+			CODEManager::Instance()->BodyAddForce( m_pToThrow->GetBody(), m_pExitForce * m_pToThrow->GetMass() );
 		}
 
 		thrownObjects[m_pToThrow] = time(NULL);

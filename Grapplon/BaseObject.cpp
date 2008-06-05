@@ -63,12 +63,14 @@ void CBaseObject::Update( float fTime )
 
 void CBaseObject::SetPosition( float fX, float fY )
 {
-	dBodySetPosition(m_oPhysicsData.body, fX, fY, 0.0f);
+	//dBodySetPosition(m_oPhysicsData.body, fX, fY, 0.0f);
+	CODEManager::Instance()->BodySetPosition( m_oPhysicsData.body, Vector(fX, fY, 0) );
 }
 
 void CBaseObject::SetPosition( Vector pos )
 {
-	dBodySetPosition(m_oPhysicsData.body, pos[0], pos[1], 0.0f);
+//	dBodySetPosition(m_oPhysicsData.body, pos[0], pos[1], 0.0f);
+	CODEManager::Instance()->BodySetPosition( m_oPhysicsData.body, pos );
 }
 
 Vector CBaseObject::GetPosition()
@@ -100,8 +102,9 @@ void CBaseObject::SetMass( float fMass, bool perminent )
 {
 	dMass mass; 
 	dMassSetBox(&mass, 1, 1, 1, 1); 
-	dMassAdjust(&mass, fMass); 
-	dBodySetMass(m_oPhysicsData.body, &mass);
+	dMassAdjust(&mass, fMass);
+//	dBodySetMass(m_oPhysicsData.body, &mass);
+	CODEManager::Instance()->BodySetMass( m_oPhysicsData.body, mass );
 	
 	if(perminent)
 		m_oPhysicsData.m_fMass = fMass;
@@ -119,7 +122,8 @@ float CBaseObject::GetMass()
 
 void CBaseObject::SetLinVelocity( Vector& v )
 {
-	dBodySetLinearVel(m_oPhysicsData.body, v[0], v[1], v[2]);
+//	dBodySetLinearVel(m_oPhysicsData.body, v[0], v[1], v[2]);
+	CODEManager::Instance()->BodySetLinVel( m_oPhysicsData.body, v );
 }
 
 Vector CBaseObject::GetLinVelocity()
@@ -129,17 +133,20 @@ Vector CBaseObject::GetLinVelocity()
 
 void CBaseObject::SetAngVelocity( Vector& v)
 {
-	dBodySetAngularVel(m_oPhysicsData.body, v[0], v[1], v[2]);
+//	dBodySetAngularVel(m_oPhysicsData.body, v[0], v[1], v[2]);
+	CODEManager::Instance()->BodySetAngVel( m_oPhysicsData.body, v );
 }
 
 void CBaseObject::AddForce( Vector& f )
 {
-	dBodyAddForce(m_oPhysicsData.body, f[0], f[1], 0.0f);
+//	dBodyAddForce(m_oPhysicsData.body, f[0], f[1], 0.0f);
+	CODEManager::Instance()->BodyAddForce( m_oPhysicsData.body, f );
 }
 
 void inline CBaseObject::ApplyForceFront()
 {
-	dBodyAddForceAtRelPos(m_oPhysicsData.body, frontForce[0], frontForce[1], 0.0f, 0.0f, 0.0f, 0.0f);
+//	dBodyAddForceAtRelPos(m_oPhysicsData.body, frontForce[0], frontForce[1], 0.0f, 0.0f, 0.0f, 0.0f);
+	CODEManager::Instance()->BodyAddForce( m_oPhysicsData.body, frontForce );
 }
 
 
@@ -150,7 +157,8 @@ void CBaseObject::SetForceFront( Vector& f )
 
 void CBaseObject::SetForce( Vector f )
 {
-	dBodySetForce(m_oPhysicsData.body, f[0], f[1], 0.0f);
+//	dBodySetForce(m_oPhysicsData.body, f[0], f[1], 0.0f);
+	CODEManager::Instance()->BodySetForce( m_oPhysicsData.body, f );
 }
 
 Vector CBaseObject::GetForwardVector()

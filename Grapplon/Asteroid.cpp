@@ -97,8 +97,10 @@ void CAsteroid::ReposAtOrbit()
 	SetPosition( pos );
 
 	// Create joint
-	dJointAttach( orbitJoint, m_pOrbitOwner->GetBody(), this->GetBody() );
-	dJointSetHingeAnchor(orbitJoint, hingePos[0], hingePos[1], 0.0f);
+	//dJointAttach( orbitJoint, m_pOrbitOwner->GetBody(), this->GetBody() );
+	CODEManager::Instance()->JointAttach( orbitJoint, m_pOrbitOwner->GetBody(), this->GetBody() );
+//	dJointSetHingeAnchor(orbitJoint, hingePos[0], hingePos[1], 0.0f);
+	CODEManager::Instance()->JointSetHingeAnchor(orbitJoint, hingePos);
 	m_bIsInOrbit = true;
 
 }

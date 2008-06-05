@@ -62,23 +62,27 @@ CHook::CHook( CPlayerObject *pOwner )
 		// New chainlink
 		curLink = new CChainLink(pOwner);
 		chainLinks.push_back(curLink);
-		dBodySetPosition( curLink->GetBody(), centerPos[0], centerPos[1], centerPos[2] );
+		//dBodySetPosition( curLink->GetBody(), centerPos[0], centerPos[1], centerPos[2] );
+		CODEManager::Instance()->BodySetPosition( curLink->GetBody(), centerPos );
 
 		// Joint with previous link / ship
 		curJointID = ode->createHingeJoint("A LinkJoint");
 		chainJoints.push_back(curJointID);
-		dJointAttach(curJointID, prevBodyID, curLink->GetBody());
+		//dJointAttach(curJointID, prevBodyID, curLink->GetBody());
+		CODEManager::Instance()->JointAttach(curJointID, prevBodyID, curLink->GetBody());
 		anchorPoint = (i % 2 == 0 ? shipPosition : shipPosition + Vector(SETS->LINK_LENGTH, 0.0f, 0.0f));
-		dJointSetHingeAnchor(curJointID, anchorPoint[0], anchorPoint[1], anchorPoint[2]);
+		//dJointSetHingeAnchor(curJointID, anchorPoint[0], anchorPoint[1], anchorPoint[2]);
+		CODEManager::Instance()->JointSetHingeAnchor(curJointID, anchorPoint);
 
 		prevBodyID = curLink->GetBody();		// Current chain will be joint in the next iteration
 	}
 
 	// Atach Ship to last ChainLink
 	chainJoints.push_back(curJointID);
-	dJointAttach(m_pLastChainJoint, prevBodyID, this->m_pOwner->GetBody());
-	dJointSetHingeAnchor(m_pLastChainJoint, shipPosition[0] , shipPosition[1], shipPosition[2]);
-
+	//dJointAttach(m_pLastChainJoint, prevBodyID, this->m_pOwner->GetBody());
+	CODEManager::Instance()->JointAttach(m_pLastChainJoint, prevBodyID, this->m_pOwner->GetBody());
+	//dJointSetHingeAnchor(m_pLastChainJoint, shipPosition[0] , shipPosition[1], shipPosition[2]);
+	CODEManager::Instance()->JointSetHingeAnchor(m_pLastChainJoint, shipPosition);
 }
 
 CHook::~CHook()
@@ -114,7 +118,8 @@ void CHook::Grasp()
 	if ( m_pGrabbedObject->m_pOwner->getType() == ASTEROID )
 	{
 		CAsteroid* asteroid = dynamic_cast<CAsteroid*>(m_pGrabbedObject->m_pOwner);
-		dJointAttach(asteroid->orbitJoint, NULL, NULL);
+		//dJointAttach(asteroid->orbitJoint, NULL, NULL);
+		CODEManager::Instance()->JointAttach(asteroid->orbitJoint, NULL, NULL);
 		asteroid->m_bIsInOrbit = false;
 		asteroid->m_bIsGrabable = false;
 		if(asteroid->m_fThrowTime - time(NULL) < 4 && asteroid->m_pThrowingPlayer != m_pOwner)
@@ -143,7 +148,8 @@ void CHook::Grasp()
 	m_pGrabbedObject->m_pOwner->SetForce(nullVec);
 
 	// Create grab joint
-	dJointAttach( m_oHookGrabJoint, m_oPhysicsData.body, m_pGrabbedObject->body );
+	//dJointAttach( m_oHookGrabJoint, m_oPhysicsData.body, m_pGrabbedObject->body );
+	CODEManager::Instance()->JointAttach( m_oHookGrabJoint, m_oPhysicsData.body, m_pGrabbedObject->body );
 	m_pGrabbedObject->m_pOwner->SetMass(0.5f, false);				// Remove movement lag
 	m_pGrabbedObject->ToggleIgnore(m_pOwner->GetPhysicsData());		// Ignore colission with ship
 
@@ -160,12 +166,15 @@ void CHook::Eject()
 	Vector hookPos = GetPosition();
 
 	// Attach last chain to the hook
-	dJointAttach(m_pLastChainJoint, chainLinks[SETS->LINK_AMOUNT * 2 - 1]->GetBody(), m_oPhysicsData.body);
-	dJointSetHingeAnchor(m_pLastChainJoint, hookPos[0] , hookPos[1], hookPos[2]);
+	//dJointAttach(m_pLastChainJoint, chainLinks[SETS->LINK_AMOUNT * 2 - 1]->GetBody(), m_oPhysicsData.body);
+	CODEManager::Instance()->JointAttach(m_pLastChainJoint, chainLinks[SETS->LINK_AMOUNT * 2 - 1]->GetBody(), m_oPhysicsData.body);
+	//dJointSetHingeAnchor(m_pLastChainJoint, hookPos[0] , hookPos[1], hookPos[2]);
+	CODEManager::Instance()->JointSetHingeAnchor(m_pLastChainJoint, hookPos);
 
 	// Shoot the hook forward
 	Vector shipFor = m_pOwner->GetForwardVector() * 6000000.0f;
-	dBodyAddForce(m_oPhysicsData.body, shipFor[0], shipFor[1], 0.0f);
+//	dBodyAddForce(m_oPhysicsData.body, shipFor[0], shipFor[1], 0.0f);
+	AddForce( shipFor );
 
 	CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/hook_throw.wav", RT_SOUND);
 	if ( pSound )
@@ -190,7 +199,8 @@ void CHook::Retract()
 
 	if(diff.Length() > 25.0f){
 		Vector change = diff * -10000.0f;
-		dBodyAddForce(m_oPhysicsData.body, change[0], change[1], 0.0f);
+		//dBodyAddForce(m_oPhysicsData.body, change[0], change[1], 0.0f);
+		AddForce( change );
 	} else {
 		Vector nullVec;
 
@@ -201,19 +211,24 @@ void CHook::Retract()
 		lastLink->SetLinVelocity(nullVec);
 		m_oPhysicsData.m_pOwner->SetLinVelocity(nullVec);
 		m_oPhysicsData.m_pOwner->SetAngVelocity(nullVec);
-		dJointAttach(m_pLastChainJoint, lastLink->GetBody(), m_pOwner->GetBody());
-		dJointSetHingeAnchor(m_pLastChainJoint, shipPos[0] , shipPos[1], 0.0f);
+		//dJointAttach(m_pLastChainJoint, lastLink->GetBody(), m_pOwner->GetBody());
+		CODEManager::Instance()->JointAttach(m_pLastChainJoint, lastLink->GetBody(), m_pOwner->GetBody());
+		//dJointSetHingeAnchor(m_pLastChainJoint, shipPos[0] , shipPos[1], 0.0f);
+		CODEManager::Instance()->JointSetHingeAnchor(m_pLastChainJoint, shipPos);
 
 		if(m_bIsRadialCorrected){
 
 			// Detach middle chainlink from ship
-			dJointAttach(m_oMiddleChainJoint, NULL, NULL);
+			//dJointAttach(m_oMiddleChainJoint, NULL, NULL);
+			CODEManager::Instance()->JointAttach(m_oMiddleChainJoint, NULL, NULL);
 
 			// Attach middle chainlink to next chainlink
 			chainLinks[SETS->LINK_GRASP_CON - 1]->SetPosition( shipPos + Vector(SETS->LINK_LENGTH / 2, 0.0f, 0.0f) );
 			chainLinks[SETS->LINK_GRASP_CON]->SetPosition( shipPos + Vector(SETS->LINK_LENGTH / 2, 0.0f, 0.0f) );
-			dJointAttach(chainJoints[SETS->LINK_GRASP_CON], chainLinks[SETS->LINK_GRASP_CON - 1]->GetBody(), chainLinks[SETS->LINK_GRASP_CON]->GetBody());
-			dJointSetHingeAnchor(chainJoints[SETS->LINK_GRASP_CON], shipPos[0], shipPos[1], 0.0f); 
+			//dJointAttach(chainJoints[SETS->LINK_GRASP_CON], chainLinks[SETS->LINK_GRASP_CON - 1]->GetBody(), chainLinks[SETS->LINK_GRASP_CON]->GetBody());
+			CODEManager::Instance()->JointAttach(chainJoints[SETS->LINK_GRASP_CON], chainLinks[SETS->LINK_GRASP_CON - 1]->GetBody(), chainLinks[SETS->LINK_GRASP_CON]->GetBody());
+			//dJointSetHingeAnchor(chainJoints[SETS->LINK_GRASP_CON], shipPos[0], shipPos[1], 0.0f); 
+			CODEManager::Instance()->JointSetHingeAnchor(chainJoints[SETS->LINK_GRASP_CON], shipPos);
 
 			m_bIsRadialCorrected = false;
 		}
@@ -246,20 +261,26 @@ void CHook::Swing()
 			int LINK_GRASP_CON = SETS->LINK_GRASP_CON;
 			// Joint between ship and before-middle link
 			chainLinks[LINK_GRASP_CON - 1]->SetPosition(shipPos);
-			dJointAttach( chainJoints[LINK_GRASP_CON], chainLinks[LINK_GRASP_CON - 1]->GetBody(), this->m_pOwner->GetBody() );
-			dJointSetHingeAnchor(chainJoints[LINK_GRASP_CON], shipPos[0] , shipPos[1], shipPos[2]);
+			//dJointAttach( chainJoints[LINK_GRASP_CON], chainLinks[LINK_GRASP_CON - 1]->GetBody(), this->m_pOwner->GetBody() );
+			CODEManager::Instance()->JointAttach( chainJoints[LINK_GRASP_CON], chainLinks[LINK_GRASP_CON - 1]->GetBody(), this->m_pOwner->GetBody() );
+			//dJointSetHingeAnchor(chainJoints[LINK_GRASP_CON], shipPos[0] , shipPos[1], shipPos[2]);
+			CODEManager::Instance()->JointSetHingeAnchor(chainJoints[LINK_GRASP_CON], shipPos);
 
 			// Joint between ship and middle link
 			chainLinks[LINK_GRASP_CON]->SetPosition(shipPos);
-			dJointAttach( m_oMiddleChainJoint, chainLinks[LINK_GRASP_CON]->GetBody(), this->m_pOwner->GetBody() );  
-			dJointSetHingeAnchor(m_oMiddleChainJoint, shipPos[0] , shipPos[1], shipPos[2]);
+			//dJointAttach( m_oMiddleChainJoint, chainLinks[LINK_GRASP_CON]->GetBody(), this->m_pOwner->GetBody() );  
+			CODEManager::Instance()->JointAttach( m_oMiddleChainJoint, chainLinks[LINK_GRASP_CON]->GetBody(), this->m_pOwner->GetBody() );
+			//dJointSetHingeAnchor(m_oMiddleChainJoint, shipPos[0] , shipPos[1], shipPos[2]);
+			CODEManager::Instance()->JointSetHingeAnchor(m_oMiddleChainJoint, shipPos);
 
 			diff.Normalize();
 			diff *= (float) ((SETS->LINK_AMOUNT * 2 - LINK_GRASP_CON) * LINK_GRASP_CON);
 			Vector hookPos = diff + shipPos;
 			this->SetPosition(hookPos);
-			dJointAttach( m_oAngleJoint, m_oPhysicsData.body, this->m_pOwner->GetBody() );
-			dJointSetHingeAnchor(m_oAngleJoint, hookPos[0] , hookPos[1], hookPos[2]);
+			//dJointAttach( m_oAngleJoint, m_oPhysicsData.body, this->m_pOwner->GetBody() );
+			CODEManager::Instance()->JointAttach( m_oAngleJoint, m_oPhysicsData.body, this->m_pOwner->GetBody() );
+			//dJointSetHingeAnchor(m_oAngleJoint, hookPos[0] , hookPos[1], hookPos[2]);
+			CODEManager::Instance()->JointSetHingeAnchor(m_oAngleJoint, hookPos);
 
 			m_bIsRadialCorrected = true;
 		} 
@@ -270,7 +291,8 @@ void CHook::Swing()
 			tangent *= (SETS->LINK_AMOUNT * 2 - SETS->LINK_GRASP_CON) * SETS->LINK_LENGTH;
 			Vector destDirection = (tangent + shipPos) - this->GetPosition();
 			Vector counterForce = destDirection * 2000;
-			dBodyAddForce(m_oPhysicsData.body, counterForce[0], counterForce[1], 0.0f);
+			//dBodyAddForce(m_oPhysicsData.body, counterForce[0], counterForce[1], 0.0f);
+			AddForce( counterForce );
 		} 
 	}
 
@@ -282,10 +304,12 @@ void CHook::Swing()
 void CHook::Throw(bool playerDied)
 {
 	// Joint between hook and object is destroyed
-	dJointAttach(m_oHookGrabJoint, NULL, NULL);
+	//dJointAttach(m_oHookGrabJoint, NULL, NULL);
+	CODEManager::Instance()->JointAttach(m_oHookGrabJoint, NULL, NULL);
 
 	// Joint between hook and ship is destroyed
-	dJointAttach(m_oAngleJoint, NULL, NULL);
+	//dJointAttach(m_oAngleJoint, NULL, NULL);
+	CODEManager::Instance()->JointAttach(m_oAngleJoint, NULL, NULL);
 
 	if(m_pGrabbedObject->m_pOwner->getType() == ASTEROID)
 	{
@@ -387,7 +411,8 @@ void CHook::ApplyForceFront()
 		
 		}
 
-		dBodyAddForce(m_oPhysicsData.body, tangent[0] * 300.0f, tangent[1] * 300.0f, 0.0f);
+		//dBodyAddForce(m_oPhysicsData.body, tangent[0] * 300.0f, tangent[1] * 300.0f, 0.0f);
+		AddForce( Vector( tangent[0] * 300.0f, tangent[1] * 300.0f, 0 ) );
 
 
 	} else if (m_eHookState == HOMING) {
