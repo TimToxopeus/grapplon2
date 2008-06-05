@@ -1,0 +1,14 @@
+[object]
+width = 50
+height = 50
+animations = idle,closed
+
+[idle]
+file = "media/images/cursor.png"
+frames = 1
+speed = 1
+
+[closed]
+file = "media/images/cursor_closed.png"
+frames = 1
+speed = 1

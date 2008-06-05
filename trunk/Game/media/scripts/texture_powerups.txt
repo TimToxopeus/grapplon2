@@ -1,0 +1,34 @@
+[object]
+width = 105
+height = 94
+animations = speedup, freeze, health, jelly, shield, hook
+
+[speedup]
+file = "media/images/powerup_speedup.png"
+frames = 1
+speed = 0
+
+[freeze]
+file = "media/images/powerup_freeze.png"
+frames = 1
+speed = 0
+
+[health]
+file = "media/images/powerup_health.png"
+frames = 1
+speed = 0
+
+[jelly]
+file = "media/images/powerup_jelly.png"
+frames = 1
+speed = 0
+
+[shield]
+file = "media/images/powerup_shield.png"
+frames = 1
+speed = 0
+
+[hook]
+file = "media/images/powerup_hook.png"
+frames = 1
+speed = 0

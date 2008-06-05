@@ -1,0 +1,246 @@
+[universe]
+width = 2900
+height = 1500
+boundaryforce = 20000000
+initspawn1 = 400 200
+initspawn2 = -400 -200
+initspawn3 = -400 200
+initspawn4 = 400 -200
+
+[sun]
+name = sun1
+mass = 1000000
+image = sun
+imageglow = sun_glow
+grav = 300
+radius = 340
+tempradius = 650
+pos = 2000 0
+scale = 2.0
+damagemult = 1.1
+
+[ordinary]
+name = fire_planet1
+orbit = sun1 900 200
+mass = 750000
+image = fire_planet
+imageglow = fire_glow
+imageorbit = orbit_circle
+grav = 100
+angle = 0
+scale = 1.6
+radius = 180
+tempradius = 320
+emitter = "media/scripts/particle_fireplanet2_emitter.txt", far, 0, 0
+damagemult = 0.2
+
+[ordinary]
+name = fire_planet2
+orbit = sun1 900 200
+mass = 750000
+image = fire_planet
+imageglow = fire_glow
+imageorbit = orbit_circle
+grav = 100
+angle = 90
+scale = 1.6
+radius = 180
+tempradius = 320
+emitter = "media/scripts/particle_fireplanet2_emitter.txt", far, 0, 0
+damagemult = 0.2
+
+[ordinary]
+name = fire_planet3
+orbit = sun1 900 200
+mass = 750000
+image = fire_planet
+imageglow = fire_glow
+imageorbit = orbit_circle
+grav = 100
+angle = 180
+scale = 1.6
+radius = 180
+tempradius = 320
+emitter = "media/scripts/particle_fireplanet2_emitter.txt", far, 0, 0
+damagemult = 0.2
+
+[ordinary]
+name = fire_planet4
+orbit = sun1 900 200
+mass = 750000
+image = fire_planet
+imageglow = fire_glow
+imageorbit = orbit_circle
+grav = 100
+angle = 270
+scale = 1.6
+radius = 180
+tempradius = 320
+emitter = "media/scripts/particle_fireplanet2_emitter.txt", far, 0, 0
+damagemult = 0.2
+
+[ice]
+name = sun2
+mass = 1000000
+image = ice_sun
+imageglow = ice_sun_glow
+grav = 300
+radius = 340
+tempradius = 650
+pos = -2000 0
+scale = 2.0
+damagemult = 1.1
+
+[ice]
+name = ice_planet1
+orbit = sun2 900 200
+mass = 300000
+image = ice_planet_02
+imageglow = ice_planet_glow
+imageorbit = orbit_circle
+grav = 100
+angle = 0
+scale = 1.6
+radius = 145
+tempradius = 320
+emitter = "media/scripts/particle_iceplanet3_emitter.txt", far, 0, 0
+damagemult = 0.1
+
+[ice]
+name = ice_planet2
+orbit = sun2 900 200
+mass = 300000
+image = ice_planet
+imageglow = ice_planet_glow
+imageorbit = orbit_circle
+grav = 100
+angle = 90
+scale = 1.6
+radius = 145
+tempradius = 320
+emitter = "media/scripts/particle_iceplanet3_emitter.txt", far, 0, 0
+damagemult = 0.1
+
+[ice]
+name = ice_planet3
+orbit = sun2 900 200
+mass = 300000
+image = ice_planet_02
+imageglow = ice_planet_glow
+imageorbit = orbit_circle
+grav = 100
+angle = 180
+scale = 1.6
+radius = 145
+tempradius = 320
+emitter = "media/scripts/particle_iceplanet3_emitter.txt", far, 0, 0
+damagemult = 0.1
+
+[ice]
+name = ice_planet4
+orbit = sun2 900 200
+mass = 300000
+image = ice_planet
+imageglow = ice_planet_glow
+imageorbit = orbit_circle
+grav = 100
+angle = 270
+scale = 1.6
+radius = 145
+tempradius = 320
+emitter = "media/scripts/particle_iceplanet3_emitter.txt", far, 0, 0
+damagemult = 0.1
+
+[sun]
+name = black_hole1
+mass = 1000000
+pos = 0 -1200
+image = black_hole
+imageglow = black_hole_glow
+grav = 500
+angle = 10
+scale = 3
+radius = 10
+tempradius = 1
+damagemult = 100
+rotation = 40
+
+[sun]
+name = black_hole2
+mass = 1000000
+pos = 0 1200
+image = black_hole
+imageglow = black_hole_glow
+grav = 500
+angle = 10
+scale = 3
+radius = 10
+tempradius = 1
+damagemult = 100
+rotation = 40
+
+[asteroid]
+name = asteroid1-1
+orbit = sun1 550 5
+mass = 40
+image = asteroid1
+grav = 0
+angle = 250
+rotation = 15
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = asteroid1-2
+orbit = sun1 550 5
+mass = 40
+image = asteroid1
+grav = 0
+angle = 210
+rotation = 15
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = asteroid1-3
+orbit = sun1 550 5
+mass = 40
+image = asteroid1
+grav = 0
+angle = 170
+rotation = 15
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = asteroid2-1
+orbit = sun2 550 -5
+mass = 40
+image = asteroid1
+grav = 0
+angle = -250
+rotation = 15
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = asteroid2-2
+orbit = sun2 550 -5
+mass = 40
+image = asteroid1
+grav = 0
+angle = -210
+rotation = 15
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = asteroid2-3
+orbit = sun2 550 -5
+mass = 40
+image = asteroid1
+grav = 0
+angle = -170
+rotation = 15
+radius = 50
+damagemult = 3.5

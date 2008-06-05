@@ -1,0 +1,10 @@
+[object]
+width = 800
+height = 800
+animations = idle
+
+[idle]
+file = "media/images/sun.png"
+frames = 1
+speed = 1
+rows = 1

@@ -1,0 +1,10 @@
+[object]
+width = 156
+height = 156
+animations = idle
+
+[idle]
+file = "media/images/generic_planet_02_spin.png"
+frames = 50
+speed = 15
+rows = 5

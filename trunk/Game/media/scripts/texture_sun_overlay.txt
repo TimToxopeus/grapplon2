@@ -1,0 +1,9 @@
+[object]
+width = 400
+height = 400
+animations = idle
+
+[idle]
+file = "media/images/sun_overlay.png"
+frames = 50
+speed = 20

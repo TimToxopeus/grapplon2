@@ -1,0 +1,9 @@
+[object]
+width = 56
+height = 56
+animations = idle
+
+[idle]
+file = "media/images/level_moon.png"
+frames = 1
+speed = 1

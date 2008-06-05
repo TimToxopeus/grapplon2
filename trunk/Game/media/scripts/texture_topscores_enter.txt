@@ -1,0 +1,9 @@
+[object]
+width = 128
+height = 46
+animations = idle
+
+[idle]
+file = "media/images/topscores_enter.png"
+frames = 2
+speed = 1

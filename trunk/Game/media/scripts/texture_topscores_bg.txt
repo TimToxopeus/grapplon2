@@ -1,0 +1,9 @@
+[object]
+width = 488
+height = 416
+animations = idle
+
+[idle]
+file = "media/images/topscores_bg.png"
+frames = 1
+speed = 1

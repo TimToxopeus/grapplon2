@@ -1,0 +1,9 @@
+[object]
+width = 756
+height = 203
+animations = idle
+
+[idle]
+file = "media/images/level_infobar.png"
+frames = 1
+speed = 1

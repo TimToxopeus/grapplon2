@@ -1,0 +1,24 @@
+[object]
+width = 263
+height = 50
+animations = 1, 2, 3, 4
+
+[1]
+file = "media/images/player1.png"
+frames = 1
+speed = 1
+
+[2]
+file = "media/images/player2.png"
+frames = 1
+speed = 1
+
+[3]
+file = "media/images/player3.png"
+frames = 1
+speed = 1
+
+[4]
+file = "media/images/player4.png"
+frames = 1
+speed = 1

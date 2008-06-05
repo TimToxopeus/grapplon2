@@ -1,0 +1,90 @@
+[universe]
+width = 1500
+height = 1500
+boundaryforce = 20000000
+initspawn1 = 1250 1250
+initspawn2 = -1250 -1250
+initspawn3 = -1250 1250
+initspawn4 = 1250 -1250
+
+[sun]
+name = black_hole
+mass = 1000000
+pos = 0 0
+image = black_hole
+imageglow = black_hole_glow
+grav = 500
+tempradius = 50
+angle = 120
+scale = 10
+radius = 100
+damagemult = 100
+rotation = 40
+emitter = "media/scripts/particle_black2_emitter.txt", far, 0, 0
+
+[asteroid]
+name = asteroid1
+orbit = black_hole 1000 50
+mass = 40
+image = asteroid1
+grav = 0
+angle = 123
+rotation = 20
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = asteroid2
+orbit = black_hole 800 50
+mass = 40
+image = asteroid1
+grav = 0
+angle = 160
+rotation = 15
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = asteroid3
+orbit = black_hole 850 50
+mass = 40
+image = asteroid1
+grav = 0
+angle = 220
+rotation = 10
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = asteroid4
+orbit = black_hole 900 50
+mass = 40
+image = asteroid1
+grav = 0
+angle = 156
+rotation = 14
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = asteroid5
+orbit = black_hole 950 50
+mass = 40
+image = asteroid1
+grav = 0
+angle = 10
+rotation = 33
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = asteroid6
+orbit = black_hole 950 50
+mass = 40
+image = asteroid1
+grav = 0
+angle = 40
+rotation = 33
+radius = 50
+damagemult = 3.5
+

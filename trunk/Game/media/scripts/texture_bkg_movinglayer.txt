@@ -1,0 +1,9 @@
+[object]
+width = 2048
+height = 2048
+animations = idle
+
+[idle]
+file = "media/images/bkg_movinglayer.png"
+frames = 1
+speed = 1

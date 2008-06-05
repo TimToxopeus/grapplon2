@@ -1,0 +1,10 @@
+[object]
+width = 50
+height = 50
+animations = idle
+
+[idle]
+file = "media/images/spark.png"
+frames = 4
+rows = 2
+speed = 1

@@ -1,0 +1,24 @@
+[object]
+width = 342
+height = 168
+animations = green, red, blue, purple
+
+[red]
+file = "media/images/bar_red.png"
+frames = 1
+speed = 1
+
+[green]
+file = "media/images/bar_green.png"
+frames = 1
+speed = 1
+
+[blue]
+file = "media/images/bar_blue.png"
+frames = 1
+speed = 1
+
+[purple]
+file = "media/images/bar_purple.png"
+frames = 1
+speed = 1

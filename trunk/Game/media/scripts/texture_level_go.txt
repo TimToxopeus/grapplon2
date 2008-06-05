@@ -1,0 +1,9 @@
+[object]
+width = 128
+height = 46
+animations = idle
+
+[idle]
+file = "media/images/level_go.png"
+frames = 2
+speed = 1

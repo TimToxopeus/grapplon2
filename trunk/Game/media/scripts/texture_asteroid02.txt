@@ -1,0 +1,10 @@
+[object]
+width = 128
+height = 128
+animations = idle
+
+[idle]
+file = "media/images/asteroid2.png"
+frames = 9
+rows = 3
+speed = 1

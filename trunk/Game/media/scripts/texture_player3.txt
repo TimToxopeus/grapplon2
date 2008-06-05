@@ -1,0 +1,9 @@
+[object]
+width = 128
+height = 128
+animations = idle
+
+[idle]
+file = "media/images/ship_blue.png"
+frames = 1
+speed = 5

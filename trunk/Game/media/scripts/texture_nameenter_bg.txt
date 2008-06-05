@@ -1,0 +1,9 @@
+[object]
+width = 797
+height = 352
+animations = idle
+
+[idle]
+file = "media/images/nameenter_bg.png"
+frames = 1
+speed = 1

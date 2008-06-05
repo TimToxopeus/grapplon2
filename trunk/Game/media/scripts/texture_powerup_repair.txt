@@ -1,0 +1,9 @@
+[object]
+width = 72
+height = 72
+animations = idle
+
+[idle]
+file = "media/images/powerup_repair.png"
+frames = 1
+speed = 0

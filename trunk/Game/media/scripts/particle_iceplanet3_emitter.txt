@@ -1,0 +1,43 @@
+[emitter]
+direction = none
+maxparticles = 500
+particles = large 25, medium 25, small 50
+lifespan = 0
+spawnrate = 10
+radius = 160
+
+[particle]
+name = "large"
+colour1 = 255 255 255
+lifespan = 600
+size = 3
+behave = forward
+
+[particle]
+name = "medium"
+colour1 = 0 150 255
+lifespan = 600
+size = 3
+behave = forward, left
+
+[particle]
+name = "small"
+colour1 = 0 255 255
+lifespan = 600
+size = 3
+behave = forward, right
+
+[behaviour]
+name = "forward"
+velocity = 10
+move = 0
+
+[behaviour]
+name = "left"
+velocity = 10
+move = -90
+
+[behaviour]
+name = "right"
+velocity = 10
+move = 90

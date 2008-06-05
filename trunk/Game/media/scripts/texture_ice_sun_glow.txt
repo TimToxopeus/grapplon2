@@ -1,0 +1,9 @@
+[object]
+width = 800
+height = 800
+animations = idle
+
+[idle]
+file = "media/images/ice_sun_glow.png"
+frames = 1
+speed = 1

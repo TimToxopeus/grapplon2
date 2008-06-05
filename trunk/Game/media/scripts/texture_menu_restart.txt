@@ -1,0 +1,9 @@
+[object]
+width = 342
+height = 46
+animations = idle
+
+[idle]
+file = "media/images/menu_restart.png"
+frames = 1
+speed = 1

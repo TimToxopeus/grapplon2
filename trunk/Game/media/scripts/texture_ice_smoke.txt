@@ -1,0 +1,9 @@
+[object]
+width = 41
+height = 41
+animations = idle
+
+[idle]
+file = "media/images/ice_smoke.png"
+frames = 1
+speed = 1
