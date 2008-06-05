@@ -5,7 +5,7 @@
 #include <sdl.h>
 
 CWiimoteManager *CWiimoteManager::m_pInstance = 0;
-bool quit = false;
+bool m_bQuit = false;
 bool wait = false;
 
 int WiimoteManagerThread(void *data)
@@ -13,7 +13,7 @@ int WiimoteManagerThread(void *data)
 	CWiimoteManager *pMan = CWiimoteManager::Instance();
 	pMan->Setup();
 	CCore *pCore = CCore::Instance();
-	while ( !quit )
+	while ( !m_bQuit )
 	{
 		pMan->HandleWiimoteEvents();
 		//SDL_Delay( 10 );
@@ -27,6 +27,10 @@ CWiimoteManager::CWiimoteManager()
 	CLogManager::Instance()->LogMessage("Initializing Wiimote manager.");
 
 	m_pThread = NULL;
+	m_pWiimotes = NULL;
+	m_bSetup = false;
+	m_bNunchuks[0] = m_bNunchuks[1] = m_bNunchuks[2] = m_bNunchuks[3] = false;
+	m_bQuit = false;
 }
 
 // Clean up wiimote manager
@@ -48,6 +52,8 @@ CWiimoteManager::~CWiimoteManager()
 			delete m_vWiimoteListeners[a];
 		m_vWiimoteListeners.clear();
 	}
+	for ( int i = 0; i<4; i++ )
+		wiiuse_disconnect(m_pWiimotes[i]);
 	wiiuse_cleanup(m_pWiimotes, 4);
 }
 
@@ -63,7 +69,7 @@ void CWiimoteManager::HandleWiimoteEvents()
 		int i = 0;
 		for ( i = 0; i<4; ++i )
 		{
-			if ( m_pWiimotes[i]->event == WIIUSE_EVENT )
+//			if ( m_pWiimotes[i]->event == WIIUSE_EVENT )
 				DispatchEvent( m_pWiimotes[i], i );
 		}
 	}
@@ -72,6 +78,7 @@ void CWiimoteManager::HandleWiimoteEvents()
 // Check for wiimotes
 int CWiimoteManager::CheckForWiimotes()
 {
+	m_iStatusWait = 0;
 	int iNewFound, iConnected;
 	iNewFound = 0;
 	iConnected = 0;
@@ -102,14 +109,15 @@ int CWiimoteManager::CheckForWiimotes()
 			wiiuse_set_leds(m_pWiimotes[2], WIIMOTE_LED_3);
 			wiiuse_set_leds(m_pWiimotes[3], WIIMOTE_LED_4);
 
-			wiiuse_rumble(m_pWiimotes[0], 1);
-			wiiuse_rumble(m_pWiimotes[1], 1);
+//			wiiuse_rumble(m_pWiimotes[0], 1);
+//			wiiuse_rumble(m_pWiimotes[1], 1);
 
-			Sleep(200);
+//			Sleep(200);
 
-			wiiuse_rumble(m_pWiimotes[0], 0);
-			wiiuse_rumble(m_pWiimotes[1], 0);
+//			wiiuse_rumble(m_pWiimotes[0], 0);
+//			wiiuse_rumble(m_pWiimotes[1], 0);
 
+			m_iStatusWait = iConnected;
 			for ( int i = 0; i<iConnected; i++ )
 			{
 				wiiuse_set_nunchuk_orient_threshold( m_pWiimotes[i], 15 );
@@ -121,6 +129,8 @@ int CWiimoteManager::CheckForWiimotes()
 				wiiuse_set_ir(m_pWiimotes[i], 1);
 				wiiuse_set_ir_vres( m_pWiimotes[i], 1024, 768 );
 				wiiuse_set_ir_position( m_pWiimotes[i], WIIUSE_IR_ABOVE );
+				
+				wiiuse_status( m_pWiimotes[i] );
 			}
 
 /*			wiiuse_set_nunchuk_orient_threshold( m_pWiimotes[1], 15 );
@@ -149,6 +159,18 @@ int CWiimoteManager::CheckForWiimotes()
 // Send the event to the registered listeners
 bool CWiimoteManager::DispatchEvent( wiimote_t *pWiimoteEvent, int iWiimote )
 {
+	if ( pWiimoteEvent->event == WIIUSE_STATUS || pWiimoteEvent->event == WIIUSE_NUNCHUK_INSERTED )
+	{
+		if ( pWiimoteEvent->exp.type == EXP_NUNCHUK )
+		{
+			m_bNunchuks[pWiimoteEvent->unid - 1] = true;
+		}
+		else
+		{
+			m_bNunchuks[pWiimoteEvent->unid - 1] = false;
+		}
+		m_iStatusWait--;
+	}
 	bool handled = false;
 	while ( wait ) {}
 	wait = true;
@@ -235,7 +257,7 @@ void CWiimoteManager::StartEventThread()
 
 void CWiimoteManager::StopEventThread()
 {
-	quit = true;
+	m_bQuit = true;
 	if ( m_pThread )
 	{
 		int status;
@@ -251,4 +273,30 @@ void CWiimoteManager::Setup()
 
 	m_pWiimotes = wiiuse_init(4);
 	CheckForWiimotes();
+	m_bSetup = true;
+	CLogManager::Instance()->LogMessage("Setup done!");
+}
+
+bool CWiimoteManager::HasNunchuk()
+{
+	while ( !m_bSetup ) {CLogManager::Instance()->LogMessage("Waiting for setup!"); SDL_Delay( 10 );}
+	while ( m_iStatusWait > 0 ) {CLogManager::Instance()->LogMessage("Waiting for status!"); SDL_Delay( 10 );}
+	if ( !m_pWiimotes )
+		return false;
+
+	for ( int i = 0; i<m_iConnectedWiimotes; i++ )
+	{
+		CLogManager::Instance()->LogMessage( "Checking wiimote " + itoa2(i) + ".." );
+		if ( m_pWiimotes[i]->handshake_state != 0 )
+		{
+			if ( !m_bNunchuks[i] )
+			{
+				CLogManager::Instance()->LogMessage( "No nunchuk found. :(" );
+				return false;
+			}
+			else
+				CLogManager::Instance()->LogMessage( "We got ourselves a live one!" );
+		}
+	}
+	return true;
 }

@@ -158,6 +158,18 @@ void CCore::Run()
 	CLogManager::Instance()->LogMessage("Starting Wiimote thread.");
 	m_pWiimoteManager->StartEventThread();
 
+	// Ensure nunchuk is working
+/*	while ( !m_pWiimoteManager->HasNunchuk() )
+	{
+		CLogManager::Instance()->LogMessage("Unable to find nunchuks, restarting Wiimote manager!");
+		m_pWiimoteManager->StopEventThread();
+		CWiimoteManager::Destroy();
+		m_pWiimoteManager = CWiimoteManager::Instance();
+		if ( m_pActiveState )
+			m_pWiimoteManager->RegisterListener( m_pActiveState, -1 );
+		m_pWiimoteManager->StartEventThread();
+	}*/
+
 	// Game loop goes here
 	CLogManager::Instance()->LogMessage("Starting game loop.");
 	while ( !ShouldQuit() )

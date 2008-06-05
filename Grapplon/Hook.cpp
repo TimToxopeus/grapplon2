@@ -274,6 +274,9 @@ void CHook::Swing()
 		} 
 	}
 
+	CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/hook_throw.wav", RT_SOUND);
+	if ( pSound && !pSound->IsPlaying() )
+		pSound->Play();
 }
 
 void CHook::Throw(bool playerDied)
