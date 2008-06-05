@@ -8,7 +8,7 @@ initspawn1 = 500 500
 initspawn2 = -500 -500
 initspawn3 = -400 900
 initspawn4 = -600 -800
-max_power_up = 3
+max_power_up = 1
 pu_freeze  = 15
 pu_speed  = 15
 pu_health  = 15
@@ -28,29 +28,20 @@ scale = 1.0
 rotation = 16
 damagemult = 1.0
 
-[asteroid]
-name = asteroid1
-orbit = sun 1000 500
-mass = 200
-image = asteroid1
-imagefire = asteroid01_fire
-imagefrozen = asteroid01_ice
-grav = 0
-angle = 123
-rotation = 20
-radius = 50
-damagemult = 10.0
+[wormhole]
+name = wormhole2
+mass = 1000
+orbit = sun 1700 50
+pos2 = 2000 2000
+image = wormhole
+imageglow = wormhole_glow_red
+grav = 1
+radius = 200
+scale = 1.0
+rotation = 0
+angle2 = 0
+exit1 = 0 0
+exit2 = -10000000 -10000000
+damagemult = 0.001
 
-[asteroid]
-name = asteroid2
-orbit = sun 600 50
-mass = 200
-image = asteroid1
-imagefire = asteroid01_fire
-imagefrozen = asteroid01_ice
-grav = 0
-angle = 160
-rotation = 15
-radius = 50
-damagemult = 10.0
 

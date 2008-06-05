@@ -320,6 +320,10 @@
 				RelativePath=".\WiimoteManager.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\WormHole.cpp"
+				>
+			</File>
 			<Filter
 				Name="Particle system"
 				>
@@ -540,6 +544,10 @@
 			</File>
 			<File
 				RelativePath=".\WiimoteManager.h"
+				>
+			</File>
+			<File
+				RelativePath=".\WormHole.h"
 				>
 			</File>
 			<Filter

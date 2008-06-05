@@ -1,0 +1,10 @@
+[object]
+width = 190
+height = 190
+animations = idle
+
+[idle]
+file = "media/images/wormhole.png"
+frames = 50
+rows = 5
+speed = 15

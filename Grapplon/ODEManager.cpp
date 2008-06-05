@@ -352,7 +352,10 @@ void CODEManager::HandleCollisions()
 
 		
 		if ( !( (d1->m_pOwner->getType() == HOOK) ^ (d2->m_pOwner->getType() == HOOK) ) )
-		{	// This is a collision between two non-hook objects
+		{	// This is a collision between two non-hook objects (or 2 hooks)
+
+			if(d1->m_pOwner->getType() == WORMHOLE || d2->m_pOwner->getType() == WORMHOLE) continue;
+
 			contact.surface.mode = dContactBounce | dContactSoftCFM;
 			contact.surface.mu = dInfinity;
 			contact.surface.mu2 = 0;

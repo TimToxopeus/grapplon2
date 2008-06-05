@@ -15,10 +15,15 @@ enum OrbitStyle
 struct PlanetaryData
 {
 	Vector position;
+	Vector position2;
+	Vector exitVector1;
+	Vector exitVector2;
 	dJointID orbitJoint;
+	dJointID orbitJoint2;
 
 	std::string name;
 	std::string orbit;
+	std::string orbit2;
 	std::string image;
 	std::string imageOrbit;
 	std::string imageGlow;
@@ -30,9 +35,12 @@ struct PlanetaryData
 
 	float gravconst;
 	int orbitAngle;
+	int orbitAngle2;
 	int mass;
 	int orbitLength;
+	int orbitLength2;
 	float orbitSpeed;
+	float orbitSpeed2;
 	int asteroidcount;
 	int radius;
 	int tempradius;

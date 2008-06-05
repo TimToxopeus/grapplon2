@@ -473,7 +473,7 @@ void CPlayerObject::CollideWith( CBaseObject *pOther)
 	
 	ObjectType oType = pOther->getType();
 
-	if(oType == ICE || oType == ASTEROID || oType == SUN || oType == FIRE || oType == ORDINARY)
+	if(oType == ICE || oType == ASTEROID || oType == SUN || oType == FIRE || oType == ORDINARY || oType == WORMHOLE)
 		mult = dynamic_cast<CPlanet*>(pOther)->m_fDamageMult;
 
 	if( pOther->getType() == ASTEROID)

@@ -5,7 +5,7 @@
 #include "ParticleSystemManager.h"
 #include "Renderer.h"
 
-CPlanet::CPlanet(PlanetaryData &data)
+CPlanet::CPlanet(PlanetaryData &data, int index)
 {
 	m_eType = data.planetType;
 	
@@ -17,16 +17,24 @@ CPlanet::CPlanet(PlanetaryData &data)
 
 	//m_oPhysicsData.planetData = &data;
 
-	m_fOrbitAngle  = (float) data.orbitAngle;
-	m_fOrbitLength = (float) data.orbitLength;
-	m_fOrbitSpeed  = (float) data.orbitSpeed;
+	if(index == 1){
+		m_fOrbitAngle  = (float) data.orbitAngle;
+		m_fOrbitLength = (float) data.orbitLength;
+		m_fOrbitSpeed  = (float) data.orbitSpeed;
+		SetPosition( data.position );
+	} else if (index == 2){
+		m_fOrbitAngle  = (float) data.orbitAngle2;
+		m_fOrbitLength = (float) data.orbitLength2;
+		m_fOrbitSpeed  = (float) data.orbitSpeed2;
+		SetPosition( data.position2 );
+	}
+
 	m_fRotation    = (float) data.rotation;
 	m_iTempRadius  = -10;
 	m_fDamageMult  = data.damageMult;
 
 	SetDepth( -2.0f );
 	SetMass( (float)data.mass );
-	SetPosition( data.position );
 
 	m_oPhysicsData.m_fGravConst = data.gravconst;
 	m_oPhysicsData.m_bAffectedByGravity = false;
@@ -53,6 +61,9 @@ CPlanet::CPlanet(PlanetaryData &data)
 	{
 		m_pOrbit = new CAnimatedTexture( "media/scripts/texture_" + data.imageOrbit + ".txt" );
 	}
+
+
+
 }
 
 CPlanet::~CPlanet()
