@@ -145,8 +145,8 @@ imageorbit = orbit_circle
 grav = 100
 angle = 270
 scale = 2
-radius = 245
-tempradius = 320
+radius = 340
+tempradius = 575
 emitter = "media/scripts/particle_ice_emitter.txt", far, 0, 0
 damagemult = 0.1
 
@@ -160,8 +160,8 @@ imageorbit = orbit_circle
 grav = 100
 angle = 270
 scale = 2
-radius = 245
-tempradius = 320
+radius = 340
+tempradius = 575
 emitter = "media/scripts/particle_ice_emitter.txt", far, 0, 0
 damagemult = 0.1
 
@@ -177,6 +177,7 @@ scale = 2
 radius = 10
 damagemult = 100
 rotation = 40
+tempradius = 1
 emitter = "media/scripts/particle_black_emitter.txt", far, 0, 0
 
 [sun]
@@ -191,6 +192,7 @@ scale = 2
 radius = 10
 damagemult = 100
 rotation = 40
+tempradius = 1
 emitter = "media/scripts/particle_black_emitter.txt", far, 0, 0
 
 [sun]
@@ -205,6 +207,7 @@ scale = 2
 radius = 10
 damagemult = 100
 rotation = 40
+tempradius = 1
 emitter = "media/scripts/particle_black_emitter.txt", far, 0, 0
 
 [sun]
@@ -219,4 +222,5 @@ scale = 2
 radius = 10
 damagemult = 100
 rotation = 40
+tempradius = 1
 emitter = "media/scripts/particle_black_emitter.txt", far, 0, 0
