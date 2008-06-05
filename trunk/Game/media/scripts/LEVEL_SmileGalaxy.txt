@@ -1,5 +1,5 @@
 [universe]
-width = 3400
+width = 3200
 height = 3000
 boundaryforce = 20000000
 initspawn1 = 1700 200
@@ -187,12 +187,34 @@ radius = 50
 damagemult = 3.5
 
 [asteroid]
-name = asteroid4
+name = asteroid6
 orbit = sun 2900 100
 mass = 40
 image = asteroid02
 grav = 0
 angle = 30
 rotation = 10
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = asteroid7
+orbit = sun 3100 100
+mass = 40
+image = asteroid02
+grav = 0
+angle = 150
+rotation = 15
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = asteroid7
+orbit = sun 2900 100
+mass = 40
+image = asteroid02
+grav = 0
+angle = 250
+rotation = 15
 radius = 50
 damagemult = 3.5
