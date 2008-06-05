@@ -2,10 +2,10 @@
 width = 4000
 height = 3000
 boundaryforce = 20000000
-initspawn1 = 1200 800
-initspawn2 = -1200 -800
-initspawn3 = -1200 800
-initspawn4 = 1200 -800
+initspawn1 = 1500 800
+initspawn2 = -1500 -800
+initspawn3 = -1500 800
+initspawn4 = 1500 -800
 max_power_up = 3
 pu_freeze  = 10
 pu_speed  = 15
@@ -195,6 +195,17 @@ radius = 50
 damagemult = 3.5
 
 [asteroid]
+name = asteroid2
+orbit = wind_planet2 600 25
+mass = 40
+image = asteroid02
+grav = 0
+angle = 180
+rotation = 15
+radius = 50
+damagemult = 3.5
+
+[asteroid]
 name = asteroid3
 orbit = wind_planet3 600 25
 mass = 40
@@ -206,12 +217,45 @@ radius = 50
 damagemult = 3.5
 
 [asteroid]
+name = asteroid3
+orbit = wind_planet3 600 25
+mass = 40
+image = asteroid02
+grav = 0
+angle = 150
+rotation = 15
+radius = 50
+damagemult = 3.5
+
+[asteroid]
 name = asteroid4
 orbit = wind_planet4 600 25
 mass = 40
 image = asteroid02
 grav = 0
 angle = 50
+rotation = 15
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = asteroid5
+orbit = wind_planet4 600 25
+mass = 40
+image = asteroid02
+grav = 0
+angle = 250
+rotation = 15
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = asteroid4
+orbit = wind_planet1 600 25
+mass = 40
+image = asteroid02
+grav = 0
+angle = 150
 rotation = 15
 radius = 50
 damagemult = 3.5
