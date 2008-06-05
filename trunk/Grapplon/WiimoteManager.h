@@ -33,6 +33,10 @@ private:
 	int m_iFoundWiimotes;
 	int m_iConnectedWiimotes;
 	int m_iLastCheck;
+	bool m_bSetup;
+
+	bool m_bNunchuks[4];
+	int m_iStatusWait;
 
 	std::vector<CListenerCarrier *> m_vWiimoteListeners;
 
@@ -49,6 +53,7 @@ public:
 	int CheckForWiimotes();
 
 	int GetActiveWiimotes() { return m_iConnectedWiimotes; }
+	bool HasNunchuk();
 
 	bool RegisterListener( IWiimoteListener *pListener, int iWiimote );
 	bool UnregisterListener( IWiimoteListener *pListener );

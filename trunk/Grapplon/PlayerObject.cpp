@@ -300,6 +300,7 @@ void CPlayerObject::Update( float fTime )
 			SetDepth( -1.0f );
 			m_fInvincibleTime = 2.0f;
 			m_pHook->SetInvincibleTime( 2.0f );
+			m_oPhysicsData.m_bAffectedByGravity = false;
 			m_fAlpha = 1.0f;
 
 			if ( m_pThrusterLeft )

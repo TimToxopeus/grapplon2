@@ -3,6 +3,8 @@
 #include "LogManager.h"
 #include "Tokenizer.h"
 #include "GameSettings.h"
+#include "Vector.h"
+#include <math.h>
 
 StateChange::StateChange( int iState, int iSkipState, CAnimatedTexture *pImage, StateStyle eStyle, bool bIncState, int iStayRendered, float fStartAlpha, float fTime, int iStartX, int iStartY, int iGoalX, int iGoalY, int iAnimation )
 {
@@ -239,10 +241,11 @@ CMenuState::CMenuState( int iState, int iScore1, int iScore2, int iScore3, int i
 
 	for ( int i = 0; i<IR_AVG; i++ )
 	{
-		cursorXAvg[i] = 0;
-		cursorYAvg[i] = 0;
+		cursorXAvg[i] = SDL_GetCursor()->hot_x;
+		cursorYAvg[i] = SDL_GetCursor()->hot_y;
 	}
-	cursorX = cursorY = 0;
+	cursorX = SDL_GetCursor()->hot_x;
+	cursorY = SDL_GetCursor()->hot_y;
 
 	CSoundManager::Instance()->LoadSound( "media/music/music_menu.ogg" );
 }
@@ -400,8 +403,8 @@ void CMenuState::Render()
 		}
 	}
 
-	if ( state == GAMEMENU || state == SCORE || state == SCOREINPUT || state == PLAYERSELECT || state == LEVELSELECT )
-	{
+//	if ( state == GAMEMENU || state == SCORE || state == SCOREINPUT || state == PLAYERSELECT || state == LEVELSELECT )
+//	{
 		target = m_pCursor->GetSize();
 		target.w += target.w;
 		target.h += target.h;
@@ -410,7 +413,7 @@ void CMenuState::Render()
 		target.x = icursorX - (target.w / 2);
 		target.y = icursorY - (target.h / 2);
 		RenderQuad( target, m_pCursor, 0, 1 );
-	}
+//	}
 }
 
 void CMenuState::Update(float fTime)
@@ -588,77 +591,40 @@ bool CMenuState::HandleWiimoteEvent( wiimote_t* pWiimoteEvent )
 {
 	if ( pWiimoteEvent->event == WIIUSE_EVENT )
 	{
-		if ( state == ABMENU )
-		{
-			if ( IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_A) && IS_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_B) ||
-				 IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_B) && IS_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_A) )
-				state++;
-		}
-		else if ( state < GAMEMENU )
-		{
-			if (IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_A) ||
-				IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_B))
-				m_bNext = true;
-		}
-		else if ( state == GAMEMENU || state == SCORE || state == PLAYERSELECT || state == LEVELSELECT )
-		{
-			if (IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_A) ||
-				IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_B))
-			{
-				m_pCursor->SetAnimation(1);
-				PushButton();
-			}
-
-			if ( !IS_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_A) && !IS_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_B) )
-				m_pCursor->SetAnimation(0);
-		}
-		else if ( state == SCOREINPUT )
-		{
-			if ( IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_A) )
-			{
-				if ( pWiimoteEvent->unid == m_iActivePlayer )
-				{
-					int icursorX = (cursorX * 2 - 1024);
-					int icursorY = (cursorY * 2 - 768);
-					PushKeyboard( icursorX, icursorY );
-				}
-			}
-			if ( IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_B) )
-			{
-				m_szInputName = m_szInputName.substr(0, m_szInputName.length()-1);
-			}
-		}
 		if ( WIIUSE_USING_IR( pWiimoteEvent ) )
 		{
 			if ( (state != SCOREINPUT && pWiimoteEvent->unid == m_iActivePlayer) ||
 				 (state == SCOREINPUT && pWiimoteEvent->unid == m_iActivePlayer) )
 			{
-				// Check if the new value doesn't crazily exceed old average
-				int deltaX = abs(cursorX - pWiimoteEvent->ir.x);
-				int deltaY = abs(cursorY - pWiimoteEvent->ir.y);
-
-				if ( deltaX < 512 && deltaY < 384 )
+				if ( pWiimoteEvent->ir.x != 0 && pWiimoteEvent->ir.y != 0 )
+					AddCursorXY( pWiimoteEvent->ir.x, pWiimoteEvent->ir.y );
+			}
+		}
+		if ( pWiimoteEvent->exp.type == EXP_NUNCHUK )
+		{
+			HandleButtonPress( pWiimoteEvent );
+			if ( (state != SCOREINPUT && pWiimoteEvent->unid == m_iActivePlayer) ||
+				 (state == SCOREINPUT && pWiimoteEvent->unid == m_iActivePlayer) )
+			{
+				if ( pWiimoteEvent->exp.nunchuk.js.mag > 0.05f )
 				{
-					for ( int i = 0; i<(IR_AVG - 1); i++ )
-					{
-						cursorXAvg[i] = cursorXAvg[i + 1];
-						cursorYAvg[i] = cursorYAvg[i + 1];
-					}
-
-					cursorXAvg[IR_AVG - 1] = pWiimoteEvent->ir.x;
-					cursorYAvg[IR_AVG - 1] = pWiimoteEvent->ir.y;
-
-					cursorX = 0; cursorY = 0;
-					for ( int i = 0; i < IR_AVG; i++ )
-					{
-						cursorX += cursorXAvg[i];
-						cursorY += cursorYAvg[i];
-					}
-
-					cursorX /= IR_AVG;
-					cursorY /= IR_AVG;
+					int icursorX = (cursorX * 2 - 1024);
+					int icursorY = (cursorY * 2 - 768);
+					Vector v = Vector((float)icursorX, (float)icursorY, 0);
+					float angle = (pWiimoteEvent->exp.nunchuk.js.ang - 90.0f)*(3.14f/180.0f);
+					v += Vector( cos(angle), sin(angle), 0.0f );
+					v -= Vector((float)icursorX, (float)icursorY, 0);
+					v.Normalize();
+					v *= 80.0f * pWiimoteEvent->exp.nunchuk.js.mag;
+					int cx = (int)(cursorX + v[0]);
+					int cy = (int)(cursorY + v[1]);
+					AddCursorXY( cx, cy );
 				}
 			}
+		}
+		else
+		{
+			HandleButtonPress( pWiimoteEvent );
 		}
 	}
 	return false;
@@ -719,6 +685,11 @@ int CMenuState::HandleSDLEvent(SDL_Event event)
 	{
 		cursorX = event.motion.x;// * 2 - 1024;
 		cursorY = event.motion.y;// * 2 - 768;
+		for ( int i = 0; i < IR_AVG; i++ )
+		{
+			this->cursorXAvg[i] = event.motion.x;
+			this->cursorYAvg[i] = event.motion.y;
+		}
 	}
 	return 0;
 }
@@ -960,4 +931,99 @@ std::string CMenuState::GetSelectedLevel()
 	if ( m_iSelectedLevel < 0 )
 		return SETS->LEVEL;
 	return "media/scripts/" + m_vLevelSelectOptions[m_iSelectedLevel]->m_szLevel.substr(0,m_vLevelSelectOptions[m_iSelectedLevel]->m_szLevel.length()-1);
+}
+
+void CMenuState::AddCursorXY( int x, int y )
+{
+	// Check if the new value doesn't crazily exceed old average
+	int deltaX = abs(cursorX - x);
+	int deltaY = abs(cursorY - y);
+
+	if ( deltaX < 512 && deltaY < 384 )
+	{
+		for ( int i = 0; i<(IR_AVG - 1); i++ )
+		{
+			cursorXAvg[i] = cursorXAvg[i + 1];
+			cursorYAvg[i] = cursorYAvg[i + 1];
+		}
+
+		cursorXAvg[IR_AVG - 1] = x;
+		cursorYAvg[IR_AVG - 1] = y;
+
+		cursorX = 0; cursorY = 0;
+		for ( int i = 0; i < IR_AVG; i++ )
+		{
+			cursorX += cursorXAvg[i];
+			cursorY += cursorYAvg[i];
+		}
+
+		cursorX /= IR_AVG;
+		cursorY /= IR_AVG;
+
+		SDL_WarpMouse( cursorX, cursorY );
+	}
+}
+
+void CMenuState::HandleButtonPress( wiimote_t* pWiimoteEvent )
+{
+	if ( state == ABMENU )
+	{
+		if ( IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_A) && IS_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_B) ||
+			 IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_B) && IS_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_A) ||
+			 IS_JUST_PRESSED(pWiimoteEvent, NUNCHUK_BUTTON_Z) && IS_PRESSED(pWiimoteEvent, NUNCHUK_BUTTON_C) ||
+			 IS_JUST_PRESSED(pWiimoteEvent, NUNCHUK_BUTTON_C) && IS_PRESSED(pWiimoteEvent, NUNCHUK_BUTTON_Z))
+			state++;
+	}
+	else if ( state < GAMEMENU )
+	{
+		if (IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_A) ||
+			IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_B) ||
+			IS_JUST_PRESSED(pWiimoteEvent, NUNCHUK_BUTTON_C) ||
+			IS_JUST_PRESSED(pWiimoteEvent, NUNCHUK_BUTTON_Z))
+			m_bNext = true;
+	}
+	else if ( state == SCOREINPUT )
+	{
+		if ( IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_A) || IS_JUST_PRESSED(pWiimoteEvent, NUNCHUK_BUTTON_C) )
+		{
+			if ( pWiimoteEvent->unid == m_iActivePlayer )
+			{
+				int icursorX = (cursorX * 2 - 1024);
+				int icursorY = (cursorY * 2 - 768);
+				PushKeyboard( icursorX, icursorY );
+			}
+		}
+		if ( IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_B) || IS_JUST_PRESSED(pWiimoteEvent, NUNCHUK_BUTTON_Z) )
+		{
+			m_szInputName = m_szInputName.substr(0, m_szInputName.length()-1);
+		}
+	}
+
+	if (IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_A) ||
+		IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_B)||
+		IS_JUST_PRESSED(pWiimoteEvent, NUNCHUK_BUTTON_C)||
+		IS_JUST_PRESSED(pWiimoteEvent, NUNCHUK_BUTTON_Z))
+	{
+		m_pCursor->SetAnimation(1);
+
+		bool pushed = PushButton();
+		if ( state == LEVELSELECT && !pushed )
+		{
+			m_iSelectedLevel = -1;
+			int icursorX = (cursorX * 2 - 1024);
+			int icursorY = (cursorY * 2 - 768);
+			for ( unsigned int i = 0; i<m_vLevelSelectOptions.size(); i++ )
+			{
+				if ( m_vLevelSelectOptions[i]->IsClicked( icursorX, icursorY ) )
+				{
+					m_iSelectedLevel = i;
+					break;
+				}
+			}
+		}
+	}
+
+	if ( !IS_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_A) && !IS_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_B) &&
+		 !IS_PRESSED(pWiimoteEvent, NUNCHUK_BUTTON_C) && !IS_PRESSED(pWiimoteEvent, NUNCHUK_BUTTON_Z))
+		m_pCursor->SetAnimation(0);
 }

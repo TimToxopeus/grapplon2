@@ -52,7 +52,11 @@ void CBaseObject::Render()
 void CBaseObject::Update( float fTime )
 {
 	if ( m_fInvincibleTime > 0.0f )
+	{
 		m_fInvincibleTime -= fTime;
+		if ( m_fInvincibleTime <= 0.0f )
+			m_oPhysicsData.m_bAffectedByGravity = true;
+	}	
 
 	m_pImage->UpdateFrame( fTime );
 }

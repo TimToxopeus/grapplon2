@@ -17,4 +17,5 @@ public:
 	void SetPosition( float fX, float fY, float fZ );
 	void Play();
 	void Clean();
+	bool IsPlaying();
 };

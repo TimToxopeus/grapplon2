@@ -13,7 +13,7 @@
 #define PLAYERSELECT 19
 #define LEVELSELECT 20
 #define HIGH 25
-#define IR_AVG 20
+#define IR_AVG 10
 
 enum StateStyle
 {
@@ -124,6 +124,9 @@ protected:
 	int m_iSelectedLevel;
 	int m_iActivePlayer;
 	std::string ReadLine( FILE *pFile );
+
+	void AddCursorXY( int x, int y );
+	void HandleButtonPress( wiimote_t* pWiimoteEvent );
 
 public:
 	CMenuState( int iState = 0, int iScore1 = -1, int iScore2 = -1, int iScore3 = -1, int iScore4 = -1 );

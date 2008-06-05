@@ -40,3 +40,11 @@ void CSound::Clean()
 	alDeleteSources( 1, &m_iSource );
 	m_iSource = 0;
 }
+
+bool CSound::IsPlaying()
+{
+    ALenum state;
+    alGetSourcei(m_iSource, AL_SOURCE_STATE, &state);
+
+	return (state == AL_PLAYING);
+}
