@@ -40,10 +40,6 @@ void CPowerUp::CollideWith(CBaseObject *pOther)
 		this->m_oPhysicsData.m_bHasCollision = false;
 
 		CODEManager::Instance()->m_pUniverse->RemovePowerUp(this);
-
-		CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/powerup_pickup.wav", RT_SOUND);
-		if ( pSound )
-			pSound->Play();
 	}
 }
 

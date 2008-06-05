@@ -163,6 +163,7 @@ void CGameState::Update(float fTime)
 {
 	m_fMatchTimeLeft -= fTime;
 	m_pHUD->SetMatchTimeLeft( m_fMatchTimeLeft );
+	m_pUniverse->Update( fTime );
 
 	if ( m_fMatchTimeLeft <= 0.0f )
 		m_bRunning = false;
