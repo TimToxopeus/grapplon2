@@ -530,7 +530,7 @@ void CODEManager::ProcessBuffer()
 	m_bBuffer = !m_bBuffer;
 	if ( m_bBuffer )
 	{
-		while ( m_iWritingToBuffer == 2 ) {}
+		while ( m_iWritingToBuffer == 2 || m_iWritingToBuffer == 3 ) {}
 //		for ( int i = m_vBuffer2.size() - 1; i>=0; i-- )
 		for ( unsigned int i = 0; i<m_vBuffer2.size(); i++ )
 		{
@@ -541,7 +541,7 @@ void CODEManager::ProcessBuffer()
 	}
 	else
 	{
-		while ( m_iWritingToBuffer == 1 ) {}
+		while ( m_iWritingToBuffer == 1 || m_iWritingToBuffer == 3 ) {}
 //		for ( int i = m_vBuffer1.size() - 1; i>=0; i-- )
 		for ( unsigned int i = 0; i<m_vBuffer1.size(); i++ )
 		{
@@ -574,6 +574,7 @@ void CODEManager::HandleEvent( ODEEvent ode_event )
 
 void CODEManager::AddToBuffer( ODEEvent ode_event )
 {
+	m_iWritingToBuffer = 3;
 	if ( m_bBuffer )
 	{
 		m_iWritingToBuffer = 1;

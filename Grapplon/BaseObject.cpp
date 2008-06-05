@@ -145,8 +145,8 @@ void CBaseObject::AddForce( Vector& f )
 
 void inline CBaseObject::ApplyForceFront()
 {
-//	dBodyAddForceAtRelPos(m_oPhysicsData.body, frontForce[0], frontForce[1], 0.0f, 0.0f, 0.0f, 0.0f);
-	CODEManager::Instance()->BodyAddForce( m_oPhysicsData.body, frontForce );
+	dBodyAddForceAtRelPos(m_oPhysicsData.body, frontForce[0], frontForce[1], 0.0f, 0.0f, 0.0f, 0.0f);
+	//CODEManager::Instance()->BodyAddForce( m_oPhysicsData.body, frontForce );
 }
 
 
