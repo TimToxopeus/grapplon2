@@ -41,6 +41,8 @@ CPlayerObject::CPlayerObject( int iPlayer )
 	m_pShieldImage = new CAnimatedTexture(image);
 	m_pShieldImage->Scale( 0.9f );
 
+	m_pSparkImage = new CAnimatedTexture("media/scripts/texture_spark.txt");
+
 	m_pExplosion = new CAnimatedTexture("media/scripts/texture_explosion.txt");
 
 	m_fPUSpeedTime = 0;
@@ -48,7 +50,11 @@ CPlayerObject::CPlayerObject( int iPlayer )
 	m_fPUHealthTime = 0;
 
 	CODEManager* ode = CODEManager::Instance(); 
-	ode->CreatePhysicsData(this, &m_oPhysicsData, 30.0f);
+	if(iPlayer == 0){
+		ode->CreatePhysicsData(this, &m_oPhysicsData, 1.0f);
+	} else {
+		ode->CreatePhysicsData(this, &m_oPhysicsData, 50.0f);
+	}
 	SetMass( 1000.0f );
 	m_oPhysicsData.m_bAffectedByGravity = true;
 	m_oPhysicsData.m_fAirDragConst = 3000.0f;
@@ -256,6 +262,26 @@ void CPlayerObject::Render()
 		RenderQuad( target, m_pShieldImage, m_fAngle);
 	}
 
+	if(m_fPUShieldTime < 0.01f && m_fPUJellyTime < 0.01f && this->m_fInvincibleTime < 0.01f && m_vHitPositions.size() > 0){
+
+		for(unsigned int i = 0; i < m_vHitPositions.size(); i++){
+
+			target = this->m_pSparkImage->GetSize();
+			target.w += target.w;
+			target.h += target.h;
+			target.x = (int) m_vHitPositions[i][0];
+			target.y = (int) m_vHitPositions[i][1];
+
+			RenderQuad( target, m_pSparkImage, 0);
+
+		}
+
+		m_vHitPositions.clear();
+
+
+	}
+
+
 	if ( m_iHitpoints <= 0 )
 	{
 		target = m_pExplosion->GetSize();
@@ -421,7 +447,7 @@ void CPlayerObject::TookSpeedPowerUp() { m_fPUSpeedTime  = (float) SETS->PU_SPEE
 void CPlayerObject::TookJellyPowerUp() { m_fFreezeTime = 0; m_fPUJellyTime  = (float) SETS->PU_JELLY_TIME;  m_fPUShieldTime = 0; }
 void CPlayerObject::TookShieldPowerUp(){ m_fFreezeTime = 0; m_fPUShieldTime = (float) SETS->PU_SHIELD_TIME; m_fPUJellyTime = 0; }
 
-void CPlayerObject::CollideWith( CBaseObject *pOther)
+void CPlayerObject::CollideWith( CBaseObject *pOther, dReal* pos)
 {
 	if ( pOther->getType() == POWERUP )
 	{
@@ -481,6 +507,9 @@ void CPlayerObject::CollideWith( CBaseObject *pOther)
 
 	if( pOther->getType() == ASTEROID)
 	{
+
+		m_vHitPositions.push_back(pos);
+
 		CAsteroid* asteroid = dynamic_cast<CAsteroid*>(pOther);
 		time_t throwTime = time(NULL) - asteroid->m_fThrowTime;
 		if(throwTime <= 4)

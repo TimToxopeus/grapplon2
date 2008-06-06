@@ -8,6 +8,6 @@ public:
 	CHealthPowerUp(void);
 	~CHealthPowerUp(void);
 
-	void CollideWith(CBaseObject* pOther);
+	void CollideWith(CBaseObject* pOther, dReal* pos);
 
 };

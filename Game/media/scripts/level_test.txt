@@ -15,12 +15,12 @@ pu_health  = 15
 pu_gelly = 15
 pu_shield = 15
 
-[ice]
+[sun]
 name = sun
 mass = 1000000
 image = ice_planet_02
 imageglow = ice_planet_glow
-grav = 300
+grav = 1
 radius = 145
 tempradius = 550
 pos = 0 0
@@ -32,16 +32,28 @@ damagemult = 1.0
 name = wormhole2
 mass = 1000
 orbit = sun 1700 50
-pos2 = 2000 2000
+pos2 = -1700 -1700
 image = wormhole
 imageglow = wormhole_glow_red
 grav = 1
 radius = 200
 scale = 1.0
 rotation = 0
+angle = 0
 angle2 = 0
 exit1 = 0 0
 exit2 = -10000000 -10000000
 damagemult = 0.001
+
+[asteroid]
+name = asteroid3
+orbit = sun 800 50
+mass = 40
+image = asteroid1
+grav = 0
+angle = 90
+rotation = 10
+radius = 50
+damagemult = 3.5
 
 

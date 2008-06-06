@@ -368,8 +368,8 @@ void CODEManager::HandleCollisions()
 
 		Vector force = Vector( d1->body->lvel ) + Vector( d2->body->lvel ) * -1;
 
-		d1->m_pOwner->CollideWith( d2->m_pOwner);
-		d2->m_pOwner->CollideWith( d1->m_pOwner);
+		d1->m_pOwner->CollideWith( d2->m_pOwner, c->pos);
+		d2->m_pOwner->CollideWith( d1->m_pOwner, c->pos);
 
 		
 		if ( !( (d1->m_pOwner->getType() == HOOK) ^ (d2->m_pOwner->getType() == HOOK) ) )

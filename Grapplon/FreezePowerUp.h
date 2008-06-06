@@ -10,7 +10,7 @@ public:
 
 private:
 
-	void CollideWith(CBaseObject* pOther);
+	void CollideWith(CBaseObject* pOther, dReal* pos);
 
 
 };

@@ -17,7 +17,7 @@ CFreezePowerUp::~CFreezePowerUp(void)
 {
 }
 
-void CFreezePowerUp::CollideWith(CBaseObject* pOther)
+void CFreezePowerUp::CollideWith(CBaseObject* pOther, dReal* pos)
 {
 	if(pOther->getType() == SHIP)
 	{
@@ -34,5 +34,5 @@ void CFreezePowerUp::CollideWith(CBaseObject* pOther)
 			pSound->Play();
 	}
 
-	CPowerUp::CollideWith(pOther);
+	CPowerUp::CollideWith(pOther, pos);
 }

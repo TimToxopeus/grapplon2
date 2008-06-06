@@ -12,7 +12,7 @@ public:
 	PowerUpType GetPowerupType() { return m_ePowerUpType; }
 	bool m_bIsGrabable;
 
-	virtual void CollideWith( CBaseObject *pOther);
+	virtual void CollideWith( CBaseObject *pOther, dReal* pos);
 	virtual void Render();
 	virtual void Respawn();
 

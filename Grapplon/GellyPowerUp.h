@@ -8,6 +8,6 @@ public:
 	CGellyPowerUp(void);
 	~CGellyPowerUp(void);
 
-	void CollideWith(CBaseObject* pOther);
+	void CollideWith(CBaseObject* pOther, dReal* pos);
 
 };
