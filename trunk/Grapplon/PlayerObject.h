@@ -54,7 +54,7 @@ public:
 	virtual void Render();
 	virtual void SetPosition( float fX, float fY );
 	virtual void SetPosition( Vector pos );
-	virtual void CollideWith( CBaseObject *pOther, dReal* pos);
+	virtual void CollideWith( CBaseObject *pOther, Vector &pos);
 
 	virtual void OnDie( CBaseObject *m_pKiller );
 	virtual inline void ApplyForceFront();

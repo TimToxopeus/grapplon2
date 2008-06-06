@@ -51,7 +51,7 @@ CPlayerObject::CPlayerObject( int iPlayer )
 
 	CODEManager* ode = CODEManager::Instance(); 
 	if(iPlayer == 0){
-		ode->CreatePhysicsData(this, &m_oPhysicsData, 1.0f);
+		ode->CreatePhysicsData(this, &m_oPhysicsData, 50.0f);
 	} else {
 		ode->CreatePhysicsData(this, &m_oPhysicsData, 50.0f);
 	}
@@ -447,7 +447,7 @@ void CPlayerObject::TookSpeedPowerUp() { m_fPUSpeedTime  = (float) SETS->PU_SPEE
 void CPlayerObject::TookJellyPowerUp() { m_fFreezeTime = 0; m_fPUJellyTime  = (float) SETS->PU_JELLY_TIME;  m_fPUShieldTime = 0; }
 void CPlayerObject::TookShieldPowerUp(){ m_fFreezeTime = 0; m_fPUShieldTime = (float) SETS->PU_SHIELD_TIME; m_fPUJellyTime = 0; }
 
-void CPlayerObject::CollideWith( CBaseObject *pOther, dReal* pos)
+void CPlayerObject::CollideWith( CBaseObject *pOther, Vector &pos)
 {
 	if ( pOther->getType() == POWERUP )
 	{

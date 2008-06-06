@@ -17,7 +17,7 @@ CGellyPowerUp::~CGellyPowerUp(void)
 {
 }
 
-void CGellyPowerUp::CollideWith(CBaseObject* pOther, dReal* pos)
+void CGellyPowerUp::CollideWith(CBaseObject* pOther, Vector &pos)
 {
 	if(pOther->getType() == SHIP)
 	{

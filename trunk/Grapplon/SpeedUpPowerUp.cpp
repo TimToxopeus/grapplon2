@@ -16,7 +16,7 @@ CSpeedUpPowerUp::~CSpeedUpPowerUp(void)
 {
 }
 
-void CSpeedUpPowerUp::CollideWith(CBaseObject* pOther, dReal* pos)
+void CSpeedUpPowerUp::CollideWith(CBaseObject* pOther, Vector &pos)
 {
 	if(pOther->getType() == SHIP)
 	{

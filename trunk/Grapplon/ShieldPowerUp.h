@@ -8,6 +8,6 @@ public:
 	CShieldPowerUp(void);
 	~CShieldPowerUp(void);
 
-	void CollideWith(CBaseObject* pOther, dReal* pos);
+	void CollideWith(CBaseObject* pOther, Vector &pos);
 
 };
