@@ -267,8 +267,6 @@ void CPlayerObject::Render()
 			CollisionEffect *ce = m_vCollisionEffects[i];
 
 			target = ce->m_pEffect->GetSize();
-			target.w = (target.w * 2);
-			target.h = (target.h * 2);
 			target.x = (int) ce->m_vPosition[0] - (target.w / 2);
 			target.y = (int) ce->m_vPosition[1] - (target.w / 2);
 
