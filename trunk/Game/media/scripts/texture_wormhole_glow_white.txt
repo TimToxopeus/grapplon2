@@ -1,0 +1,9 @@
+[object]
+width = 220
+height = 220
+animations = idle
+
+[idle]
+file = "media/images/wormhole_glow_white.png"
+frames = 1
+speed = 1
