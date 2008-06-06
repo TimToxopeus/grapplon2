@@ -60,10 +60,19 @@ bool LevelSelectOption::IsClicked( int x, int y )
 	SDL_Rect target;
 	target = m_pImage->GetSize();
 
+	float radius = (float)sqrt((float)(target.w * target.w + target.h * target.h)) + 10;
+
 	target.w += target.w;
 	target.h += target.h;
 	target.x = -756 + this->x * 2;
 	target.y = -650 + this->y * 2;
+
+	Vector v1 = Vector((float)target.x, (float)target.y, 0);
+	Vector v2 = Vector((float)x, (float)y, 0);
+	Vector v3 = v1 - v2;
+	if ( v3.Length() < radius )
+		return true;
+	return false;
 
 	if ( x < target.x || x > target.x + target.w )
 		return false;
@@ -615,7 +624,7 @@ bool CMenuState::HandleWiimoteEvent( wiimote_t* pWiimoteEvent )
 					v += Vector( cos(angle), sin(angle), 0.0f );
 					v -= Vector((float)icursorX, (float)icursorY, 0);
 					v.Normalize();
-					v *= 80.0f * pWiimoteEvent->exp.nunchuk.js.mag;
+					v *= 15.0f * pWiimoteEvent->exp.nunchuk.js.mag;
 					int cx = (int)(cursorX + v[0]);
 					int cy = (int)(cursorY + v[1]);
 					AddCursorXY( cx, cy );
