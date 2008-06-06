@@ -41,8 +41,6 @@ CPlayerObject::CPlayerObject( int iPlayer )
 	m_pShieldImage = new CAnimatedTexture(image);
 	m_pShieldImage->Scale( 0.9f );
 
-	m_pSparkImage = new CAnimatedTexture("media/scripts/texture_spark.txt");
-
 	m_pExplosion = new CAnimatedTexture("media/scripts/texture_explosion.txt");
 
 	m_fPUSpeedTime = 0;
@@ -262,23 +260,21 @@ void CPlayerObject::Render()
 		RenderQuad( target, m_pShieldImage, m_fAngle);
 	}
 
-	if(m_fPUShieldTime < 0.01f && m_fPUJellyTime < 0.01f && this->m_fInvincibleTime < 0.01f && m_vHitPositions.size() > 0){
+	if(m_fPUShieldTime < 0.01f && m_fPUJellyTime < 0.01f && this->m_fInvincibleTime < 0.01f && m_vCollisionEffects.size() > 0){
 
-		for(unsigned int i = 0; i < m_vHitPositions.size(); i++){
+		for(unsigned int i = 0; i < m_vCollisionEffects.size(); i++)
+		{
+			CollisionEffect *ce = m_vCollisionEffects[i];
 
-			target = this->m_pSparkImage->GetSize();
-			target.w = (target.w * 3);
-			target.h = (target.h * 3);
-			target.x = (int) m_vHitPositions[i][0] - (target.w / 2);
-			target.y = (int) m_vHitPositions[i][1] - (target.w / 2);
+			target = ce->m_pEffect->GetSize();
+			target.w = (target.w * 2);
+			target.h = (target.h * 2);
+			target.x = (int) ce->m_vPosition[0] - (target.w / 2);
+			target.y = (int) ce->m_vPosition[1] - (target.w / 2);
 
-			RenderQuad( target, m_pSparkImage, 0);
+			RenderQuad( target, ce->m_pEffect, 0);
 
 		}
-
-		m_vHitPositions.clear();
-
-
 	}
 
 
@@ -370,7 +366,20 @@ void CPlayerObject::Update( float fTime )
 
 	if ( m_iHitpoints <= 0 )
 		m_pExplosion->UpdateFrame( fTime );
-	m_pSparkImage->UpdateFrame( fTime );
+
+	if ( m_vCollisionEffects.size() > 0 )
+	{
+		for ( int i = m_vCollisionEffects.size() - 1; i>=0; i-- )
+		{
+			m_vCollisionEffects[i]->m_pEffect->UpdateFrame( fTime );
+			if ( m_vCollisionEffects[i]->m_pEffect->IsFinished() )
+			{
+				delete m_vCollisionEffects[i]->m_pEffect;
+				delete m_vCollisionEffects[i];
+				m_vCollisionEffects.erase( m_vCollisionEffects.begin() + i );
+			}
+		}
+	}
 
 	CBaseMovableObject::Update( fTime );
 
@@ -508,8 +517,14 @@ void CPlayerObject::CollideWith( CBaseObject *pOther, Vector &pos)
 
 	if( pOther->getType() == ASTEROID)
 	{
-
-		m_vHitPositions.push_back(pos);
+		if ( !HasSpark( pOther ) )
+		{
+			CollisionEffect *ce = new CollisionEffect();
+			ce->m_pEffect = new CAnimatedTexture("media/scripts/texture_hit.txt");
+			ce->m_vPosition = pos;
+			ce->m_pOther = pOther;
+			m_vCollisionEffects.push_back(ce);
+		}
 
 		CAsteroid* asteroid = dynamic_cast<CAsteroid*>(pOther);
 		time_t throwTime = time(NULL) - asteroid->m_fThrowTime;
@@ -562,4 +577,14 @@ void CPlayerObject::CollideWith( CBaseObject *pOther, Vector &pos)
 	}
 
 	//CBaseObject::CollideWith(pOther, force);
+}
+
+bool CPlayerObject::HasSpark( CBaseObject *pOther )
+{
+	for ( unsigned int i = 0; i<m_vCollisionEffects.size(); i++ )
+	{
+		if ( m_vCollisionEffects[i]->m_pOther == pOther )
+			return true;
+	}
+	return false;
 }

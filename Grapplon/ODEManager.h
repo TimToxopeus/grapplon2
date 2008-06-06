@@ -12,7 +12,6 @@ class CUniverse;
 #define ODE_DEPTH 10
 #define MAX_CONTACTS 128
 #define MAX_HINGES 64
-#define SOUNDTIME 500
 
 struct Collide
 {

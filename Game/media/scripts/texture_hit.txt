@@ -8,3 +8,4 @@ file = "media/images/hit.png"
 frames = 12
 rows = 3
 speed = 10
+loop = 0

@@ -2,6 +2,8 @@
 #include "PlayerObject.h"
 #include "Renderer.h"
 #include "LogManager.h"
+#include "ResourceManager.h"
+#include "Sound.h"
 #include "AnimatedTexture.h"
 
 CHUD::CHUD()
@@ -59,6 +61,12 @@ void CHUD::Update( float fTime )
 
 	for ( int i = 0; i<4; i++ )
 		m_pCountDown[i]->UpdateFrame( fTime );
+
+	if ( m_fMatchTimeLeft <= 5.0f && m_fMatchTimeLeft >= 4.0f )
+	{
+		CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Countdown.wav", RT_SOUND);
+		pSound->Play();
+	}
 }
 
 void CHUD::Render()
