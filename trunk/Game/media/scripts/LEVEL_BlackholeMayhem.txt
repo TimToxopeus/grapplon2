@@ -1,6 +1,6 @@
 [universe]
-width = 2500
-height = 2500
+width = 3000
+height = 3000
 boundaryforce = 20000000
 initspawn1 = 1500 450
 initspawn2 = -1500 -450
