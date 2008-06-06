@@ -1,3 +1,7 @@
+--------------------------------------------------------------------------------------------------------------------
+GENERAL
+--------------------------------------------------------------------------------------------------------------------
+
 [universe]
 width = 2500
 height = 2000
@@ -11,18 +15,61 @@ pu_freeze  = 20
 pu_health  = 10
 pu_shield = 5
 
+--------------------------------------------------------------------------------------------------------------------
+WIND PLANETS
+--------------------------------------------------------------------------------------------------------------------
+
 [sun]
 name = wind_planet1
 mass = 100000
 image = wind_planet
 imageglow = windglow
 imageorbit = orbit_circle
-grav = -1000
+grav = -200
 scale = 1.5
 radius = 140
 damagemult = 0.2
 pos = 0 0
 tempradius = 1
+
+[ordinary]
+name = wind_planet4
+orbit = wind_planet1 500 -100
+mass = 350000
+image = wind_planet
+imageglow = windglow
+imageorbit = orbit_circle
+grav = -500
+angle = 40
+scale = 1.0
+radius = 140
+damagemult = 0.2
+
+[ordinary]
+name = wind_planet5
+orbit = wind_planet1 500 -100
+mass = 350000
+image = wind_planet
+imageglow = windglow
+imageorbit = orbit_circle
+grav = -500
+angle = 160
+scale = 1.0
+radius = 140
+damagemult = 0.2
+
+[ordinary]
+name = wind_planet6
+orbit = wind_planet1 500 -100
+mass = 350000
+image = wind_planet
+imageglow = windglow
+imageorbit = orbit_circle
+grav = -500
+angle = 280
+scale = 1.0
+radius = 140
+damagemult = 0.2
 
 [sun]
 name = wind_planet2
@@ -50,6 +97,10 @@ damagemult = 0.2
 pos = 0 1100
 tempradius = 1
 
+--------------------------------------------------------------------------------------------------------------------
+ASTEROID PLANETS
+--------------------------------------------------------------------------------------------------------------------
+
 [sun]
 name = astroidPlanet1
 mass = 100000
@@ -59,7 +110,7 @@ grav = 10
 scale = 1.5
 radius = 140
 damagemult = 0.05
-pos = -1600 -1000
+pos = -2200 -1000
 tempradius = 1
 
 [sun]
@@ -71,7 +122,7 @@ grav = 10
 scale = 1.5
 radius = 140
 damagemult = 0.05
-pos = -1600 1000
+pos = -2200 1000
 tempradius = 1
 
 [sun]
@@ -83,7 +134,7 @@ grav = 10
 scale = 1.5
 radius = 140
 damagemult = 0.05
-pos = 1600 -1000
+pos = 2200 -1000
 tempradius = 1
 
 [sun]
@@ -95,8 +146,12 @@ grav = 10
 scale = 1.5
 radius = 140
 damagemult = 0.05
-pos = 1600 1000
+pos = 2200 1000
 tempradius = 1
+
+--------------------------------------------------------------------------------------------------------------------
+ASTEROIDS
+--------------------------------------------------------------------------------------------------------------------
 
 [asteroid]
 name = asteroid1-1
@@ -174,7 +229,6 @@ angle = 100
 rotation = 33
 radius = 50
 damagemult = 3.5
-
 
 [asteroid]
 name = asteroid4-3
