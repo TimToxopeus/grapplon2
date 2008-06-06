@@ -54,7 +54,7 @@ public:
 
 	Vector GetForwardVector();
 
-	virtual void CollideWith( CBaseObject *pOther);
+	virtual void CollideWith( CBaseObject *pOther, dReal* pos);
 	virtual void OnDie( CBaseObject *m_pKiller );
 	virtual void IncreaseTemp( float timePassed ) {};
 	int GetHitpoints() { return m_iHitpoints; };

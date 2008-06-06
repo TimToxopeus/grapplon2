@@ -42,7 +42,7 @@ public:
 	void Explode();
 	void LeaveField();
 	void OnPlanetCollide(CBaseObject *pOther);
-	void CollideWith(CBaseObject *pOther);
+	void CollideWith(CBaseObject *pOther, dReal* pos);
 	void Split();
 	void IncreaseTemp(float timePassed);
 

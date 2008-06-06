@@ -83,6 +83,8 @@ bool CUniverse::Load( std::string file )
 			}
 		}
 
+		int inc = 0;
+
 		// Calculate positions
 		for ( unsigned int i = 0; i<m_vUniverse.size(); i++ )
 		{
@@ -91,17 +93,17 @@ bool CUniverse::Load( std::string file )
 			if(d.orbit != "")
 			{
 				CPlanet* orbitted = m_vPlanets[IndexByName( d.orbit )];
-				SetUpOrbit(m_vPlanets[i], orbitted);
+				SetUpOrbit(m_vPlanets[i + inc], orbitted);
 
 				if( d.planetType == WORMHOLE){
-					i++;
+					inc++;
 					if(d.orbit2 != ""){
 						CPlanet* orbitted = m_vPlanets[IndexByName( d.orbit2 )];
-						SetUpOrbit(m_vPlanets[i], orbitted);
+						SetUpOrbit(m_vPlanets[i + inc], orbitted);
 					}
 				}
-			} else if (d.planetType == WORMHOLE){
-				i++;
+			} else if(d.planetType == WORMHOLE){
+				inc++;
 			}
 
 

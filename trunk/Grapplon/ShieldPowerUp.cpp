@@ -17,7 +17,7 @@ CShieldPowerUp::~CShieldPowerUp(void)
 {
 }
 
-void CShieldPowerUp::CollideWith(CBaseObject* pOther)
+void CShieldPowerUp::CollideWith(CBaseObject* pOther, dReal* pos)
 {
 	if(pOther->getType() == SHIP)
 	{
@@ -28,5 +28,5 @@ void CShieldPowerUp::CollideWith(CBaseObject* pOther)
 			pSound->Play();
 	}
 
-	CPowerUp::CollideWith(pOther);
+	CPowerUp::CollideWith(pOther, pos);
 }

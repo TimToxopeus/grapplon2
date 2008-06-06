@@ -8,6 +8,6 @@ public:
 	CSpeedUpPowerUp(void);
 	~CSpeedUpPowerUp(void);
 
-	void CollideWith(CBaseObject* pOther);
+	void CollideWith(CBaseObject* pOther, dReal* pos);
 
 };

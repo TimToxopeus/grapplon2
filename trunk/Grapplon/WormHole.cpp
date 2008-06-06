@@ -29,7 +29,7 @@ void CWormHole::ThrowObject(CBaseObject* object){
 	m_pToThrow = object;
 }
 
-void CWormHole::CollideWith(CBaseObject *pOther)
+void CWormHole::CollideWith(CBaseObject *pOther, dReal* pos)
 {
 	ObjectType oType = pOther->getType();
 	if(oType == SUN || oType == ICE || oType == ORDINARY || oType == HOOK || oType == FIRE || oType == WORMHOLE) return;

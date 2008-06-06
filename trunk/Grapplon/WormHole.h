@@ -14,7 +14,7 @@ public:
 	CWormHole* twin;
 
 	void ThrowObject(CBaseObject* player);
-	void CollideWith(CBaseObject *pOther);
+	void CollideWith(CBaseObject *pOther, dReal* pos);
 	CBaseObject* m_pToThrow;
 	virtual void Update(float fTime);
 

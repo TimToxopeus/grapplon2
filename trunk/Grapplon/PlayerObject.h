@@ -20,6 +20,9 @@ private:
 	CAnimatedTexture *m_pExplosion;
 	CAnimatedTexture *m_pJellyImage;
 	CAnimatedTexture *m_pShieldImage;
+	CAnimatedTexture *m_pSparkImage;
+
+	std::vector<Vector> m_vHitPositions;
 
 	int m_iPlayer;
 	float m_fExplosionAngle;
@@ -51,7 +54,7 @@ public:
 	virtual void Render();
 	virtual void SetPosition( float fX, float fY );
 	virtual void SetPosition( Vector pos );
-	virtual void CollideWith( CBaseObject *pOther);
+	virtual void CollideWith( CBaseObject *pOther, dReal* pos);
 
 	virtual void OnDie( CBaseObject *m_pKiller );
 	virtual inline void ApplyForceFront();
