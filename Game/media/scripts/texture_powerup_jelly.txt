@@ -1,9 +1,10 @@
 [object]
-width = 72
-height = 72
+width = 150
+height = 150
 animations = idle
 
 [idle]
 file = "media/images/powerup_jelly.png"
-frames = 1
-speed = 0
+frames = 40
+rows = 5
+speed = 20
