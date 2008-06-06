@@ -4,6 +4,6 @@ height = 203
 animations = idle
 
 [idle]
-file = "media/images/level_info_moon.png"
+file = "media/images/level_info_battle.png"
 frames = 1
 speed = 1
