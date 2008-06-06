@@ -1,0 +1,10 @@
+[object]
+width = 400
+height = 400
+animations = idle
+
+[idle]
+file = "media/images/hit.png"
+frames = 12
+rows = 3
+speed = 10
