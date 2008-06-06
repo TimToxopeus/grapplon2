@@ -267,10 +267,10 @@ void CPlayerObject::Render()
 		for(unsigned int i = 0; i < m_vHitPositions.size(); i++){
 
 			target = this->m_pSparkImage->GetSize();
-			target.w += target.w;
-			target.h += target.h;
-			target.x = (int) m_vHitPositions[i][0];
-			target.y = (int) m_vHitPositions[i][1];
+			target.w = (target.w * 3);
+			target.h = (target.h * 3);
+			target.x = (int) m_vHitPositions[i][0] - (target.w / 2);
+			target.y = (int) m_vHitPositions[i][1] - (target.w / 2);
 
 			RenderQuad( target, m_pSparkImage, 0);
 
