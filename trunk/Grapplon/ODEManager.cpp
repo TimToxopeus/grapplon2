@@ -18,6 +18,8 @@
 
 #include "Vector.h"
 
+#define SOUNDTIME 250
+
 CODEManager *CODEManager::m_pInstance = NULL;
 
 int ODEManagerThread(void *data)

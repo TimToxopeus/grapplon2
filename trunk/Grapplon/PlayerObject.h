@@ -9,6 +9,13 @@ class CParticleEmitter;
 
 class CHook;
 
+struct CollisionEffect
+{
+	CAnimatedTexture *m_pEffect;
+	Vector m_vPosition;
+	CBaseObject *m_pOther;
+};
+
 class CPlayerObject : public CBaseMovableObject, public IWiimoteListener
 {
 private:
@@ -20,9 +27,8 @@ private:
 	CAnimatedTexture *m_pExplosion;
 	CAnimatedTexture *m_pJellyImage;
 	CAnimatedTexture *m_pShieldImage;
-	CAnimatedTexture *m_pSparkImage;
 
-	std::vector<Vector> m_vHitPositions;
+	std::vector<CollisionEffect *> m_vCollisionEffects;
 
 	int m_iPlayer;
 	float m_fExplosionAngle;
@@ -40,6 +46,7 @@ private:
 	CParticleEmitter *m_pThrusterLeft, *m_pThrusterRight;
 
 	void Respawn();
+	bool HasSpark( CBaseObject *pOther );
 
 public:
 
