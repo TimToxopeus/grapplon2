@@ -13,7 +13,7 @@
 #define PLAYERSELECT 19
 #define LEVELSELECT 20
 #define HIGH 25
-#define IR_AVG 10
+#define IR_AVG 1
 
 enum StateStyle
 {
