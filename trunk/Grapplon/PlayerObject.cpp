@@ -48,11 +48,7 @@ CPlayerObject::CPlayerObject( int iPlayer )
 	m_fPUHealthTime = 0;
 
 	CODEManager* ode = CODEManager::Instance(); 
-	if(iPlayer == 0){
-		ode->CreatePhysicsData(this, &m_oPhysicsData, 50.0f);
-	} else {
-		ode->CreatePhysicsData(this, &m_oPhysicsData, 50.0f);
-	}
+	ode->CreatePhysicsData(this, &m_oPhysicsData, 50.0f);
 	SetMass( 1000.0f );
 	m_oPhysicsData.m_bAffectedByGravity = true;
 	m_oPhysicsData.m_fAirDragConst = 3000.0f;
@@ -60,9 +56,9 @@ CPlayerObject::CPlayerObject( int iPlayer )
 	m_pHook = new CHook( this );
 	
 	m_pThrusterLeft = CParticleSystemManager::InstanceNear()->LoadEmitter( "media/scripts/particle_thruster" + itoa2(iPlayer + 1) + ".txt" );
-	if ( m_pThrusterLeft) m_pThrusterLeft->ToggleSpawn();		// TODO: Reset
+//	if ( m_pThrusterLeft) m_pThrusterLeft->ToggleSpawn();		// TODO: Reset
 	m_pThrusterRight = CParticleSystemManager::InstanceNear()->LoadEmitter( "media/scripts/particle_thruster" + itoa2(iPlayer + 1) + ".txt" );
-	if ( m_pThrusterRight ) m_pThrusterRight->ToggleSpawn();
+//	if ( m_pThrusterRight ) m_pThrusterRight->ToggleSpawn();
 }
 
 CPlayerObject::~CPlayerObject()
