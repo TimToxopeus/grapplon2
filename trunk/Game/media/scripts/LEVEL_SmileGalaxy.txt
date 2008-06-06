@@ -1,6 +1,6 @@
 [universe]
 width = 2800
-height = 2400
+height = 2500
 boundaryforce = 20000000
 initspawn1 = 1700 200
 initspawn2 = -1700 200
@@ -144,7 +144,7 @@ damagemult = 3.5
 
 [asteroid]
 name = asteroid1
-orbit = sun 2200 100
+orbit = sun 2250 100
 mass = 40
 image = asteroid02
 grav = 0
@@ -155,7 +155,7 @@ damagemult = 3.5
 
 [asteroid]
 name = asteroid2
-orbit = sun 2300 100
+orbit = sun 2350 100
 mass = 40
 image = asteroid02
 grav = 0
@@ -166,7 +166,7 @@ damagemult = 3.5
 
 [asteroid]
 name = asteroid3
-orbit = sun 2500 100
+orbit = sun 2480 100
 mass = 40
 image = asteroid02
 grav = 0
@@ -177,7 +177,7 @@ damagemult = 3.5
 
 [asteroid]
 name = asteroid4
-orbit = sun 2500 100
+orbit = sun 2450 100
 mass = 40
 image = asteroid02
 grav = 0
