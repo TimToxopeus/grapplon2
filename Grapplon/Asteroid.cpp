@@ -194,7 +194,7 @@ void CAsteroid::IncreaseTemp(float tempTimeIncrease)
 }
 
 
-void CAsteroid::CollideWith(CBaseObject *pOther, dReal* pos)
+void CAsteroid::CollideWith(CBaseObject *pOther, Vector &pos)
 {
 
 	if(!m_bIsInOrbit && m_pHoldingPlayer == NULL && (pOther->getType() == ORDINARY || pOther->getType() == SUN || pOther->getType() == ICE || pOther->getType() == BROKEN))

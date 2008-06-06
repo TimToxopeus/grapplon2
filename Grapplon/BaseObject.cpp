@@ -168,7 +168,7 @@ Vector CBaseObject::GetForwardVector()
 	return v;
 }
 
-void CBaseObject::CollideWith( CBaseObject *pOther, dReal* pos )
+void CBaseObject::CollideWith( CBaseObject *pOther, Vector &pos )
 {
 }
 

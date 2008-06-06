@@ -28,7 +28,7 @@ void CPowerUp::Render()
 	CBaseObject::Render();
 }
 
-void CPowerUp::CollideWith(CBaseObject *pOther, dReal* pos)
+void CPowerUp::CollideWith(CBaseObject *pOther, Vector &pos)
 {
 	if(pOther->getType() == SHIP)
 	{

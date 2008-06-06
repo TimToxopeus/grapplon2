@@ -17,7 +17,7 @@ CHealthPowerUp::~CHealthPowerUp(void)
 {
 }
 
-void CHealthPowerUp::CollideWith(CBaseObject* pOther, dReal* pos)
+void CHealthPowerUp::CollideWith(CBaseObject* pOther, Vector &pos)
 {
 	if(pOther->getType() == SHIP)
 	{

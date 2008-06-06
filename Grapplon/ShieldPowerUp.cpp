@@ -17,7 +17,7 @@ CShieldPowerUp::~CShieldPowerUp(void)
 {
 }
 
-void CShieldPowerUp::CollideWith(CBaseObject* pOther, dReal* pos)
+void CShieldPowerUp::CollideWith(CBaseObject* pOther, Vector &pos)
 {
 	if(pOther->getType() == SHIP)
 	{
