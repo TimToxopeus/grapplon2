@@ -370,6 +370,7 @@ void CPlayerObject::Update( float fTime )
 
 	if ( m_iHitpoints <= 0 )
 		m_pExplosion->UpdateFrame( fTime );
+	m_pSparkImage->UpdateFrame( fTime );
 
 	CBaseMovableObject::Update( fTime );
 
