@@ -1,6 +1,6 @@
 [universe]
-width = 1600
-height = 1000
+width = 2500
+height = 2000
 boundaryforce = 20000000
 initspawn1 = -800 500
 initspawn2 = 800 -500
@@ -27,27 +27,27 @@ tempradius = 1
 [sun]
 name = wind_planet2
 mass = 100000
-image = wind_planet
-imageglow = windglow
+image = saturn_planet
+imageglow = wormhole_glow_yellow
 imageorbit = orbit_circle
-grav = -2000
-scale = 2
+grav = -4000
+scale = 3
 radius = 140
 damagemult = 0.2
-pos = 0 -700
+pos = 0 -1100
 tempradius = 1
 
 [sun]
 name = wind_planet3
 mass = 100000
-image = wind_planet
-imageglow = windglow
+image = saturn_planet
+imageglow = wormhole_glow_yellow
 imageorbit = orbit_circle
-grav = -2000
-scale = 2
+grav = -4000
+scale = 3
 radius = 140
 damagemult = 0.2
-pos = 0 700
+pos = 0 1100
 tempradius = 1
 
 [sun]
@@ -59,7 +59,7 @@ grav = 10
 scale = 1.5
 radius = 140
 damagemult = 0.05
-pos = -1400 -800
+pos = -1600 -1000
 tempradius = 1
 
 [sun]
@@ -71,7 +71,7 @@ grav = 10
 scale = 1.5
 radius = 140
 damagemult = 0.05
-pos = -1400 800
+pos = -1600 1000
 tempradius = 1
 
 [sun]
@@ -83,7 +83,7 @@ grav = 10
 scale = 1.5
 radius = 140
 damagemult = 0.05
-pos = 1400 -800
+pos = 1600 -1000
 tempradius = 1
 
 [sun]
@@ -95,7 +95,7 @@ grav = 10
 scale = 1.5
 radius = 140
 damagemult = 0.05
-pos = 1400 800
+pos = 1600 1000
 tempradius = 1
 
 [asteroid]

@@ -1,6 +1,6 @@
 [universe]
-width = 3000
-height = 3000
+width = 2800
+height = 2800
 boundaryforce = 20000000
 initspawn1 = 2000 2000
 initspawn2 = -2000 -2000
@@ -30,154 +30,107 @@ damagemult = 100
 rotation = 40
 emitter = "media/scripts/particle_black2_emitter.txt", far, 0, 0
 
-[ordinary]
-name = generic_planet
-orbit = black_hole 900 -100
+[wormhole]
+name = wormhole1
 mass = 750000
+orbit = black_hole 900 -100
+orbit2 = black_hole 1800 75
 image = wormhole
 imageglow = wormhole_glow_red
-grav = 0
-scale = 2
-radius = 160
+grav = 1
+radius = 100 
+scale = 1.0
+rotation = 0
 angle = 10
-damagemult = 0
+angle2 = 320
+exit1 = -100000 -100000
+exit2 = -100000 -100000
+damagemult = 0.001
 
-[ordinary]
-name = generic_planet
-orbit = black_hole 900 -100
+[wormhole]
+name = wormhole2
 mass = 750000
-image = wormhole
-imageglow = wormhole_glow_green
-grav = 0
-scale = 2
-radius = 160
-angle = 130
-damagemult = 0
-
-[ordinary]
-name = generic_planet
 orbit = black_hole 900 -100
-mass = 750000
+orbit2 = black_hole 2500 -300
 image = wormhole
 imageglow = wormhole_glow_blue
-grav = 0
-scale = 2
-radius = 160
+grav = 1
+radius = 100 
+scale = 1.0
+rotation = 0
 angle = 250
-damagemult = 0
+angle2 = 0
+exit1 = -100000 -100000
+exit2 = -100000 -100000
+damagemult = 0.001
 
-
-[ordinary]
-name = generic_planet
-orbit = black_hole 1800 75
+[wormhole]
+name = wormhole3
 mass = 750000
-image = wormhole
-imageglow = wormhole_glow_yellow
-grav = 0
-scale = 2
-radius = 160
-angle = 50
-damagemult = 0
-
-[ordinary]
-name = generic_planet
-orbit = black_hole 1800 75
-mass = 750000
-image = wormhole
-imageglow = wormhole_glow_purple
-grav = 0
-scale = 2
-radius = 160
-angle = 140
-damagemult = 0
-
-[ordinary]
-name = generic_planet
-orbit = black_hole 1800 75
-mass = 750000
-image = wormhole
-imageglow = wormhole_glow_white
-grav = 0
-scale = 2
-radius = 160
-angle = 230
-damagemult = 0
-
-[ordinary]
-name = generic_planet
-orbit = black_hole 1800 75
-mass = 750000
-image = wormhole
-imageglow = wormhole_glow_red
-grav = 0
-scale = 2
-radius = 160
-angle = 320
-damagemult = 0
-
-
-
-[ordinary]
-name = generic_planet
-orbit = black_hole 2500 -300
-mass = 750000
-image = wormhole
-imageglow = wormhole_glow_blue
-grav = 0
-scale = 2
-radius = 160
-angle = 0
-damagemult = 0
-
-[ordinary]
-name = generic_planet
-orbit = black_hole 2500 -300
-mass = 750000
+orbit = black_hole 900 -100
+orbit2 = black_hole 2500 -300
 image = wormhole
 imageglow = wormhole_glow_green
-grav = 0
-scale = 2
-radius = 160
-angle = 72
-damagemult = 0
+grav = 1
+radius = 100 
+scale = 1.0
+rotation = 0
+angle = 130
+angle2 = 72
+exit1 = -100000 -100000
+exit2 = -100000 -100000
+damagemult = 0.001
 
-[ordinary]
-name = generic_planet
-orbit = black_hole 2500 -300
+[wormhole]
+name = wormhole4
 mass = 750000
+orbit = black_hole 1800 75
+orbit2 = black_hole 2500 -300
 image = wormhole
 imageglow = wormhole_glow_yellow
-grav = 0
-scale = 2
-radius = 160
-angle = 144
-damagemult = 0
+grav = 1
+radius = 100 
+scale = 1.0
+rotation = 0
+angle = 50
+angle2 = 144
+exit1 = -100000 -100000
+exit2 = -100000 -100000
+damagemult = 0.001
 
-[ordinary]
-name = generic_planet
-orbit = black_hole 2500 -300
+[wormhole]
+name = wormhole5
 mass = 750000
+orbit = black_hole 1800 75
+orbit2 = black_hole 2500 -300
 image = wormhole
 imageglow = wormhole_glow_white
-grav = 0
-scale = 2
-radius = 160
-angle = 216
-damagemult = 0
+grav = 1
+radius = 100 
+scale = 1.0
+rotation = 0
+angle = 230
+angle2 = 216
+exit1 = -100000 -100000
+exit2 = -100000 -100000
+damagemult = 0.001
 
-[ordinary]
-name = generic_planet
-orbit = black_hole 2500 -300
+[wormhole]
+name = wormhole6
 mass = 750000
+orbit = black_hole 1800 75
+orbit2 = black_hole 2500 -300
 image = wormhole
 imageglow = wormhole_glow_purple
-grav = 0
-scale = 2
-radius = 160
-angle = 288
-damagemult = 0
-
-
+grav = 1
+radius = 100 
+scale = 1.0
+rotation = 0
+angle = 140
+angle2 = 288
+exit1 = -100000 -100000
+exit2 = -100000 -100000
+damagemult = 0.001
 
 [asteroid]
 name = asteroid1
