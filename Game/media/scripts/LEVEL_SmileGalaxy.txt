@@ -1,17 +1,17 @@
 [universe]
-width = 3200
-height = 3000
+width = 2800
+height = 2400
 boundaryforce = 20000000
 initspawn1 = 1700 200
 initspawn2 = -1700 200
 initspawn3 = -1700 -200
 initspawn4 = 1700 -200
 max_power_up = 3
-pu_freeze  = 20
+pu_freeze  = 5
 pu_speed  = 35
-pu_health  = 20
+pu_health  = 30
 pu_gelly = 15
-pu_shield = 10
+pu_shield = 15
 
 [sun]
 name = sun
@@ -29,13 +29,13 @@ damagemult = 1.1
 [sun]
 name = black_hole
 mass = 1000000
-pos = -1200 -1000
+pos = -1200 -1350
 image = black_hole
 imageglow = black_hole_glow
-grav = 500
+grav = 300
 angle = 10
-scale = 3
-radius = 10
+scale = 4
+radius = 12
 damagemult = 100
 tempradius = 1
 rotation = 40
@@ -44,13 +44,13 @@ emitter = "media/scripts/particle_black_emitter.txt", far, 0, 0
 [sun]
 name = black_hole2
 mass = 1000000
-pos = 1200 -1000
+pos = 1200 -1350
 image = black_hole
 imageglow = black_hole_glow
-grav = 500
+grav = 300
 angle = 10
-scale = 3
-radius = 10
+scale = 4
+radius = 12
 damagemult = 100
 tempradius = 1
 rotation = 40
@@ -58,7 +58,7 @@ emitter = "media/scripts/particle_black_emitter.txt", far, 0, 0
 
 [ice]
 name = ice_planet1
-pos = 0 1400
+pos = 0 1500
 mass = 300000
 image = ice_planet_02
 imageglow = ice_planet_glow
@@ -73,7 +73,7 @@ damagemult = 0.1
 
 [ice]
 name = ice_planet2
-pos = 750 1300
+pos = 750 1400
 mass = 300000
 image = ice_planet_02
 imageglow = ice_planet_glow
@@ -88,7 +88,7 @@ damagemult = 0.1
 
 [ice]
 name = ice_planet3
-pos = -750 1300
+pos = -750 1400
 mass = 300000
 image = ice_planet_02
 imageglow = ice_planet_glow
@@ -103,7 +103,7 @@ damagemult = 0.1
 
 [ice]
 name = ice_planet6
-pos = -1500 1000
+pos = -1500 1100
 mass = 300000
 image = ice_planet_02
 imageglow = ice_planet_glow
@@ -118,7 +118,7 @@ damagemult = 0.1
 
 [ice]
 name = ice_planet7
-pos = 1500 1000
+pos = 1500 1100
 mass = 300000
 image = ice_planet_02
 imageglow = ice_planet_glow
@@ -133,7 +133,7 @@ damagemult = 0.1
 
 [asteroid]
 name = asteroid5
-orbit = sun 3200 100
+orbit = sun 2200 100
 mass = 40
 image = asteroid02
 grav = 0
@@ -144,7 +144,7 @@ damagemult = 3.5
 
 [asteroid]
 name = asteroid1
-orbit = sun 3100 100
+orbit = sun 2200 100
 mass = 40
 image = asteroid02
 grav = 0
@@ -155,7 +155,7 @@ damagemult = 3.5
 
 [asteroid]
 name = asteroid2
-orbit = sun 3000 100
+orbit = sun 2300 100
 mass = 40
 image = asteroid02
 grav = 0
@@ -166,7 +166,7 @@ damagemult = 3.5
 
 [asteroid]
 name = asteroid3
-orbit = sun 3000 100
+orbit = sun 2500 100
 mass = 40
 image = asteroid02
 grav = 0
@@ -177,7 +177,7 @@ damagemult = 3.5
 
 [asteroid]
 name = asteroid4
-orbit = sun 2900 100
+orbit = sun 2500 100
 mass = 40
 image = asteroid02
 grav = 0
@@ -188,7 +188,7 @@ damagemult = 3.5
 
 [asteroid]
 name = asteroid6
-orbit = sun 2900 100
+orbit = sun 2300 100
 mass = 40
 image = asteroid02
 grav = 0
@@ -199,7 +199,7 @@ damagemult = 3.5
 
 [asteroid]
 name = asteroid7
-orbit = sun 3100 100
+orbit = sun 2300 100
 mass = 40
 image = asteroid02
 grav = 0
@@ -210,7 +210,7 @@ damagemult = 3.5
 
 [asteroid]
 name = asteroid7
-orbit = sun 2900 100
+orbit = sun 2400 100
 mass = 40
 image = asteroid02
 grav = 0
