@@ -30,6 +30,7 @@ CHUD::CHUD()
 	m_pWins = new CAnimatedTexture( "media/scripts/texture_wins.txt" );
 	m_pPlayer = new CAnimatedTexture("media/scripts/texture_player.txt");
 	m_pExplosion = new CAnimatedTexture("media/scripts/texture_explosion.txt");
+	m_pExplosion->SetAnimation(2);
 
 	m_fScoreTiming = 0.0f;
 	m_iSoundStep = 0;
