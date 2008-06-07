@@ -576,12 +576,12 @@ void CPlayerObject::CollideWith( CBaseObject *pOther, Vector &pos)
 	{
 		// Collision with another ship, check who gets points
 		// If pOther faces me, pOther gets points
-		int score = (int) (damage * mult);
+		int score = (int) ((damage * mult) / 10);
 		float angle = pOther->GetPosition().CalculateAngle(GetPosition());
 		float angle2 = pOther->GetRotation();
 		float diff = AngleDiff( angle, angle2 );
-		if ( score > 0 )
-			CLogManager::Instance()->LogMessage(ftoa2(angle) + ", " + ftoa2(angle2) + ", " + ftoa2(diff));
+//		if ( score > 0 )
+//			CLogManager::Instance()->LogMessage(ftoa2(angle) + ", " + ftoa2(angle2) + ", " + ftoa2(diff));
 
 		if ( diff < 25.0f )
 		{
