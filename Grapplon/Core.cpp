@@ -195,7 +195,7 @@ void CCore::Run()
 			u1 = (float)(SDL_GetTicks() - lastUpdate) / 1000.0f;
 			if ( !m_bThreaded )
 			{
-				if ( !((CGameState *)m_pActiveState)->CountingDown() )
+				if ( !((CGameState *)m_pActiveState)->IsPaused() )
 				{
 					if ( m_pODEManager ) m_pODEManager->Update( timeSinceLastUpdate );
 					u3 = (float)(SDL_GetTicks() - lastUpdate) / 1000.0f;

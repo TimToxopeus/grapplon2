@@ -5,6 +5,8 @@
 #include "ResourceManager.h"
 #include "Sound.h"
 #include "AnimatedTexture.h"
+#include <algorithm>
+#include <functional>
 
 CHUD::CHUD()
 {
@@ -18,14 +20,28 @@ CHUD::CHUD()
 	m_pCountDown[2] = new CAnimatedTexture("media/scripts/texture_countdown_1.txt");
 	m_pCountDown[3] = new CAnimatedTexture("media/scripts/texture_countdown_go.txt");
 
+	m_pShips[0] = new CAnimatedTexture("media/scripts/texture_player1.txt");
+	m_pShips[1] = new CAnimatedTexture("media/scripts/texture_player2.txt");
+	m_pShips[2] = new CAnimatedTexture("media/scripts/texture_player3.txt");
+	m_pShips[3] = new CAnimatedTexture("media/scripts/texture_player4.txt");
+
 	m_pBorders = new CAnimatedTexture( "media/scripts/texture_hud_border.txt" );
 	m_pHealth = new CAnimatedTexture( "media/scripts/texture_hud_bar.txt" );
 	m_pNumbers = new CAnimatedTexture( "media/scripts/texture_numbers.txt" );
+
+	m_pGameEnd = new CAnimatedTexture( "media/scripts/texture_game_end.txt" );
+	m_pWins = new CAnimatedTexture( "media/scripts/texture_wins.txt" );
+	m_pPlayer = new CAnimatedTexture("media/scripts/texture_player.txt");
+	m_pExplosion = new CAnimatedTexture("media/scripts/texture_explosion.txt");
+
+	m_fScoreTiming = 0.0f;
+	m_iSoundStep = 0;
+	m_fPlayerOffset = 0.0f;
+	m_iWinner = -1;
 }
 
 CHUD::~CHUD()
 {
-	delete m_pNumbers;
 	for ( int i = 0; i<4; i++ )
 	{
 		if ( m_pCountDown[i] )
@@ -33,10 +49,21 @@ CHUD::~CHUD()
 			delete m_pCountDown[i];
 			m_pCountDown[i] = NULL;
 		}
+		if ( m_pShips[i] )
+		{
+			delete m_pShips[i];
+			m_pShips[i] = NULL;
+		}
 	}
 
 	delete m_pBorders;
 	delete m_pHealth;
+	delete m_pNumbers;
+
+	delete m_pGameEnd;
+	delete m_pWins;
+	delete m_pPlayer;
+	delete m_pExplosion;
 }
 
 void CHUD::SetPlayers( CPlayerObject *p1, CPlayerObject *p2, CPlayerObject *p3, CPlayerObject *p4 )
@@ -66,6 +93,84 @@ void CHUD::Update( float fTime )
 	{
 		CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Countdown.wav", RT_SOUND);
 		pSound->Play();
+	}
+
+	if ( m_fMatchTimeLeft == 0.0f )
+	{
+		if ( m_iWinner == -1 )
+		{
+			std::vector<int> m_vScores;
+			for ( int i = 0; i<4; i++ )
+				if ( m_pPlayers[i] )
+					m_vScores.push_back( m_pPlayers[i]->m_iScore );
+			std::sort( m_vScores.begin(), m_vScores.end(), std::greater<int>() );
+
+			if ( m_vScores[0] == m_vScores[1] )
+			{
+				m_iWinner = 4; // DRAW
+			}
+			else
+			{
+				for ( int i = 0; i<4; i++ )
+				{
+					if ( m_pPlayers[i] )
+					{
+						if ( m_vScores[0] == m_pPlayers[i]->m_iScore )
+						{
+							m_iWinner = i;
+							break;
+						}
+					}
+				}
+			}
+			m_pPlayer->SetAnimation(m_iWinner);
+		}
+
+		m_fScoreTiming += fTime;
+		if ( m_fScoreTiming >= 0.5f && m_iSoundStep == 0 )
+		{
+			CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Collision_Schip_Asteroid.wav", RT_SOUND);
+			pSound->Play(true);
+			m_iSoundStep++;
+		}
+
+		if ( m_fScoreTiming >= 1.5f && m_iSoundStep == 1 )
+		{
+			CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Collision_Schip_Asteroid.wav", RT_SOUND);
+			pSound->Play(true);
+			m_iSoundStep++;
+		}
+
+		if ( m_fScoreTiming >= 2.0f && m_iSoundStep == 2 )
+		{
+			CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Collision_Schip_Asteroid.wav", RT_SOUND);
+			pSound->Play(true);
+			m_iSoundStep++;
+		}
+
+		if ( m_fScoreTiming >= 2.5f && m_iSoundStep == 3 )
+		{
+			CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Collision_Schip_Asteroid.wav", RT_SOUND);
+			pSound->Play(true);
+			m_iSoundStep++;
+		}
+
+		if ( m_fScoreTiming >= 3.0f && m_iSoundStep == 4 )
+		{
+			CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Collision_Schip_Asteroid.wav", RT_SOUND);
+			pSound->Play(true);
+			m_iSoundStep++;
+		}
+
+		if ( m_fScoreTiming >= 4.0f && m_iSoundStep == 5 )
+		{
+			CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Explosion4.wav", RT_SOUND);
+			pSound->Play(true);
+			m_iSoundStep++;
+		}
+
+		if ( m_fScoreTiming >= 4.0f )
+			m_pExplosion->UpdateFrame( fTime );
 	}
 }
 
@@ -193,6 +298,126 @@ void CHUD::Render()
 			target.x = -(target.w / 2);
 			target.y = -(target.h / 2);
 			RenderQuad(target, m_pCountDown[3], 0, 0.5f - (0.5f * delta));
+		}
+	}
+
+	if ( m_fMatchTimeLeft == 0.0f )
+	{
+		if ( m_fScoreTiming >= 0.5f )
+		{
+			target = m_pGameEnd->GetSize();
+			target.x = -(target.w);
+			target.y = -(target.h) - 350;
+			target.w += target.w;
+			target.h += target.h;
+			RenderQuad(target, m_pGameEnd, 0, 1);
+		}
+
+		if ( m_fScoreTiming >= 1.5f )
+		{
+			DrawHitpointBar( -170, -250, 0, 0 );
+			DrawScoreBar( 0, -200, 0, m_pPlayers[0]->m_iScore, false );
+
+			if ( m_fScoreTiming < 4.0f || m_iWinner == 0 )
+			{
+				target = m_pShips[0]->GetSize();
+				target.x = -(target.w) + 5;
+				target.y = -(target.h) - 100;
+				RenderQuad(target, m_pShips[0], 0, 1);
+			}
+			else if ( !m_pExplosion->IsFinished() )
+			{
+				target = m_pExplosion->GetSize();
+				target.x = -(target.w) + 5;
+				target.y = -(target.h) - 100;
+				RenderQuad(target, m_pExplosion, 0, 1);
+			}
+		}
+
+		if ( m_fScoreTiming >= 2.0f )
+		{
+			DrawHitpointBar( 0, -150, 1, 0 );
+			DrawScoreBar( 170, -100, 1, m_pPlayers[1]->m_iScore, true );
+
+			if ( m_fScoreTiming < 4.0f || m_iWinner == 1 )
+			{
+				target = m_pShips[1]->GetSize();
+				target.x = -(target.w) + 320;
+				target.y = -(target.h);
+				RenderQuad(target, m_pShips[1], 0, 1);
+			}
+			else if ( !m_pExplosion->IsFinished() )
+			{
+				target = m_pExplosion->GetSize();
+				target.x = -(target.w) + 320;
+				target.y = -(target.h);
+				RenderQuad(target, m_pExplosion, 0, 1);
+			}
+		}
+
+		if ( m_pPlayers[2] )
+		{
+			if ( m_fScoreTiming >= 2.5f )
+			{
+				DrawHitpointBar( -170, -50, 2, 0 );
+				DrawScoreBar( 0, 0, 2, m_pPlayers[2]->m_iScore, false );
+
+				if ( m_fScoreTiming < 4.0f || m_iWinner == 2 )
+				{
+					target = m_pShips[2]->GetSize();
+					target.x = -(target.w) + 5;
+					target.y = -(target.h) + 100;
+					RenderQuad(target, m_pShips[2], 0, 1);
+				}
+				else if ( !m_pExplosion->IsFinished() )
+				{
+					target = m_pExplosion->GetSize();
+					target.x = -(target.w) + 5;
+					target.y = -(target.h) + 100;
+					RenderQuad(target, m_pExplosion, 0, 1);
+				}
+			}
+		}
+
+		if ( m_pPlayers[3] )
+		{
+			if ( m_fScoreTiming >= 3.0f )
+			{
+				DrawHitpointBar( 0, 50, 3, 0 );
+				DrawScoreBar( 170, 100, 3, m_pPlayers[3]->m_iScore, true );
+
+				if ( m_fScoreTiming < 4.0f || m_iWinner == 3 )
+				{
+					target = m_pShips[3]->GetSize();
+					target.x = -(target.w) + 320;
+					target.y = -(target.h) + 200;
+					RenderQuad(target, m_pShips[3], 0, 1);
+				}
+				else if ( !m_pExplosion->IsFinished() )
+				{
+					target = m_pExplosion->GetSize();
+					target.x = -(target.w) + 320;
+					target.y = -(target.h) + 200;
+					RenderQuad(target, m_pExplosion, 0, 1);
+				}
+			}
+		}
+
+		if ( m_fScoreTiming >= (4.0f - m_fPlayerOffset) )
+		{
+			target = m_pPlayer->GetSize();
+			target.x = -(target.w);
+			target.y = -(target.h) + 300;
+			target.w += target.w;
+			target.h += target.h;
+			RenderQuad(target, m_pPlayer, 0, 1);
+
+			target = m_pWins->GetSize();
+			target.x = -(target.w);
+			target.y = -(target.h) + 400;
+			target.w += target.w;
+			target.h += target.h;
+			RenderQuad(target, m_pWins, 0, 1);
 		}
 	}
 

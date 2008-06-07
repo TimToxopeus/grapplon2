@@ -170,14 +170,15 @@ void CGameState::Update(float fTime)
 		m_fCountDown -= fTime;
 	m_pHUD->SetCountdown( m_fCountDown );
 
-	if ( m_fCountDown <= 0.0f )
+	if ( m_fCountDown <= 0.0f && m_fMatchTimeLeft > 0.0f )
+	{
 		m_fMatchTimeLeft -= fTime;
+		if ( m_fMatchTimeLeft < 0.0f )
+			m_fMatchTimeLeft = 0.0f;
+	}
 	m_pHUD->SetMatchTimeLeft( m_fMatchTimeLeft );
 
 	m_pUniverse->Update( fTime );
-
-	if ( m_fMatchTimeLeft <= 0.0f )
-		m_bRunning = false;
 }
 
 bool CGameState::HandleWiimoteEvent( wiimote_t* pWiimoteEvent )
@@ -191,6 +192,13 @@ bool CGameState::HandleWiimoteEvent( wiimote_t* pWiimoteEvent )
 			box.x += (int)(cos(angle) * (5.0f * nc->js.mag));
 			box.y += (int)(sin(angle) * (5.0f * nc->js.mag));
 			return true;
+		}
+
+		if ( m_fMatchTimeLeft <= 0.0f )
+		{
+			if ( IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_A) ||
+				IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_B) )
+				m_bRunning = false;
 		}
 	}
 	return false;
@@ -228,4 +236,24 @@ int CGameState::GetScore( int iPlayer )
 void CGameState::AddScore( int iPlayer, int iScore, int iX, int iY )
 {
 	m_pHUD->AddScore( iPlayer, iScore, iX, iY );
+}
+
+bool CGameState::IsPaused()
+{
+	if ( m_fCountDown > 0.0f ) // 3-2-1 Go! paused
+	{
+		return true;
+	}
+	else
+	{
+		if ( m_fMatchTimeLeft > 0.0f ) // We are still playing
+		{
+			return false;
+		}
+		else
+		{
+			// Game ended
+			return true;
+		}
+	}
 }

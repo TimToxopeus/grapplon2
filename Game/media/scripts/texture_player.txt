@@ -1,7 +1,7 @@
 [object]
 width = 263
 height = 50
-animations = 1, 2, 3, 4
+animations = 1, 2, 3, 4, draw
 
 [1]
 file = "media/images/player1.png"
@@ -20,5 +20,10 @@ speed = 1
 
 [4]
 file = "media/images/player4.png"
+frames = 1
+speed = 1
+
+[draw]
+file = "media/images/draw.png"
 frames = 1
 speed = 1
