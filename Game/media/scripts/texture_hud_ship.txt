@@ -1,0 +1,24 @@
+[object]
+width = 342
+height = 168
+animations = green, red, blue, purple
+
+[red]
+file = "media/images/hud_red_ship.png"
+frames = 1
+speed = 1
+
+[green]
+file = "media/images/hud_green_ship.png"
+frames = 1
+speed = 1
+
+[blue]
+file = "media/images/hud_blue_ship.png"
+frames = 1
+speed = 1
+
+[purple]
+file = "media/images/hud_purple_ship.png"
+frames = 1
+speed = 1
