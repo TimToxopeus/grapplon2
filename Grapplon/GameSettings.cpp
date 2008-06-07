@@ -66,8 +66,10 @@ CGameSettings::CGameSettings()
 	PU_SHIELD_TIME			= -1;
 
 	SCORE_STEAL				= 1000;
+	SCORE_GRAB				= 100;
 
 	MENU_ON					= true;
+	FULLSCREEN				= false;
 
 	Init();
 }
@@ -132,6 +134,9 @@ bool CGameSettings::Init()
 		else if ( tokens[0] == "PUSpeedMult" )			{ PU_SPEED_MULT			=		 atoi( tokens[2].c_str() );	}
 		else if ( tokens[0] == "PUJellyTime" )			{ PU_JELLY_TIME			=		 atoi( tokens[2].c_str() );	}
 		else if ( tokens[0] == "PUShieldTime" )			{ PU_SHIELD_TIME		=		 atoi( tokens[2].c_str() );	}
+		else if ( tokens[0] == "ScoreSteal" )			{ SCORE_STEAL			=		 atoi( tokens[2].c_str() );	}
+		else if ( tokens[0] == "ScoreGrab" )			{ SCORE_GRAB			=		 atoi( tokens[2].c_str() );	}
+		else if ( tokens[0] == "Fullscreen" )			{ FULLSCREEN			=		 (tokens[2] == "1"); }
 
 		in = ReadLine();
 	}

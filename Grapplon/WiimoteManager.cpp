@@ -126,9 +126,9 @@ int CWiimoteManager::CheckForWiimotes()
 				wiiuse_motion_sensing(m_pWiimotes[i], 1);
 				wiiuse_set_flags( m_pWiimotes[i], WIIUSE_SMOOTHING, 0 );
 
-				wiiuse_set_ir(m_pWiimotes[i], 1);
+/*				wiiuse_set_ir(m_pWiimotes[i], 1);
 				wiiuse_set_ir_vres( m_pWiimotes[i], 1024, 768 );
-				wiiuse_set_ir_position( m_pWiimotes[i], WIIUSE_IR_ABOVE );
+				wiiuse_set_ir_position( m_pWiimotes[i], WIIUSE_IR_ABOVE );*/
 				
 				wiiuse_status( m_pWiimotes[i] );
 			}

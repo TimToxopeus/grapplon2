@@ -18,6 +18,20 @@
 #include "Core.h"
 #include "State_Game.h"
 
+float AngleDiff( float a, float b )
+{
+	float c = a - b;
+	if ( c <= 180 && c >= -180 )
+		return c;
+
+	float d = -((a + 360) - b);
+	if ( d <= 180 && d >= -180 )
+		return d;
+
+	float e = -((b + 360) - a);
+	return e;
+}
+
 CPlayerObject::CPlayerObject( int iPlayer )
 	: m_iScore(0), m_iPlayer(iPlayer), y(10.0f), p(10.0f), r(10.0f), m_bHandleWiiMoteEvents(true), timeSinceNoInput(5.0f), m_fRespawnTime(0.0f)
 {
@@ -149,6 +163,7 @@ bool CPlayerObject::HandleWiimoteEvent( wiimote_t* pWiimoteEvent )
 					m_fAngle = pWiimoteEvent->exp.nunchuk.js.ang;
 				else
 					m_fAngle += (direction / 6.0f);
+				while ( m_fAngle > 360.0f ) { m_fAngle -= 360.0f; }
 				m_fVelocityForward = 25000.0f * (sin(1.57f * pWiimoteEvent->exp.nunchuk.js.mag));
 
 				timeSinceNoInput = 0.0f;
@@ -292,6 +307,7 @@ void CPlayerObject::Update( float fTime )
 	{
 		m_fAngle += 15.0f * fTime;
 		m_fVelocityForward = 50.0f;
+		if ( m_fAngle > 360.0f ) m_fAngle -= 360.0f;
 	}
 
 	if ( m_fRespawnTime > 0.0f )
@@ -509,17 +525,17 @@ void CPlayerObject::CollideWith( CBaseObject *pOther, Vector &pos)
 	if(oType == ICE || oType == ASTEROID || oType == SUN || oType == FIRE || oType == ORDINARY || oType == WORMHOLE)
 		mult = dynamic_cast<CPlanet*>(pOther)->m_fDamageMult;
 
+	if ( !HasSpark( pOther ) )
+	{
+		CollisionEffect *ce = new CollisionEffect();
+		ce->m_pEffect = new CAnimatedTexture("media/scripts/texture_hit.txt");
+		ce->m_vPosition = pos;
+		ce->m_pOther = pOther;
+		m_vCollisionEffects.push_back(ce);
+	}
+
 	if( pOther->getType() == ASTEROID)
 	{
-		if ( !HasSpark( pOther ) )
-		{
-			CollisionEffect *ce = new CollisionEffect();
-			ce->m_pEffect = new CAnimatedTexture("media/scripts/texture_hit.txt");
-			ce->m_vPosition = pos;
-			ce->m_pOther = pOther;
-			m_vCollisionEffects.push_back(ce);
-		}
-
 		CAsteroid* asteroid = dynamic_cast<CAsteroid*>(pOther);
 		time_t throwTime = time(NULL) - asteroid->m_fThrowTime;
 		if(throwTime <= 4)
@@ -547,14 +563,34 @@ void CPlayerObject::CollideWith( CBaseObject *pOther, Vector &pos)
 			int score = 0;
 			if(asteroid->m_pThrowingPlayer != this && m_fPUJellyTime <= 0.0001f)
 			{
-				score += (int) (damage * mult);
-				asteroid->m_pThrowingPlayer->m_iScore += score;
-				asteroid->m_pThrowingPlayer->m_iScore += asteroid->m_iMilliSecsInOrbit / 10;
-				score += asteroid->m_iMilliSecsInOrbit / 10;
+				score += (int) (damage * mult) + asteroid->m_iMilliSecsInOrbit / 10;
+				asteroid->m_pThrowingPlayer->m_iScore += (int)(score / 10);
 			}
 
 			CGameState *pState = (CGameState *)CCore::Instance()->GetActiveState();
-			pState->AddScore( asteroid->m_pThrowingPlayer->GetPlayerID(), score, (int)GetX(), (int)GetY() );
+			pState->AddScore( asteroid->m_pThrowingPlayer->GetPlayerID(), (int)(score / 10), (int)GetX(), (int)GetY() );
+		}
+	}
+
+	if( pOther->getType() == SHIP)
+	{
+		// Collision with another ship, check who gets points
+		// If pOther faces me, pOther gets points
+		int score = (int) (damage * mult);
+		float angle = pOther->GetPosition().CalculateAngle(GetPosition());
+		float angle2 = pOther->GetRotation();
+		float diff = AngleDiff( angle, angle2 );
+		if ( score > 0 )
+			CLogManager::Instance()->LogMessage(ftoa2(angle) + ", " + ftoa2(angle2) + ", " + ftoa2(diff));
+
+		if ( diff < 25.0f )
+		{
+			if ( score > 0 )
+			{
+				((CPlayerObject *)pOther)->m_iScore += score;
+				CGameState *pState = (CGameState *)CCore::Instance()->GetActiveState();
+				pState->AddScore( ((CPlayerObject *)pOther)->GetPlayerID(), score, (int)GetX(), (int)GetY() );
+			}
 		}
 	}
 

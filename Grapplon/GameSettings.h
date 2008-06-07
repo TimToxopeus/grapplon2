@@ -59,11 +59,14 @@ public:
 	bool		MENU_ON;
 
 	int			SCORE_STEAL;
+	int			SCORE_GRAB;
 
 	int			PU_SPEED_TIME;
 	int			PU_SPEED_MULT;
 	int			PU_JELLY_TIME;
 	int			PU_SHIELD_TIME;
+
+	bool		FULLSCREEN;
 
 	bool  Init();
 	
