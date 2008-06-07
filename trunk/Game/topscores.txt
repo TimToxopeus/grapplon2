@@ -1,3 +1,5 @@
+tim 106923
+tim 61964
 monkey 56149
 roy 55011
 pietepi 50389
@@ -6,5 +8,3 @@ mat 49144
 paul 48799
 monkey 48560
 roy 47682
-pla 44700
-player1 44008
