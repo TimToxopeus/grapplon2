@@ -30,7 +30,7 @@ private:
 	CAnimatedTexture *m_pGameEnd;
 	CAnimatedTexture *m_pWins;
 	CAnimatedTexture *m_pPlayer;
-	CAnimatedTexture *m_pShips[4];
+	CAnimatedTexture *m_pShips;
 	CAnimatedTexture *m_pExplosion;
 
 	float m_fMatchTimeLeft;

@@ -708,7 +708,7 @@ int CMenuState::HandleSDLEvent(SDL_Event event)
 			}
 			if ( state == LEVELSELECT && !pushed )
 			{
-				m_iSelectedLevel = -1;
+//				m_iSelectedLevel = -1;
 				int icursorX = (cursorX * 2 - 1024);
 				int icursorY = (cursorY * 2 - 768);
 				for ( unsigned int i = 0; i<m_vLevelSelectOptions.size(); i++ )
@@ -1068,7 +1068,7 @@ void CMenuState::HandleButtonPress( wiimote_t* pWiimoteEvent )
 		}
 		if ( state == LEVELSELECT && !pushed )
 		{
-			m_iSelectedLevel = -1;
+//			m_iSelectedLevel = -1;
 			int icursorX = (cursorX * 2 - 1024);
 			int icursorY = (cursorY * 2 - 768);
 			for ( unsigned int i = 0; i<m_vLevelSelectOptions.size(); i++ )

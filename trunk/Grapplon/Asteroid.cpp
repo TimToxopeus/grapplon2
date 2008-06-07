@@ -15,6 +15,7 @@ CAsteroid::CAsteroid(PlanetaryData &data)
 	m_pImage->SetFrame(4);
 
 	m_fTempTime = SETS->TEMP_TIME;
+	m_fThrowTime = 0;
 
 	m_eType = ASTEROID;
 	m_oPhysicsData.m_bAffectedByTemperature = true;

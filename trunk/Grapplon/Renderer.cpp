@@ -5,6 +5,8 @@
 #include "LogManager.h"
 #include <algorithm>
 
+#include "GameSettings.h"
+
 #include "Vector.h"
 #include "BaseObject.h"
 
@@ -100,6 +102,9 @@ bool CRenderer::Init()
 //	SDL_WM_SetIcon(SDL_LoadBMP("icon.bmp"), NULL);
 	SDL_WM_SetCaption("Grapplon", NULL);
 	int flags = SDL_OPENGL;
+	if ( SETS->FULLSCREEN )
+		flags |= SDL_FULLSCREEN;
+
 	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
 	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
 	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);

@@ -122,11 +122,17 @@ void CHook::Grasp()
 		CODEManager::Instance()->JointAttach(asteroid->orbitJoint, NULL, NULL);
 		asteroid->m_bIsInOrbit = false;
 		asteroid->m_bIsGrabable = false;
-		if(asteroid->m_fThrowTime - time(NULL) < 4 && asteroid->m_pThrowingPlayer != m_pOwner)
+		if(asteroid->m_fThrowTime - time(NULL) < 4 && asteroid->m_pThrowingPlayer != m_pOwner && asteroid->m_pThrowingPlayer != NULL )
 		{
 			CGameState *pState = (CGameState *)CCore::Instance()->GetActiveState();
 			pState->AddScore( m_pOwner->GetPlayerID(), SETS->SCORE_STEAL, (int)GetX(), (int)GetY() );
 			m_pOwner->m_iScore += SETS->SCORE_STEAL;				// Steal bonus
+		}
+		else
+		{
+			CGameState *pState = (CGameState *)CCore::Instance()->GetActiveState();
+			pState->AddScore( m_pOwner->GetPlayerID(), SETS->SCORE_GRAB, (int)GetX(), (int)GetY() );
+			m_pOwner->m_iScore += SETS->SCORE_GRAB;				// Steal bonus
 		}
 		asteroid->m_fThrowTime = 0;
 		asteroid->m_pHoldingPlayer = m_pOwner;
