@@ -37,5 +37,5 @@ public:
 
 	int GetScore( int iPlayer );
 	CUniverse *GetUniverse() { return m_pUniverse; }
-	bool CountingDown() { return (m_fCountDown > 0.0f); }
+	bool IsPaused();
 };

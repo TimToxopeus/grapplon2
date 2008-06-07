@@ -27,9 +27,19 @@ private:
 
 	CAnimatedTexture *m_pBorders;
 	CAnimatedTexture *m_pHealth;
+	CAnimatedTexture *m_pGameEnd;
+	CAnimatedTexture *m_pWins;
+	CAnimatedTexture *m_pPlayer;
+	CAnimatedTexture *m_pShips[4];
+	CAnimatedTexture *m_pExplosion;
 
 	float m_fMatchTimeLeft;
 	float m_fCountdown;
+
+	int m_iSoundStep;
+	float m_fScoreTiming;
+	float m_fPlayerOffset;
+	int m_iWinner;
 
 	std::vector<Score> m_vScores;
 

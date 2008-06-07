@@ -24,14 +24,14 @@ bool CSound::CreateSource()
 	return true;
 }
 
-void CSound::Play()
+void CSound::Play(bool bOverride)
 {
 	if ( m_iSource == 0 )
 		CreateSource();
     ALenum state;
     alGetSourcei(m_iSource, AL_SOURCE_STATE, &state);
 
-	if ( !(state == AL_PLAYING) )
+	if ( bOverride == true || !(state == AL_PLAYING) )
 		alSourcePlay( m_iSource );
 }
 

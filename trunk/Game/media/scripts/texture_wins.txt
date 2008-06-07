@@ -1,0 +1,9 @@
+[object]
+width = 165
+height = 37
+animations = idle
+
+[idle]
+file = "media/images/wins.png"
+frames = 1
+speed = 1

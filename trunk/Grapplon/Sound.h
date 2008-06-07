@@ -15,7 +15,7 @@ public:
 	unsigned int GetSound() { return m_iSound; }
 	bool CreateSource();
 	void SetPosition( float fX, float fY, float fZ );
-	void Play();
+	void Play(bool bOverride = false);
 	void Clean();
 	bool IsPlaying();
 };
