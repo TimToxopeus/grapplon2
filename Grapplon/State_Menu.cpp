@@ -1,5 +1,7 @@
 #include "State_Menu.h"
 #include "SoundManager.h"
+#include "ResourceManager.h"
+#include "Sound.h"
 #include "LogManager.h"
 #include "Tokenizer.h"
 #include "GameSettings.h"
@@ -502,7 +504,13 @@ void CMenuState::Update(float fTime)
 					{
 						if ( icursorY > m_vStates[a].m_iStartY && icursorY < m_vStates[a].m_iStartY + m_vStates[a].m_pImage->GetSize().h * 2 )
 						{
-							m_vStates[a].m_fAlpha = 1.0f;
+							if ( m_vStates[a].m_fAlpha != 1.0f )
+							{
+								m_vStates[a].m_fAlpha = 1.0f;
+								CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Menu_button_mouseon.wav", RT_SOUND);
+								if ( pSound )
+									pSound->Play();
+							}
 						}
 						else
 							m_vStates[a].m_fAlpha = 0.5f;
@@ -521,7 +529,13 @@ void CMenuState::Update(float fTime)
 					{
 						if ( icursorY > m_vStates[a].m_iStartY && icursorY < m_vStates[a].m_iStartY + m_vStates[a].m_pImage->GetSize().h * 2 )
 						{
-							m_vStates[a].m_fAlpha = 1.0f;
+							if ( m_vStates[a].m_fAlpha != 1.0f )
+							{
+								m_vStates[a].m_fAlpha = 1.0f;
+								CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Menu_button_mouseon.wav", RT_SOUND);
+								if ( pSound )
+									pSound->Play();
+							}
 						}
 						else
 							m_vStates[a].m_fAlpha = 0.5f;
@@ -540,7 +554,13 @@ void CMenuState::Update(float fTime)
 					{
 						if ( icursorY > m_vStates[a].m_iStartY && icursorY < m_vStates[a].m_iStartY + m_vStates[a].m_pImage->GetSize().h * 2 )
 						{
-							m_vStates[a].m_pImage->SetFrame(1);
+							if ( m_vStates[a].m_pImage->GetFrame() != 1 )
+							{
+								m_vStates[a].m_pImage->SetFrame(1);
+								CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Menu_button_mouseon.wav", RT_SOUND);
+								if ( pSound )
+									pSound->Play();
+							}
 						}
 						else
 							m_vStates[a].m_pImage->SetFrame(0);
@@ -559,7 +579,13 @@ void CMenuState::Update(float fTime)
 					{
 						if ( icursorY > m_vStates[a].m_iStartY && icursorY < m_vStates[a].m_iStartY + m_vStates[a].m_pImage->GetSize().h * 2 )
 						{
-							m_vStates[a].m_fAlpha = 1.0f;
+							if ( m_vStates[a].m_fAlpha != 1.0f )
+							{
+								m_vStates[a].m_fAlpha = 1.0f;
+								CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Menu_button_mouseon.wav", RT_SOUND);
+								if ( pSound )
+									pSound->Play();
+							}
 						}
 						else
 							m_vStates[a].m_fAlpha = 0.5f;
@@ -578,7 +604,13 @@ void CMenuState::Update(float fTime)
 					{
 						if ( icursorY > m_vStates[a].m_iStartY && icursorY < m_vStates[a].m_iStartY + m_vStates[a].m_pImage->GetSize().h * 2 )
 						{
-							m_vStates[a].m_fAlpha = 1.0f;
+							if ( m_vStates[a].m_fAlpha != 1.0f )
+							{
+								m_vStates[a].m_fAlpha = 1.0f;
+								CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Menu_button_mouseon.wav", RT_SOUND);
+								if ( pSound )
+									pSound->Play();
+							}
 						}
 						else
 							m_vStates[a].m_fAlpha = 0.5f;
@@ -668,6 +700,12 @@ int CMenuState::HandleSDLEvent(SDL_Event event)
 		else if ( state < SCOREINPUT || state == PLAYERSELECT || state == LEVELSELECT )
 		{
 			bool pushed = PushButton();
+			if ( pushed )
+			{
+				CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Menu_button_mouseclick.wav", RT_SOUND);
+				if ( pSound )
+					pSound->Play();
+			}
 			if ( state == LEVELSELECT && !pushed )
 			{
 				m_iSelectedLevel = -1;
@@ -889,6 +927,9 @@ void CMenuState::PushKeyboard( int x, int y )
 					int t = j + i * 10;
 					char tokens[31] = "qwertyuiopasdfghjkl!zxcvbnm,.-";
 					m_szInputName += tokens[t];
+					CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Menu_button_mouseclick.wav", RT_SOUND);
+					if ( pSound )
+						pSound->Play();
 					return;
 				}
 			}
@@ -898,6 +939,9 @@ void CMenuState::PushKeyboard( int x, int y )
 	if ( icursorX > -640 && icursorX < -248 && icursorY > 225 && icursorY < 317 )
 	{
 		m_szInputName = m_szInputName.substr(0, m_szInputName.length()-1);
+		CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Menu_button_mouseclick.wav", RT_SOUND);
+		if ( pSound )
+			pSound->Play();
 	}
 	if ( icursorX > 364 && icursorX < 620 && icursorY > 225 && icursorY < 317 )
 	{
@@ -1016,6 +1060,12 @@ void CMenuState::HandleButtonPress( wiimote_t* pWiimoteEvent )
 		m_pCursor->SetAnimation(1);
 
 		bool pushed = PushButton();
+		if ( pushed )
+		{
+			CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Menu_button_mouseclick.wav", RT_SOUND);
+			if ( pSound )
+				pSound->Play();
+		}
 		if ( state == LEVELSELECT && !pushed )
 		{
 			m_iSelectedLevel = -1;

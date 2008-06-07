@@ -52,6 +52,7 @@ public:
 	void Scale( float fScale );
 	void SetAnimation( int iAnimation );
 	void SetFrame( unsigned int iFrame );
+	unsigned int GetFrame() { return m_iCurFrame; }
 
 	void OverrideHeight( float fHeight ) { m_fOverrideHeight = fHeight; } // HUD ONLY!!
 	bool IsFinished() { return (m_vAnimations[m_iCurAnim].m_iFrames == m_iCurFrame + 1); }
