@@ -48,6 +48,14 @@ private:
 	void Respawn();
 	bool HasSpark( CBaseObject *pOther );
 
+	bool m_bElectroChangedThisFrame;
+	float m_fTimeForEMP;
+	float m_fElectroTime;
+	float m_fEMPTime;
+
+	int m_iJellyFrame;
+	int m_iJellyIter;
+
 public:
 
 	CPlayerObject( int iPlayer );
@@ -70,6 +78,9 @@ public:
 	void TookSpeedPowerUp();
 	void TookJellyPowerUp();
 	void TookShieldPowerUp();
+	void ResetStatus();
+
+	void IncreaseElectro(float timePassed);
 
 	int GetPlayerID() { return m_iPlayer; }
 

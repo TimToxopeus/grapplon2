@@ -51,6 +51,7 @@ CODEManager::CODEManager()
 	
 	// Create world and space
 	m_oWorld = dWorldCreate();
+	dWorldSetQuickStepNumIterations (m_oWorld, SETS->PH_NUM_ITS);
 
 	dVector3 extentsv3, centerv;
 	extentsv3[0] = extentsv3[1] = extentsv3[2] = 1000;
@@ -110,7 +111,7 @@ CODEManager::~CODEManager()
 
 void CODEManager::Update( float fTime )
 {
-	float nbSecondsByStep = 0.0005f;
+	float nbSecondsByStep = SETS->PH_STEP_TIME;
 
 	// Find the corresponding number of steps that must be taken 
 	int nbStepsToPerform = static_cast<int>(fTime/nbSecondsByStep); 
@@ -336,6 +337,8 @@ void CODEManager::ApplyGravity(float timePassed)
 						object->m_pOwner->IncreaseTemp(timePassed);
 					else if(planet->getType() == ICE)
 						object->m_pOwner->IncreaseTemp(-timePassed);
+					else if(planet->getType() == ELECTRO)
+						object->m_pOwner->IncreaseElectro(timePassed);
 				}
 
 				if( !object->m_bAffectedByGravity) continue;
@@ -445,7 +448,8 @@ void CODEManager::AddData( PhysicsData *pData )
 	std::vector<PhysicsData*>* list = NULL;
 
 	if(oType == SHIP )															list = &m_vPlayers;
-	if(oType == ORDINARY || oType == ICE || oType == BROKEN || oType == SUN)	list = &m_vPlanets;
+	if(oType == ORDINARY || oType == ICE || oType == BROKEN 
+		|| oType == SUN || oType == ELECTRO)									list = &m_vPlanets;
 	if(oType == ASTEROID)														list = &m_vAsteroids;
 	if(oType == POWERUP)														list = &m_vPowerUps;
 	if(list == NULL)															list = &m_vOthers;

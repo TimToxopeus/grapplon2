@@ -7,4 +7,4 @@ animations = idle
 file = "media/images/powerup_jelly.png"
 frames = 40
 rows = 5
-speed = 20
+speed = 15

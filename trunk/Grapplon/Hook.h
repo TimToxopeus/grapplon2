@@ -22,8 +22,9 @@ private:
 	dJointID m_oAngleJoint;						// Joint between hook and ship, keeps hook at a fixed length
 	bool m_bIsRadialCorrected;					// Lies the hook on a fixed radius? (in swinging mode)
 	bool m_bHasAutoAim;							// Should throwing be auto-aimed?
-	PhysicsData *m_pGrabbedObject;				// Grabbed object
 	CAnimatedTexture* m_pFrozenImage;
+	
+	void ResetStatus();
 
 public:
 	
@@ -31,6 +32,8 @@ public:
 	~CHook();
 
 	HookState m_eHookState;						// The current state of the hook
+	PhysicsData *m_pGrabbedObject;				// Grabbed object
+
 
 	bool IsDisconnected() { return m_eHookState != CONNECTED; }
 	void Eject();								// Release the hook from the ship in order to grasp objects
@@ -38,7 +41,7 @@ public:
 	void SetGrasped(PhysicsData*);				// Grasp the object in next update
 	void Swing();								// Swing the object
 	void Throw(bool playerDied = false);		// Throw the object
-	void Retract();								// Retract the hook back to the ship
+	void Retract(bool playerDied = false);		// Retract the hook back to the ship
 	void AddChainForce(float x_force, float y_force);
 	void adjustPos(Vector displacement);
 	void HandlePlayerDied();

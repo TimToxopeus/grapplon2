@@ -189,10 +189,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Asteroid.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\Background.cpp"
 				>
 			</File>
@@ -229,10 +225,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Ice.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\LogManager.cpp"
 				>
 			</File>
@@ -249,15 +241,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\OrdinaryPlanet.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\PhysicsData.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Planet.cpp"
 				>
 			</File>
 			<File
@@ -293,10 +277,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Sun.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\Texture.cpp"
 				>
 			</File>
@@ -318,10 +298,6 @@
 			</File>
 			<File
 				RelativePath=".\WiimoteManager.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\WormHole.cpp"
 				>
 			</File>
 			<Filter
@@ -396,6 +372,66 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="Planets"
+				>
+				<File
+					RelativePath=".\Asteroid.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Asteroid.h"
+					>
+				</File>
+				<File
+					RelativePath=".\ElectroPlanet.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ElectroPlanet.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Ice.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Ice.h"
+					>
+				</File>
+				<File
+					RelativePath=".\OrdinaryPlanet.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\OrdinaryPlanet.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Planet.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Planet.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Sun.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Sun.h"
+					>
+				</File>
+				<File
+					RelativePath=".\WormHole.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\WormHole.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -408,10 +444,6 @@
 			</File>
 			<File
 				RelativePath=".\AnimatedTexture.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Asteroid.h"
 				>
 			</File>
 			<File
@@ -447,10 +479,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Ice.h"
-				>
-			</File>
-			<File
 				RelativePath=".\LogManager.h"
 				>
 			</File>
@@ -467,15 +495,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\OrdinaryPlanet.h"
-				>
-			</File>
-			<File
 				RelativePath=".\PhysicsData.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Planet.h"
 				>
 			</File>
 			<File
@@ -519,10 +539,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Sun.h"
-				>
-			</File>
-			<File
 				RelativePath=".\Texture.h"
 				>
 			</File>
@@ -544,10 +560,6 @@
 			</File>
 			<File
 				RelativePath=".\WiimoteManager.h"
-				>
-			</File>
-			<File
-				RelativePath=".\WormHole.h"
 				>
 			</File>
 			<Filter

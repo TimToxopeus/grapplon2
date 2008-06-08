@@ -64,11 +64,15 @@ CGameSettings::CGameSettings()
 	PU_SPEED_MULT			= -1;
 	PU_JELLY_TIME			= -1;
 	PU_SHIELD_TIME			= -1;
-
+	CHAIN_MASS				= 0.01f;
 	SCORE_STEAL				= 1000;
-	SCORE_GRAB				= 100;
-
+	SCORE_GRAB				= 200;
+	PH_NUM_ITS				= 20;
+	PH_STEP_TIME			= 0.0005f;
 	MENU_ON					= true;
+	HOOK_CORRECTION_FORCE	= 2000;
+	FIRE_AST_MULT			= 3.0;
+	SCORE_PUSH_DEAD			= -1;
 	FULLSCREEN				= false;
 
 	Init();
@@ -134,6 +138,17 @@ bool CGameSettings::Init()
 		else if ( tokens[0] == "PUSpeedMult" )			{ PU_SPEED_MULT			=		 atoi( tokens[2].c_str() );	}
 		else if ( tokens[0] == "PUJellyTime" )			{ PU_JELLY_TIME			=		 atoi( tokens[2].c_str() );	}
 		else if ( tokens[0] == "PUShieldTime" )			{ PU_SHIELD_TIME		=		 atoi( tokens[2].c_str() );	}
+		else if ( tokens[0] == "PhysicsStepTime" )		{ PH_STEP_TIME			= (float)atof( tokens[2].c_str() );	}
+		else if ( tokens[0] == "PhysicsNrIterations" )	{ PH_NUM_ITS			=		 atoi( tokens[2].c_str() );	}
+		else if ( tokens[0] == "ChainMass" )			{ CHAIN_MASS			= (float)atof( tokens[2].c_str() );	}
+		else if ( tokens[0] == "ScoreSteal" )			{ SCORE_STEAL			=		 atoi( tokens[2].c_str() );	}
+		else if ( tokens[0] == "ScoreGrab" )			{ SCORE_GRAB			=		 atoi( tokens[2].c_str() );	}
+		else if ( tokens[0] == "HookCorrectionForce" )	{ HOOK_CORRECTION_FORCE =		 atoi( tokens[2].c_str() );	}
+		else if ( tokens[0] == "FireAstMult" )			{ FIRE_AST_MULT			= (float)atof( tokens[2].c_str() );	}
+		else if ( tokens[0] == "ScorePushDead" )		{ SCORE_PUSH_DEAD		=		 atoi( tokens[2].c_str() );	}
+		else if ( tokens[0] == "TimeForEMP" )			{ TIME_FOR_EMP			= (float)atof( tokens[2].c_str() );	}
+		else if ( tokens[0] == "EMPTime" )				{ EMP_TIME				= (float)atof( tokens[2].c_str() );	}
+		
 		else if ( tokens[0] == "ScoreSteal" )			{ SCORE_STEAL			=		 atoi( tokens[2].c_str() );	}
 		else if ( tokens[0] == "ScoreGrab" )			{ SCORE_GRAB			=		 atoi( tokens[2].c_str() );	}
 		else if ( tokens[0] == "Fullscreen" )			{ FULLSCREEN			=		 (tokens[2] == "1"); }

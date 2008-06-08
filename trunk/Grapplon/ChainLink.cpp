@@ -7,6 +7,7 @@
 #include "ODEManager.h"
 #include "ResourceManager.h"
 #include "AnimatedTexture.h"
+#include "GameSettings.h"
 
 #define LINK_LENGTH 50.0f
 #define LINK_MASS 0.1f
@@ -25,7 +26,7 @@ CChainLink::CChainLink( CPlayerObject *pOwner )
 	m_oPhysicsData.m_bAffectedByGravity = false;
 	m_oPhysicsData.m_bHasCollision = false;
 
-	SetMass( 0.01f );
+	SetMass( SETS->CHAIN_MASS );
 
 	m_oPhysicsData.ToggleIgnore( pOwner->GetPhysicsData() );
 

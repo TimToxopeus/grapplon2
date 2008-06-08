@@ -6,6 +6,7 @@
 #include "Sun.h"
 #include "Ice.h"
 #include "OrdinaryPlanet.h"
+#include "ElectroPlanet.h"
 #include "Asteroid.h"
 #include "PowerUp.h"
 #include "FreezePowerUp.h"
@@ -53,13 +54,14 @@ bool CUniverse::Load( std::string file )
 		while ( !feof(pFile) )
 		{
 			std::string in = ReadLine();
-			if		( in == "[sun]" ) 		{	ReadPlanet(SUN);	}
+			if		( in == "[sun]" ) 		{	ReadPlanet(SUN);		}
 			else if ( in == "[ordinary]" )	{	ReadPlanet(ORDINARY);	}
 			else if ( in == "[asteroid]" )	{	ReadPlanet(ASTEROID);	}
-			else if ( in == "[ice]" )		{	ReadPlanet(ICE);	}
-			else if ( in == "[broken]" )	{	ReadPlanet(BROKEN);	}
+			else if ( in == "[ice]" )		{	ReadPlanet(ICE);		}
+			else if ( in == "[electro]" )	{	ReadPlanet(ELECTRO);	}
+			else if ( in == "[broken]" )	{	ReadPlanet(BROKEN);		}
 			else if ( in == "[wormhole]")	{	ReadPlanet(WORMHOLE);	}
-			else if ( in == "[universe]")	{	ReadUniverse();	}
+			else if ( in == "[universe]")	{	ReadUniverse();			}
 		}
 		fclose( pFile );
 
@@ -67,7 +69,8 @@ bool CUniverse::Load( std::string file )
 		{
 			if		( m_vUniverse[i].planetType == SUN )		{	m_vPlanets.push_back( new CSun( m_vUniverse[i] ) );				}
 			else if ( m_vUniverse[i].planetType == ASTEROID )	{	m_vPlanets.push_back( new CAsteroid( m_vUniverse[i] ) );		}
-			else if ( m_vUniverse[i].planetType == ICE )		{	m_vPlanets.push_back( new CIce( m_vUniverse[i] ) );	}
+			else if ( m_vUniverse[i].planetType == ICE )		{	m_vPlanets.push_back( new CIce( m_vUniverse[i] ) );				}
+			else if ( m_vUniverse[i].planetType == ELECTRO )	{	m_vPlanets.push_back( new CElectroPlanet( m_vUniverse[i] ) );	}
 			else if ( m_vUniverse[i].planetType == BROKEN )		{	m_vPlanets.push_back( new COrdinaryPlanet( m_vUniverse[i] ) );	}
 			else if ( m_vUniverse[i].planetType == ORDINARY )	{	m_vPlanets.push_back( new COrdinaryPlanet( m_vUniverse[i] ) );	}
 			else if ( m_vUniverse[i].planetType == WORMHOLE )	{	
