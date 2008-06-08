@@ -32,6 +32,8 @@ CPlayerObject::CPlayerObject( int iPlayer )
 	m_iJellyFrame		= 44;
 	m_iJellyIter		= 0;
 
+	m_bReInit = true;
+
 	std::string image = "media/scripts/texture_player" + itoa2(iPlayer + 1) + ".txt";
 	m_pImage = new CAnimatedTexture(image);
 	m_pImage->SetFramerate( 10 );
@@ -49,6 +51,11 @@ CPlayerObject::CPlayerObject( int iPlayer )
 	image = "media/scripts/texture_ship_shield" + itoa2(iPlayer + 1) + ".txt";
 	m_pShieldImage = new CAnimatedTexture(image);
 	m_pShieldImage->Scale( 0.9f );
+
+	image = "media/scripts/texture_ship_respawn" + itoa2(iPlayer + 1) + ".txt";
+	this->m_pRespawnImage = new CAnimatedTexture(image);
+	m_pRespawnImage->Scale( 0.18f * 0.9f);
+	m_pRespawnImage->SetFrame(8);
 
 	m_pExplosion = new CAnimatedTexture("media/scripts/texture_explosion.txt");
 
@@ -84,6 +91,8 @@ void CPlayerObject::ResetStatus()
 		m_fPUSpeedTime = 0.0f;
 		m_fPUJellyTime = 0.0f;
 		m_fPUHealthTime = 0.0f;
+		m_fElectroTime = 0.0f;
+		m_fEMPTime = 0.0f;
 		m_oPhysicsData.m_bAffectedByGravity = true;
 
 }
@@ -303,6 +312,16 @@ void CPlayerObject::Render()
 		RenderQuad( target, m_pExplosion, m_fExplosionAngle + 180.0f, 1 );
 	}
 
+	if ( !m_pRespawnImage->IsFinished() )
+	{
+		target = m_pRespawnImage->GetSize();
+		target.w += target.w;
+		target.h += target.h;
+		target.x = (int)GetX() - (target.w / 2);
+		target.y = (int)GetY() - (target.h / 2);
+
+		RenderQuad( target, m_pRespawnImage, m_fAngle, 1);
+	}
 }
 
 void CPlayerObject::Update( float fTime )
@@ -326,26 +345,27 @@ void CPlayerObject::Update( float fTime )
 				SetDepth( 1.0f );
 			}
 
-			SetScale( 1.0f + 3.0f * m_fRespawnTime );
-			m_pHook->SetScale( 1.0f + 3.0f * m_fRespawnTime );
-			SetAlpha( 1.0f - (1.0f * m_fRespawnTime) );
-			m_pHook->SetAlpha( 1.0f - (1.0f * m_fRespawnTime) );
+			//SetScale( 1.0f + 3.0f * m_fRespawnTime );
+			//m_pHook->SetScale( 1.0f + 3.0f * m_fRespawnTime );
+			//SetAlpha( 1.0f - (1.0f * m_fRespawnTime) );
+			//m_pHook->SetAlpha( 1.0f - (1.0f * m_fRespawnTime) );
 		}
 
-		if ( m_fRespawnTime <= 0.0f )
-		{
-			m_bHandleWiiMoteEvents = true;
-			SetDepth( -1.0f );
-			m_fInvincibleTime = 2.0f;
-			m_pHook->SetInvincibleTime( 2.0f );
-			m_oPhysicsData.m_bAffectedByGravity = false;
-			m_fAlpha = 1.0f;
+		// DIT GEBEURT NU NA HET DOEN VAN DE RESPAWN ANIMATIE
+		//if ( m_fRespawnTime <= 0.0f )
+		//{
+		//	m_bHandleWiiMoteEvents = true;
+		//	SetDepth( -1.0f );
+		//	m_fInvincibleTime = 2.0f;
+		//	m_pHook->SetInvincibleTime( 2.0f );
+		//	m_oPhysicsData.m_bAffectedByGravity = false;
+		//	m_fAlpha = 1.0f;
 
-			if ( m_pThrusterLeft )
-				m_pThrusterLeft->ToggleSpawn(true, true);
-			if ( m_pThrusterRight )
-				m_pThrusterRight->ToggleSpawn(true, true);
-		}
+		//	if ( m_pThrusterLeft )
+		//		m_pThrusterLeft->ToggleSpawn(true, true);
+		//	if ( m_pThrusterRight )
+		//		m_pThrusterRight->ToggleSpawn(true, true);
+		//}
 	}
 
 	if(m_fFreezeTime > 0){
@@ -388,8 +408,27 @@ void CPlayerObject::Update( float fTime )
 
 	//m_fAngle = GetPosition().CalculateAngle( GetPosition() + Vector(m_oPhysicsData.body->lvel) );
 
-	if ( m_iHitpoints <= 0 )
+	if ( !m_pRespawnImage->IsFinished() ){
+		m_pRespawnImage->UpdateFrame( fTime );
+	} else if(!m_bReInit){
+		m_bHandleWiiMoteEvents = true;
+		SetDepth( -1.0f );
+		m_fInvincibleTime = 2.0f;
+		m_pHook->SetInvincibleTime( 2.0f );
+		m_oPhysicsData.m_bAffectedByGravity = false;
+		m_fAlpha = 1.0f;
+
+		if ( m_pThrusterLeft )
+			m_pThrusterLeft->ToggleSpawn(true, true);
+		if ( m_pThrusterRight )
+			m_pThrusterRight->ToggleSpawn(true, true);
+
+		m_bReInit = true;
+	}
+
+	if ( m_iHitpoints <= 0 ){
 		m_pExplosion->UpdateFrame( fTime );
+	}
 
 	if ( m_vCollisionEffects.size() > 0 )
 	{
@@ -411,7 +450,7 @@ void CPlayerObject::Update( float fTime )
 
 	if(!m_bElectroChangedThisFrame && m_fElectroTime > 0.0001f)
 	{
-//		m_fElectroTime -= fTime;
+		m_fElectroTime -= fTime;
 	}
 
 	m_bElectroChangedThisFrame = false;				// Set false for next frame
@@ -445,6 +484,10 @@ void CPlayerObject::OnDie( CBaseObject *m_pKiller )
 	m_fPUJellyTime = 0.0f;
 	m_fPUShieldTime = 0.0f;
 	m_fPUSpeedTime = 0.0f;
+	m_fEMPTime = 0.0f;
+	m_fElectroTime = 0.0f;
+
+	m_bReInit = false;
 
 	m_pHook->SetInvincibleTime( 4.0f );
 	m_fRespawnTime = 2.0f;
@@ -491,6 +534,10 @@ void CPlayerObject::Respawn()
 	m_oPhysicsData.m_pOwner->SetLinVelocity(n);
 	SetForce(n);
 	m_iHitpoints = m_iMaxHitpoints;
+
+	m_pRespawnImage->SetAnimation(0);
+	m_pRespawnImage->SetFrame(0);
+
 }
 
 void CPlayerObject::TookHealthPowerUp(){ m_iHitpoints	 = m_iMaxHitpoints; }
@@ -587,7 +634,7 @@ void CPlayerObject::CollideWith( CBaseObject *pOther, Vector &pos)
 	{
 
 		if(m_fPUJellyTime > 0.001f && m_iJellyFrame == 44){
-			m_iJellyFrame = 14;
+			m_iJellyFrame = 0;			// Start bounce-animatie
 		}
 
 

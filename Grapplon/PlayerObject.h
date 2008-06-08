@@ -27,6 +27,9 @@ private:
 	CAnimatedTexture *m_pExplosion;
 	CAnimatedTexture *m_pJellyImage;
 	CAnimatedTexture *m_pShieldImage;
+	CAnimatedTexture *m_pRespawnImage;
+
+	bool m_bReInit;
 
 	std::vector<CollisionEffect *> m_vCollisionEffects;
 
