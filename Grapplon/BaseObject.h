@@ -57,6 +57,7 @@ public:
 	virtual void CollideWith( CBaseObject *pOther, Vector &pos);
 	virtual void OnDie( CBaseObject *m_pKiller );
 	virtual void IncreaseTemp( float timePassed ) {};
+	virtual void IncreaseElectro( float timePassed ) {};
 	int GetHitpoints() { return m_iHitpoints; };
 	int GetMaxHitpoints() { return m_iMaxHitpoints; };
 	virtual void SetInvincibleTime( float fTime ) { m_fInvincibleTime = fTime; };

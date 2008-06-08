@@ -1,10 +1,11 @@
 [object]
-width = 400
-height = 400
+width = 50
+height = 50
 animations = idle
 
 [idle]
-file = "media/images/hit.png"
-frames = 12
-rows = 3
+file = "media/images/spark.png"
+frames = 4
+rows = 2
 speed = 10
+loop = 0

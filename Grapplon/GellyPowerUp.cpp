@@ -9,8 +9,7 @@
 CGellyPowerUp::CGellyPowerUp(void)
 {
 	m_ePowerUpType = GELLY;
-	m_pImage->SetAnimation(3);
-
+	m_pImage = new CAnimatedTexture("media/scripts/texture_powerup_jelly.txt");
 }
 
 CGellyPowerUp::~CGellyPowerUp(void)

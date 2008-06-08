@@ -60,11 +60,24 @@ public:
 
 	int			SCORE_STEAL;
 	int			SCORE_GRAB;
+	int			SCORE_PUSH_DEAD;
 
 	int			PU_SPEED_TIME;
 	int			PU_SPEED_MULT;
 	int			PU_JELLY_TIME;
 	int			PU_SHIELD_TIME;
+
+	float		PH_STEP_TIME;
+	int			PH_NUM_ITS;
+
+	int			HOOK_CORRECTION_FORCE;
+
+	float		CHAIN_MASS;
+	float		FIRE_AST_MULT;
+
+	float		TIME_FOR_EMP;
+	float		EMP_TIME;
+
 
 	bool		FULLSCREEN;
 

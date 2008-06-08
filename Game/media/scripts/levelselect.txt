@@ -1,5 +1,5 @@
 texture_level_black_hole.txt texture_level_info_black_hole.txt 115 81 level_blackholemayhem.txt
 texture_level_battle.txt texture_level_info_battle.txt 610 320 level_BattleOfElements.txt
 texture_level_wind.txt texture_level_info_wind.txt 424 62 level_WindGalaxy.txt
-texture_level_door.txt texture_level_info_doors.txt 288 341 level_DoorsOfSecurity.txt
+texture_level_door.txt texture_level_info_doors.txt 288 341 level_DodgeBall.txt
 texture_level_sun.txt texture_level_info_sun.txt 378 219 level_SolarGalaxy.txt

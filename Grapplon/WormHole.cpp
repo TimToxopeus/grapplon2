@@ -32,7 +32,8 @@ void CWormHole::ThrowObject(CBaseObject* object){
 void CWormHole::CollideWith(CBaseObject *pOther, Vector &pos)
 {
 	ObjectType oType = pOther->getType();
-	if(oType == SUN || oType == ICE || oType == ORDINARY || oType == HOOK || oType == FIRE || oType == WORMHOLE) return;
+	if(oType == SUN || oType == ICE || oType == ORDINARY || oType == HOOK 
+		|| oType == FIRE || oType == ELECTRO || oType == WORMHOLE || oType == ELECTRO) return;
 
 	if(thrownObjects.find(pOther) == thrownObjects.end() || abs((float) (thrownObjects[pOther] - time(NULL))) > 2.0f ){
 		twin->ThrowObject(pOther);

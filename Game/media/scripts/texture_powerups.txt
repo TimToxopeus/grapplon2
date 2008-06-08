@@ -20,8 +20,9 @@ speed = 0
 
 [jelly]
 file = "media/images/powerup_jelly.png"
-frames = 1
-speed = 0
+frames = 40
+rows = 5
+speed = 15
 
 [shield]
 file = "media/images/powerup_shield.png"
