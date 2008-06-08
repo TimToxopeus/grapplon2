@@ -334,6 +334,13 @@ void CUniverse::RemovePowerUp(CPowerUp* powerup)
 	std::list<PowerUpSetting>::iterator it = m_lPlacedPowerUps.begin();
 	std::list<PowerUpSetting>::iterator delIt;
 
+	Vector n;
+	powerup->SetForce(n);
+	powerup->SetLinVelocity(n);
+	powerup->SetAngVelocity(n);
+	powerup->m_bIsGrabable = false;
+	powerup->GetPhysicsData()->m_bHasCollision = false;
+
 	PowerUpSetting curPU;
 
 	for(it; it != m_lPlacedPowerUps.end(); it++)
