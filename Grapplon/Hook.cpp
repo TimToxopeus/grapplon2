@@ -159,7 +159,6 @@ void CHook::Grasp()
 	m_pGrabbedObject->m_pOwner->SetForce(nullVec);
 
 	// Create grab joint
-	//dJointAttach( m_oHookGrabJoint, m_oPhysicsData.body, m_pGrabbedObject->body );
 	CODEManager::Instance()->JointAttach( m_oHookGrabJoint, m_oPhysicsData.body, m_pGrabbedObject->body );
 	m_pGrabbedObject->m_pOwner->SetMass(0.5f, false);				// Remove movement lag
 	m_pGrabbedObject->ToggleIgnore(m_pOwner->GetPhysicsData());		// Ignore colission with ship

@@ -25,7 +25,12 @@ void CFreezePowerUp::CollideWith(CBaseObject* pOther, Vector &pos)
 		std::vector<PhysicsData*>::iterator it = players.begin();
 		for(it; it != players.end(); it++){
 			if((*it)->m_pOwner != pOther){
-				dynamic_cast<CPlayerObject*>((*it)->m_pOwner)->m_fFreezeTime = SETS->FREEZE_TIME;
+				CPlayerObject* other = dynamic_cast<CPlayerObject*>((*it)->m_pOwner);
+				if(other->m_fPUJellyTime > 0.001){
+					other->m_fPUJellyTime = 0;
+				} else {
+					other->m_fFreezeTime = SETS->FREEZE_TIME;
+				}
 			}
 		}
 
