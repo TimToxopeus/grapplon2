@@ -506,6 +506,17 @@ void CHook::SetInvincibleTime( float fTime )
 
 void CHook::Render()
 {
+
+	Vector hookPos  = GetPosition();
+	//Vector chainPos = chainLinks[SETS->LINK_AMOUNT * 2 - 2]->GetPosition();
+	Vector chainPos = m_pOwner->GetPosition();
+	Vector chainToHook = (hookPos - chainPos).GetNormalized();
+	float angle = RADTODEG(asin(chainToHook[1]));
+	if(chainToHook[0] < 0) angle = -angle;
+	this->SetRotation(angle);
+	if(m_pGrabbedObject != NULL) m_pGrabbedObject->m_pOwner->SetRotation(angle);
+
+
 	CBaseMovableObject::Render();
 	if(m_pOwner->m_fFreezeTime > 0.0f)
 	{
