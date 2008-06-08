@@ -28,18 +28,6 @@ scale = 1.0
 rotation = 16
 damagemult = 1.0
 
-[electro]
-name = electro
-orbit = sun 800 50
-mass = 40
-image = asteroid1
-tempradius = 400
-grav = 0
-angle = 90
-rotation = 10
-radius = 50
-damagemult = 3.5
-
 [asteroid]
 name = asteroid2
 orbit = sun 800 50
