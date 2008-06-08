@@ -177,14 +177,11 @@ void CHook::Eject()
 	Vector hookPos = GetPosition();
 
 	// Attach last chain to the hook
-	//dJointAttach(m_pLastChainJoint, chainLinks[SETS->LINK_AMOUNT * 2 - 1]->GetBody(), m_oPhysicsData.body);
 	CODEManager::Instance()->JointAttach(m_pLastChainJoint, chainLinks[SETS->LINK_AMOUNT * 2 - 1]->GetBody(), m_oPhysicsData.body);
-	//dJointSetHingeAnchor(m_pLastChainJoint, hookPos[0] , hookPos[1], hookPos[2]);
 	CODEManager::Instance()->JointSetHingeAnchor(m_pLastChainJoint, hookPos);
 
 	// Shoot the hook forward
-	Vector shipFor = m_pOwner->GetForwardVector() * 6000000.0f;
-//	dBodyAddForce(m_oPhysicsData.body, shipFor[0], shipFor[1], 0.0f);
+	Vector shipFor = m_pOwner->GetForwardVector() * SETS->EJECT_FORCE;
 	AddForce( shipFor );
 
 	CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/hook_throw.wav", RT_SOUND);
@@ -209,7 +206,7 @@ void CHook::Retract(bool playerDied)
 	Vector diff = this->GetPosition() - destPos;
 
 	if(diff.Length() > 25.0f && !playerDied){
-		Vector change = diff * -10000.0f;
+		Vector change = diff * -SETS->RETRACT_FORCE;
 		AddForce( change );
 	} else {
 		Vector nullVec;
@@ -253,13 +250,6 @@ void CHook::Swing()
 {
 	Vector hookPos  = this->GetPosition();
 
-//	Vector chainPos = chainLinks[LINK_AMOUNT]->GetPosition();
-//	Vector dir = hookPos - chainPos;
-//	dir.Normalize();
-//	m_fAngle = RADTODEG2(asin(dir[1]));
-//	this->SetAngVelocity(Vector(0, 0, 0));			
-//	m_pOwner->SetAngVelocity(Vector(0, 0, 0));
-
 	if(!m_bIsRadialCorrected)
 	{
 		Vector shipPos = m_pOwner->GetPosition();
@@ -268,28 +258,22 @@ void CHook::Swing()
 		if(diff.Length() < (SETS->LINK_AMOUNT * 2 - SETS->LINK_GRASP_CON) * SETS->LINK_LENGTH + 30)
 		{
 
-			int LINK_GRASP_CON = SETS->LINK_GRASP_CON;
 			// Joint between ship and before-middle link
+			int LINK_GRASP_CON = SETS->LINK_GRASP_CON;
 			chainLinks[LINK_GRASP_CON - 1]->SetPosition(shipPos);
-			//dJointAttach( chainJoints[LINK_GRASP_CON], chainLinks[LINK_GRASP_CON - 1]->GetBody(), this->m_pOwner->GetBody() );
 			CODEManager::Instance()->JointAttach( chainJoints[LINK_GRASP_CON], chainLinks[LINK_GRASP_CON - 1]->GetBody(), this->m_pOwner->GetBody() );
-			//dJointSetHingeAnchor(chainJoints[LINK_GRASP_CON], shipPos[0] , shipPos[1], shipPos[2]);
 			CODEManager::Instance()->JointSetHingeAnchor(chainJoints[LINK_GRASP_CON], shipPos);
 
 			// Joint between ship and middle link
 			chainLinks[LINK_GRASP_CON]->SetPosition(shipPos);
-			//dJointAttach( m_oMiddleChainJoint, chainLinks[LINK_GRASP_CON]->GetBody(), this->m_pOwner->GetBody() );  
 			CODEManager::Instance()->JointAttach( m_oMiddleChainJoint, chainLinks[LINK_GRASP_CON]->GetBody(), this->m_pOwner->GetBody() );
-			//dJointSetHingeAnchor(m_oMiddleChainJoint, shipPos[0] , shipPos[1], shipPos[2]);
 			CODEManager::Instance()->JointSetHingeAnchor(m_oMiddleChainJoint, shipPos);
 
 			diff.Normalize();
 			diff *= (float) ((SETS->LINK_AMOUNT * 2 - LINK_GRASP_CON) * LINK_GRASP_CON);
 			Vector hookPos = diff + shipPos;
 			this->SetPosition(hookPos);
-			//dJointAttach( m_oAngleJoint, m_oPhysicsData.body, this->m_pOwner->GetBody() );
 			CODEManager::Instance()->JointAttach( m_oAngleJoint, m_oPhysicsData.body, this->m_pOwner->GetBody() );
-			//dJointSetHingeAnchor(m_oAngleJoint, hookPos[0] , hookPos[1], hookPos[2]);
 			CODEManager::Instance()->JointSetHingeAnchor(m_oAngleJoint, hookPos);
 
 			m_bIsRadialCorrected = true;
@@ -301,7 +285,6 @@ void CHook::Swing()
 			tangent *= (SETS->LINK_AMOUNT * 2 - SETS->LINK_GRASP_CON) * SETS->LINK_LENGTH;
 			Vector destDirection = (tangent + shipPos) - this->GetPosition();
 			Vector counterForce = destDirection * 2000;
-			//dBodyAddForce(m_oPhysicsData.body, counterForce[0], counterForce[1], 0.0f);
 			AddForce( counterForce );
 		} 
 	}
@@ -413,10 +396,10 @@ void CHook::ApplyForceFront()
 		if( frontForce[0] * frontForce[1] != 0.0f ){
 			float force = frontForce.Length();
 			
-			tangent *= force * 1;
-			if(tangent.Length() > 35.0f){
+			tangent *= force * SETS->TURN_ACCEL;
+			if(tangent.Length() > SETS->MAX_TURN_SPEED){
 				tangent.Normalize();
-				tangent *= 35.0f;
+				tangent *= SETS->MAX_TURN_SPEED;
 			}
 		
 		}
@@ -487,22 +470,22 @@ void CHook::HandlePlayerDied()
 			m_eHookState = CONNECTED;
 			break;
 		case HOMING:
-			Retract();
+			Retract(true);
 			break;
 		case GRASPING:
 			m_pGrabbedObject = NULL;
-			Retract();
+			Retract(true);
 			break;
 		case SWINGING:
 			Throw(true);
-			Retract();
+			Retract(true);
 			break;
 		case THROWING:
 			Throw();
-			Retract();
+			Retract(true);
 			break;
 		case RETRACTING:
-			Retract();
+			Retract(true);
 			break;
 	}
 
