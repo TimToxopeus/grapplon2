@@ -10,7 +10,7 @@
 CPowerUp::CPowerUp()
 {
 	m_eType = POWERUP;
-	m_bIsGrabable = true;
+	m_bIsGrabable = false;
 
 	m_pImage = new CAnimatedTexture("media/scripts/texture_powerups.txt");
 
@@ -32,13 +32,6 @@ void CPowerUp::CollideWith(CBaseObject *pOther, Vector &pos)
 {
 	if(pOther->getType() == SHIP)
 	{
-		Vector n;
-		SetForce(n);
-		SetLinVelocity(n);
-		SetAngVelocity(n);
-		this->m_bIsGrabable = false;
-		this->m_oPhysicsData.m_bHasCollision = false;
-
 		CODEManager::Instance()->m_pUniverse->RemovePowerUp(this);
 	}
 }

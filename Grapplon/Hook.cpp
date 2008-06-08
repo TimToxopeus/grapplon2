@@ -174,15 +174,19 @@ void CHook::Grasp()
 void CHook::Eject()
 {
 	m_oPhysicsData.m_bHasCollision = true;
-	Vector hookPos = GetPosition();
+	
+	Vector lastChainPos = chainLinks[SETS->LINK_AMOUNT*2 - 1]->GetPosition();
+	SetPosition(lastChainPos + this->GetForwardVector()*25);			// Displacement from center
+	
+
 
 	// Attach last chain to the hook
 	CODEManager::Instance()->JointAttach(m_pLastChainJoint, chainLinks[SETS->LINK_AMOUNT * 2 - 1]->GetBody(), m_oPhysicsData.body);
-	CODEManager::Instance()->JointSetHingeAnchor(m_pLastChainJoint, hookPos);
+	CODEManager::Instance()->JointSetHingeAnchor(m_pLastChainJoint, lastChainPos);
 
 	// Shoot the hook forward
-	Vector shipFor = m_pOwner->GetForwardVector() * SETS->EJECT_FORCE;
-	AddForce( shipFor );
+	Vector shootForce = m_pOwner->GetForwardVector() * SETS->EJECT_FORCE;
+	AddForce( shootForce );
 
 	CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/hook_throw.wav", RT_SOUND);
 	if ( pSound )
@@ -292,11 +296,9 @@ void CHook::Swing()
 void CHook::Throw(bool playerDied)
 {
 	// Joint between hook and object is destroyed
-	//dJointAttach(m_oHookGrabJoint, NULL, NULL);
 	CODEManager::Instance()->JointAttach(m_oHookGrabJoint, NULL, NULL);
 
 	// Joint between hook and ship is destroyed
-	//dJointAttach(m_oAngleJoint, NULL, NULL);
 	CODEManager::Instance()->JointAttach(m_oAngleJoint, NULL, NULL);
 
 	if(m_pGrabbedObject->m_pOwner->getType() == ASTEROID)

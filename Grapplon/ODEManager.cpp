@@ -235,20 +235,20 @@ void CODEManager::ApplyMotorForceAndDrag()
 	PhysicsData* curObject;
 	Vector airDragForce;
 	Vector pos;
-	std::vector<PhysicsData*>* lists[3] = { &m_vOthers, &m_vPlayers, &m_vAsteroids };
+	std::vector<PhysicsData*>* lists[4] = { &m_vOthers, &m_vPlayers, &m_vAsteroids, &m_vPowerUps };
 
 	bool correctWidth;
 	bool correctHeight;
 
 
-	for(int il = 0; il < 3; il++)
+	for(int il = 0; il < 4; il++)
 	{
 		for (unsigned int i = 0; i<lists[il]->size(); i++ )
 		{
 			curObject = (*lists[il])[i];
 
 			ObjectType objType = curObject->m_pOwner->getType();
-			if(objType != SHIP && objType != HOOK && objType != ASTEROID) continue;
+			if(objType != SHIP && objType != HOOK && objType != ASTEROID && objType != POWERUP) continue;
 			if(curObject->m_fAirDragConst != 0.0f){
 				airDragForce = Vector(dBodyGetLinearVel(curObject->body)) * -curObject->m_fAirDragConst;
 				dBodyAddForce(curObject->body, airDragForce[0], airDragForce[1], 0.0f);
@@ -280,7 +280,16 @@ void CODEManager::ApplyMotorForceAndDrag()
 							asteroid->m_fBounceToggleTime = SETS->W_BOUNCE_TOGGLE_TIME;
 						}
 					}
+				} else if(objType == POWERUP)
+				{
+					CPowerUp* powerup = dynamic_cast<CPowerUp*>(curObject->m_pOwner);
+					
+					if(!powerup->m_bIsGrabable) continue;			// Already leaving the field OR Grabbed
+					
+					m_pUniverse->RemovePowerUp(powerup);
+					continue;			// Don't rebounce
 				}
+
 
 				airDragForce = Vector(0, 0, 0);
 				if(correctWidth ) airDragForce[0] = (float) (pos[0] < 0 ? -1 : 1) * -m_pUniverse->m_fBoundaryForce;	
