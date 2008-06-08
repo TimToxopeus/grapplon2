@@ -218,23 +218,18 @@ void CHook::Retract(bool playerDied)
 		lastLink->SetLinVelocity(nullVec);
 		m_oPhysicsData.m_pOwner->SetLinVelocity(nullVec);
 		m_oPhysicsData.m_pOwner->SetAngVelocity(nullVec);
-		//dJointAttach(m_pLastChainJoint, lastLink->GetBody(), m_pOwner->GetBody());
 		CODEManager::Instance()->JointAttach(m_pLastChainJoint, lastLink->GetBody(), m_pOwner->GetBody());
-		//dJointSetHingeAnchor(m_pLastChainJoint, shipPos[0] , shipPos[1], 0.0f);
 		CODEManager::Instance()->JointSetHingeAnchor(m_pLastChainJoint, shipPos);
 
 		if(m_bIsRadialCorrected){
 
 			// Detach middle chainlink from ship
-			//dJointAttach(m_oMiddleChainJoint, NULL, NULL);
 			CODEManager::Instance()->JointAttach(m_oMiddleChainJoint, NULL, NULL);
 
 			// Attach middle chainlink to next chainlink
 			chainLinks[SETS->LINK_GRASP_CON - 1]->SetPosition( shipPos + Vector(SETS->LINK_LENGTH / 2, 0.0f, 0.0f) );
 			chainLinks[SETS->LINK_GRASP_CON]->SetPosition( shipPos + Vector(SETS->LINK_LENGTH / 2, 0.0f, 0.0f) );
-			//dJointAttach(chainJoints[SETS->LINK_GRASP_CON], chainLinks[SETS->LINK_GRASP_CON - 1]->GetBody(), chainLinks[SETS->LINK_GRASP_CON]->GetBody());
 			CODEManager::Instance()->JointAttach(chainJoints[SETS->LINK_GRASP_CON], chainLinks[SETS->LINK_GRASP_CON - 1]->GetBody(), chainLinks[SETS->LINK_GRASP_CON]->GetBody());
-			//dJointSetHingeAnchor(chainJoints[SETS->LINK_GRASP_CON], shipPos[0], shipPos[1], 0.0f); 
 			CODEManager::Instance()->JointSetHingeAnchor(chainJoints[SETS->LINK_GRASP_CON], shipPos);
 
 			m_bIsRadialCorrected = false;
