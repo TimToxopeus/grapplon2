@@ -38,7 +38,6 @@ private:
 	float m_fRespawnTime;
 
 	float m_fPUSpeedTime;
-	float m_fPUJellyTime;
 	float m_fPUShieldTime;
 	float m_fPUHealthTime;
 
@@ -60,7 +59,9 @@ public:
 
 	CPlayerObject( int iPlayer );
 	virtual ~CPlayerObject();
-	
+
+	float m_fPUJellyTime;
+
 	int m_iScore;
 	float m_fFreezeTime;
 

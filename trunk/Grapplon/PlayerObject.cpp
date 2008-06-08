@@ -539,7 +539,6 @@ void CPlayerObject::CollideWith( CBaseObject *pOther, Vector &pos)
 	}
 
 	if( m_fPUShieldTime > 0.0001f) return;
-
 	if ( m_fInvincibleTime > 0.0001f ) return;
 
 	Vector posThis  = this->GetPosition();
@@ -588,7 +587,7 @@ void CPlayerObject::CollideWith( CBaseObject *pOther, Vector &pos)
 	{
 
 		if(m_fPUJellyTime > 0.001f && m_iJellyFrame == 44){
-			m_iJellyFrame = 0;
+			m_iJellyFrame = 14;
 		}
 
 
@@ -625,10 +624,11 @@ void CPlayerObject::CollideWith( CBaseObject *pOther, Vector &pos)
 					pSound->Play();
 			}
 
-			int score = 0;
+			//int score = 0;
 			if(asteroid->m_pThrowingPlayer && asteroid->m_pThrowingPlayer != this && m_fPUJellyTime <= 0.0001f)
 			{
-				score += (int) (damage * mult);
+				int damageMult = (int) (damage * mult);
+				int score = (damageMult > m_iHitpoints ? m_iHitpoints : damageMult );
 				asteroid->m_pThrowingPlayer->m_iScore += score;
 				asteroid->m_pThrowingPlayer->m_iScore += asteroid->m_iMilliSecsInOrbit / 10;
 				score += asteroid->m_iMilliSecsInOrbit / 10;
