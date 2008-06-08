@@ -148,9 +148,6 @@ bool CGameSettings::Init()
 		else if ( tokens[0] == "ScorePushDead" )		{ SCORE_PUSH_DEAD		=		 atoi( tokens[2].c_str() );	}
 		else if ( tokens[0] == "TimeForEMP" )			{ TIME_FOR_EMP			= (float)atof( tokens[2].c_str() );	}
 		else if ( tokens[0] == "EMPTime" )				{ EMP_TIME				= (float)atof( tokens[2].c_str() );	}
-		
-		else if ( tokens[0] == "ScoreSteal" )			{ SCORE_STEAL			=		 atoi( tokens[2].c_str() );	}
-		else if ( tokens[0] == "ScoreGrab" )			{ SCORE_GRAB			=		 atoi( tokens[2].c_str() );	}
 		else if ( tokens[0] == "Fullscreen" )			{ FULLSCREEN			=		 (tokens[2] == "1"); }
 
 		in = ReadLine();

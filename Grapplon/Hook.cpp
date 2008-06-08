@@ -122,18 +122,23 @@ void CHook::Grasp()
 		CODEManager::Instance()->JointAttach(asteroid->orbitJoint, NULL, NULL);
 		asteroid->m_bIsInOrbit = false;
 		asteroid->m_bIsGrabable = false;
-		if(asteroid->m_fThrowTime - time(NULL) < 4 && asteroid->m_pThrowingPlayer != m_pOwner && asteroid->m_pThrowingPlayer != NULL )
+		
+		if(asteroid->m_pThrowingPlayer != m_pOwner)
 		{
+			int score = 0;
+	
+			if(asteroid->m_pThrowingPlayer != NULL && (time(NULL) - asteroid->m_fThrowTime) < 4){
+				score = SETS->SCORE_STEAL;
+			} else {
+				score = SETS->SCORE_GRAB;
+			}
+
 			CGameState *pState = (CGameState *)CCore::Instance()->GetActiveState();
-			pState->AddScore( m_pOwner->GetPlayerID(), SETS->SCORE_STEAL, (int)GetX(), (int)GetY() );
-			m_pOwner->m_iScore += SETS->SCORE_STEAL;				// Steal bonus
+			pState->AddScore( m_pOwner->GetPlayerID(), score, (int)GetX(), (int)GetY() );
+			m_pOwner->m_iScore += score;
+			
 		}
-		else
-		{
-			CGameState *pState = (CGameState *)CCore::Instance()->GetActiveState();
-			pState->AddScore( m_pOwner->GetPlayerID(), SETS->SCORE_GRAB, (int)GetX(), (int)GetY() );
-			m_pOwner->m_iScore += SETS->SCORE_GRAB;				// Steal bonus
-		}
+		
 		asteroid->m_fThrowTime = 0;
 		asteroid->m_pHoldingPlayer = m_pOwner;
 		asteroid->m_pThrowingPlayer = NULL;
@@ -189,7 +194,7 @@ void CHook::Eject()
 	m_eHookState = HOMING;
 }
 
-void CHook::Retract()
+void CHook::Retract(bool playerDied)
 {
 	if ( m_eHookState != RETRACTING )
 	{
@@ -203,9 +208,8 @@ void CHook::Retract()
 	Vector destPos = shipPos + m_pOwner->GetForwardVector() * SETS->CENT_DIST_HOOK;
 	Vector diff = this->GetPosition() - destPos;
 
-	if(diff.Length() > 25.0f){
+	if(diff.Length() > 25.0f && !playerDied){
 		Vector change = diff * -10000.0f;
-		//dBodyAddForce(m_oPhysicsData.body, change[0], change[1], 0.0f);
 		AddForce( change );
 	} else {
 		Vector nullVec;
