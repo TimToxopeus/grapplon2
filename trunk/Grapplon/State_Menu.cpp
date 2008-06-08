@@ -866,7 +866,7 @@ void CMenuState::LoadScores()
 
 	int i = 0;
 	std::string in = ReadLine(pFile);
-	while ( in != "" )
+	while ( in != "" && i <= 9 )
 	{
 		tokens = tokenizer.GetTokens( in );
 		m_szNames[i] = tokens[0];
