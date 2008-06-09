@@ -162,15 +162,12 @@ void CGameState::Render()
 			if(aabb_b < (int) playerPos[1]) aabb_b = (int) playerPos[1];
 		}
 
-		//for(int i = 0; i < GetUniverse()->m_vBlackHoles.size(); i++){
+		for(unsigned int i = 0; i < GetUniverse()->m_vBlackHoles.size(); i++){
 
 
 
-		//}
-
-
+		}
 	}
-
 
 	// Desired view
 	int view_l = aabb_l + (int) (SETS->VIEW_PERC * (float) (level_l - aabb_l));

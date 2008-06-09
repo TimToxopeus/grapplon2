@@ -77,7 +77,8 @@ CGameSettings::CGameSettings()
 	SCREEN_MARGIN			= -99999;
 	VIEW_PERC				= -9999.0f;
 	SPAWN_ZOOM_TIME			= -1;
-
+	PU_FREEZE_TIME			= -1;
+	
 	Init();
 }
 
@@ -141,6 +142,7 @@ bool CGameSettings::Init()
 		else if ( tokens[0] == "PUSpeedMult" )			{ PU_SPEED_MULT			=		 atoi( tokens[2].c_str() );	}
 		else if ( tokens[0] == "PUJellyTime" )			{ PU_JELLY_TIME			=		 atoi( tokens[2].c_str() );	}
 		else if ( tokens[0] == "PUShieldTime" )			{ PU_SHIELD_TIME		=		 atoi( tokens[2].c_str() );	}
+		else if ( tokens[0] == "PUFreezeTime" )			{ PU_FREEZE_TIME		=		 atoi( tokens[2].c_str() );	}
 		else if ( tokens[0] == "PhysicsStepTime" )		{ PH_STEP_TIME			= (float)atof( tokens[2].c_str() );	}
 		else if ( tokens[0] == "PhysicsNrIterations" )	{ PH_NUM_ITS			=		 atoi( tokens[2].c_str() );	}
 		else if ( tokens[0] == "ChainMass" )			{ CHAIN_MASS			= (float)atof( tokens[2].c_str() );	}

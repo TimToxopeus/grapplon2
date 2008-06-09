@@ -28,6 +28,7 @@ private:
 	CAnimatedTexture *m_pJellyImage;
 	CAnimatedTexture *m_pShieldImage;
 	CAnimatedTexture *m_pRespawnImage;
+	CAnimatedTexture *m_pPUFrozenImage;
 
 	Vector explosionPos;
 
@@ -49,6 +50,7 @@ private:
 	float m_fPUSpeedTime;
 	float m_fPUShieldTime;
 	float m_fPUHealthTime;
+	float m_fPUFreezeTime;
 
 	bool  m_bHandleWiiMoteEvents;
 	CParticleEmitter *m_pThrusterLeft, *m_pThrusterRight;
@@ -89,6 +91,8 @@ public:
 	void TookJellyPowerUp();
 	void TookShieldPowerUp();
 	void ResetStatus();
+	void AffectedByFreezePU();
+
 
 	void IncreaseElectro(float timePassed);
 

@@ -66,6 +66,7 @@ public:
 	int			PU_SPEED_MULT;
 	int			PU_JELLY_TIME;
 	int			PU_SHIELD_TIME;
+	int			PU_FREEZE_TIME;
 
 	float		PH_STEP_TIME;
 	int			PH_NUM_ITS;
@@ -84,6 +85,7 @@ public:
 	int			SCREEN_MARGIN;
 	float		VIEW_PERC;
 	float		SPAWN_ZOOM_TIME;
+
 
 	bool  Init();
 	

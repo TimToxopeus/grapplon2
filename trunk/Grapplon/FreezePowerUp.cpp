@@ -29,7 +29,7 @@ void CFreezePowerUp::CollideWith(CBaseObject* pOther, Vector &pos)
 				if(other->m_fPUJellyTime > 0.001){
 					other->m_fPUJellyTime = 0;
 				} else {
-					other->m_fFreezeTime = SETS->FREEZE_TIME;
+					other->AffectedByFreezePU();
 				}
 			}
 		}
