@@ -15,8 +15,9 @@ speed = 0
 
 [health]
 file = "media/images/powerup_health.png"
-frames = 1
-speed = 0
+frames = 40
+rows = 5
+speed = 15
 
 [jelly]
 file = "media/images/powerup_jelly.png"
