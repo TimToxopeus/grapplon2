@@ -993,7 +993,7 @@ std::string CMenuState::GetSelectedLevel()
 
 void CMenuState::AddCursorXY( int x, int y )
 {
-	if ( x < -1024 || x > 1024 || y < -768 || y > 768 )
+	if ( x < 0 || x > 1024 || y < 0 || y > 768 )
 		return;
 
 	// Check if the new value doesn't crazily exceed old average
