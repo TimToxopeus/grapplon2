@@ -19,6 +19,7 @@ class CODEManager;
 class CRenderer;
 class CSoundManager;
 class CParticleSystemManager;
+class CAnimatedTexture;
 
 class CCore
 {
@@ -34,6 +35,7 @@ private:
 	CODEManager *m_pODEManager;
 	CSoundManager *m_pSoundManager;
 	CParticleSystemManager *m_pParticleSystemManagerNear, *m_pParticleSystemManagerFar;
+	CAnimatedTexture *m_pLoading;
 
 	bool m_bMenu;
 	bool m_bRunningValid;

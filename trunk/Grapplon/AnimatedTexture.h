@@ -56,4 +56,5 @@ public:
 
 	void OverrideHeight( float fHeight ) { m_fOverrideHeight = fHeight; } // HUD ONLY!!
 	bool IsFinished() { return (m_vAnimations[m_iCurAnim].m_iFrames == m_iCurFrame + 1); }
+	int GetAnimCount() { return m_vAnimations.size(); }
 };
