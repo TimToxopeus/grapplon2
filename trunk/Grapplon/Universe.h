@@ -68,7 +68,7 @@ public:
 	std::list<PowerUpSetting> m_lIdlePowerUps;
 	std::list<PowerUpSetting> m_lPlacedPowerUps;
 
-	std::vector<CWormHole*> m_vBlackHoles;
+	std::vector<CWormHole*> m_vWormHoles;
 
 
 	bool Load( std::string file );

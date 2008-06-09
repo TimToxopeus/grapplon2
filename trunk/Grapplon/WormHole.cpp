@@ -18,6 +18,8 @@ CWormHole::CWormHole(PlanetaryData &data, int index)
 		m_pExitForce = data.exitVector2;
 	}
 
+	m_fZoomRadius = data.zoomradius;
+
 	m_pImage->Scale(3.0f);
 	m_pGlow->Scale(3.0f);
 
