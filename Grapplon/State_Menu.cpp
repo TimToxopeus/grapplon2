@@ -684,6 +684,11 @@ int CMenuState::HandleSDLEvent(SDL_Event event)
 		{
 			m_bRunning = false;
 		}
+		if ( event.key.keysym.sym == SDLK_ESCAPE )
+		{
+			m_bRunning = false;
+			m_bQuit = true;
+		}
 		else if ( event.key.keysym.sym == SDLK_p )
 		{
 			state = ABMENU + 1;
@@ -988,6 +993,9 @@ std::string CMenuState::GetSelectedLevel()
 
 void CMenuState::AddCursorXY( int x, int y )
 {
+	if ( x < -1024 || x > 1024 || y < -768 || y > 768 )
+		return;
+
 	// Check if the new value doesn't crazily exceed old average
 	int deltaX = abs(cursorX - x);
 	int deltaY = abs(cursorY - y);
