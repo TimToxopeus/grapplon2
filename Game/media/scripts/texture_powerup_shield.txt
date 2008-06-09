@@ -1,0 +1,10 @@
+[object]
+width = 160
+height = 160
+animations = idle
+
+[idle]
+file = "media/images/powerup_jelly.png"
+frames = 40
+rows = 5
+speed = 15
