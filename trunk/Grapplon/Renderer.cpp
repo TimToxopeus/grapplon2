@@ -13,6 +13,8 @@
 #include "AnimatedTexture.h"
 #include <sstream>
 
+#define PERC 0.5
+
 CRenderer *CRenderer::m_pInstance = 0;
 
 struct ActiveObjectSort

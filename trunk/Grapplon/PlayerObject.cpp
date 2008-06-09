@@ -32,7 +32,7 @@ CPlayerObject::CPlayerObject( int iPlayer )
 	m_iJellyFrame		= 44;
 	m_iJellyIter		= 0;
 
-	m_bReInit = true;
+	m_bIsReinitialized = true;
 
 	std::string image = "media/scripts/texture_player" + itoa2(iPlayer + 1) + ".txt";
 	m_pImage = new CAnimatedTexture(image);
@@ -306,8 +306,8 @@ void CPlayerObject::Render()
 		target = m_pExplosion->GetSize();
 		target.w += target.w;
 		target.h += target.h;
-		target.x = (int)GetX() - (target.w / 2);
-		target.y = (int)GetY() - (target.h / 2);
+		target.x = (int)explosionPos[0] - (target.w / 2);
+		target.y = (int)explosionPos[1] - (target.h / 2);
 
 		RenderQuad( target, m_pExplosion, m_fExplosionAngle + 180.0f, 1 );
 	}
@@ -337,35 +337,16 @@ void CPlayerObject::Update( float fTime )
 	{
 		m_fRespawnTime -= fTime;
 
-		if ( m_fRespawnTime < 1.0f )
+		if ( m_fRespawnTime < 1.0f && m_fRespawnTime + fTime > 1.0f )
 		{
-			if ( m_fRespawnTime + fTime > 1.0f )
-			{
-				Respawn();
-				SetDepth( 1.0f );
-			}
-
-			//SetScale( 1.0f + 3.0f * m_fRespawnTime );
-			//m_pHook->SetScale( 1.0f + 3.0f * m_fRespawnTime );
-			//SetAlpha( 1.0f - (1.0f * m_fRespawnTime) );
-			//m_pHook->SetAlpha( 1.0f - (1.0f * m_fRespawnTime) );
+			Respawn();
+			//SetDepth( 1.0f );
 		}
 
-		// DIT GEBEURT NU NA HET DOEN VAN DE RESPAWN ANIMATIE
-		//if ( m_fRespawnTime <= 0.0f )
-		//{
-		//	m_bHandleWiiMoteEvents = true;
-		//	SetDepth( -1.0f );
-		//	m_fInvincibleTime = 2.0f;
-		//	m_pHook->SetInvincibleTime( 2.0f );
-		//	m_oPhysicsData.m_bAffectedByGravity = false;
-		//	m_fAlpha = 1.0f;
+		if(m_fRespawnTime >= 1.0f && m_fRespawnTime <= 2.0f){
+			SetPosition( GetPosition() + respawnDisplacement*(fTime) );
+		}
 
-		//	if ( m_pThrusterLeft )
-		//		m_pThrusterLeft->ToggleSpawn(true, true);
-		//	if ( m_pThrusterRight )
-		//		m_pThrusterRight->ToggleSpawn(true, true);
-		//}
 	}
 
 	if(m_fFreezeTime > 0){
@@ -410,20 +391,25 @@ void CPlayerObject::Update( float fTime )
 
 	if ( !m_pRespawnImage->IsFinished() ){
 		m_pRespawnImage->UpdateFrame( fTime );
-	} else if(!m_bReInit){
+	} else if(!m_bIsReinitialized){
 		m_bHandleWiiMoteEvents = true;
 		SetDepth( -1.0f );
 		m_fInvincibleTime = 2.0f;
 		m_pHook->SetInvincibleTime( 2.0f );
 		m_oPhysicsData.m_bAffectedByGravity = false;
 		m_fAlpha = 1.0f;
+		m_pHook->SetVisibility(1.0f);
+		m_pHook->GetPhysicsData()->m_bHasCollision = true;
+		GetPhysicsData()->m_bHasCollision = true;
 
 		if ( m_pThrusterLeft )
-			m_pThrusterLeft->ToggleSpawn(true, true);
+		m_pThrusterLeft->ToggleSpawn(true, true);
 		if ( m_pThrusterRight )
 			m_pThrusterRight->ToggleSpawn(true, true);
 
-		m_bReInit = true;
+		m_bIsReinitialized = true;
+
+
 	}
 
 	if ( m_iHitpoints <= 0 ){
@@ -471,10 +457,16 @@ void CPlayerObject::OnDie( CBaseObject *m_pKiller )
 	m_pExplosion->SetAnimation(rand()%3);
 	m_pExplosion->SetFrame(0);
 	m_fExplosionAngle = m_fAngle;
+	
+	explosionPos = GetPosition();
 
 	Vector nullVec;
 	m_pHook->HandlePlayerDied();
 	m_bHandleWiiMoteEvents = false;
+
+	m_pHook->GetPhysicsData()->m_bHasCollision = false;
+	GetPhysicsData()->m_bHasCollision = false;
+
 	SetForceFront(nullVec);
 	SetLinVelocity(nullVec);
 	SetAngVelocity(nullVec);
@@ -486,14 +478,11 @@ void CPlayerObject::OnDie( CBaseObject *m_pKiller )
 	m_fPUSpeedTime = 0.0f;
 	m_fEMPTime = 0.0f;
 	m_fElectroTime = 0.0f;
-
-	m_bReInit = false;
+	m_fRespawnTime = 3.0f;
 
 	m_pHook->SetInvincibleTime( 4.0f );
-	m_fRespawnTime = 2.0f;
 	SetAlpha( 0.0f );
-	m_pHook->SetAlpha( 0.0f );
-
+	m_pHook->SetVisibility( 0.0f);
 	// Spawn emitter
 	Vector direction = m_pKiller->GetPosition() - GetPosition();
 	direction.Normalize();
@@ -515,10 +504,9 @@ void CPlayerObject::OnDie( CBaseObject *m_pKiller )
 		m_pThrusterLeft->ToggleSpawn(true, false);
 	if ( m_pThrusterRight )
 		m_pThrusterRight->ToggleSpawn(true, false);
-}
 
-void CPlayerObject::Respawn()
-{
+
+	// Get respawnposition
 	int x, y;
 
 	CRenderer *pRenderer = CRenderer::Instance();
@@ -528,15 +516,24 @@ void CPlayerObject::Respawn()
 		y = rand()%3000 - 1500;
 	} while ( pRenderer->ObjectsInRange( x, y, 200 ) );
 
-	Vector v = Vector( (float)x, (float)y, 0.0f );
-	SetPosition( v );
+	respawnPosition = Vector( (float)x, (float)y, 0.0f );
+	respawnDisplacement = respawnPosition - GetPosition();
+	
 	Vector n;
 	m_oPhysicsData.m_pOwner->SetLinVelocity(n);
+	m_oPhysicsData.m_pOwner->SetAngVelocity(n);
 	SetForce(n);
-	m_iHitpoints = m_iMaxHitpoints;
 
+}
+
+void CPlayerObject::Respawn()
+{
+	SetPosition( respawnPosition );
+	m_iHitpoints = m_iMaxHitpoints;
 	m_pRespawnImage->SetAnimation(0);
 	m_pRespawnImage->SetFrame(0);
+	m_bIsReinitialized = false;
+
 
 }
 

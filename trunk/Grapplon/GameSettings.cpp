@@ -74,6 +74,8 @@ CGameSettings::CGameSettings()
 	FIRE_AST_MULT			= 3.0;
 	SCORE_PUSH_DEAD			= -1;
 	FULLSCREEN				= false;
+	SCREEN_MARGIN			= -99999;
+	VIEW_PERC				= -9999.0f;
 
 	Init();
 }
@@ -149,6 +151,8 @@ bool CGameSettings::Init()
 		else if ( tokens[0] == "TimeForEMP" )			{ TIME_FOR_EMP			= (float)atof( tokens[2].c_str() );	}
 		else if ( tokens[0] == "EMPTime" )				{ EMP_TIME				= (float)atof( tokens[2].c_str() );	}
 		else if ( tokens[0] == "Fullscreen" )			{ FULLSCREEN			=		 (tokens[2] == "1"); }
+		else if ( tokens[0] == "ScreenMargin" )			{ SCREEN_MARGIN			=		 atoi( tokens[2].c_str() );	}
+		else if ( tokens[0] == "ViewEdgePercentage" )	{ VIEW_PERC				= (float)atof( tokens[2].c_str() );	}
 
 		in = ReadLine();
 	}

@@ -81,6 +81,10 @@ public:
 
 	bool		FULLSCREEN;
 
+	int			SCREEN_MARGIN;
+	float		VIEW_PERC;
+
+
 	bool  Init();
 	
 };

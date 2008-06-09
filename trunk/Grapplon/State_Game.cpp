@@ -132,6 +132,91 @@ CGameState::~CGameState()
 
 void CGameState::Render()
 {
+
+	int level_width = (int) GetUniverse()->m_fWidth;
+	int level_height = (int) GetUniverse()->m_fHeight;
+
+	// Note: m_fWidth is actually half the width (same for height)
+	int level_l = -level_width;
+	int level_r =  level_width;
+	int level_t = -level_height;
+	int level_b =  level_height;
+
+	// aabb = Axis Aligned Bounding Box of the players (and interpolated wormholes)
+	int aabb_l = 99999999;
+	int aabb_r = -99999999;
+	int aabb_t = 99999999;
+	int aabb_b = -99999999;
+
+	Vector playerPos;
+
+	// Calculate aabb
+	for( int i = 0; i<4; i++ )
+	{
+		if( m_pPlayers[i] )
+		{
+			playerPos = m_pPlayers[i]->GetPosition();
+			if(aabb_l > (int) playerPos[0]) aabb_l = (int) playerPos[0];
+			if(aabb_r < (int) playerPos[0]) aabb_r = (int) playerPos[0];
+			if(aabb_t > (int) playerPos[1]) aabb_t = (int) playerPos[1];
+			if(aabb_b < (int) playerPos[1]) aabb_b = (int) playerPos[1];
+		}
+
+		//for(int i = 0; i < GetUniverse()->m_vBlackHoles.size(); i++){
+
+
+
+		//}
+
+
+	}
+
+
+	// Desired view
+	int view_l = aabb_l + (int) (SETS->VIEW_PERC * (float) (level_l - aabb_l));
+	int view_r = aabb_r + (int) (SETS->VIEW_PERC * (float) (level_r - aabb_r));
+	int view_b = aabb_b + (int) (SETS->VIEW_PERC * (float) (level_b - aabb_b));
+	int view_t = aabb_t + (int) (SETS->VIEW_PERC * (float) (level_t - aabb_t));
+
+	// Rescale view such that it's aspect ratio is 1024/768
+	// For correct aspect ratio, 4/3 = w/h ----> 4h = 3w -----> 0 = 4h - 3w
+	int diff = 4*(view_b - view_t) - 3*(view_r - view_l);			// , else enlarge height
+
+	if( diff > 0 ){		// diff > 0 ---> 4h = 3w + diff ---> 4h > 3w ---> enlarge width
+		view_l -= (diff / 6);
+		view_r += (diff / 6);
+	} else {			// diff < 0 ---> 4h + diff = 3w ---> 4h < 3w ---> enlarge height
+		view_t -= (diff / 8);
+		view_b += (diff / 8);
+	}
+
+	// Correct view outside level
+	if(view_l < level_l){
+		view_r += level_l - view_l;
+		view_l = level_l;
+	} else if(view_r > level_r){
+		view_l += level_r - view_r;
+		view_r = level_r;
+	}
+
+	if(view_t < level_t){
+		view_b += level_t - view_t;
+		view_t = level_t;
+	} else if(view_b > level_b){
+		view_t += level_b - view_b;
+		view_b = level_b;
+	}
+	// View has correct aspect ratio
+	// Determine zoom-level
+	float zoom = ((view_r - view_l) + 2* SETS->SCREEN_MARGIN) / 1024.0f;					// w = zoom * 1024 --> zoom = w / 1024
+
+	if(zoom < SETS->MIN_ZOOM) zoom = SETS->MIN_ZOOM;
+	// Determine center of view
+	Vector view_center( (float) ((view_r + view_l) / 2), (float) ((view_t + view_b) / 2), 0.0f);
+
+	
+	
+	/*
 	Vector playerCenter;
 	float c = 0;
 	for ( int i = 0; i<4; i++ )
@@ -160,8 +245,9 @@ void CGameState::Render()
 		zoom = SETS->MIN_ZOOM;
 	if ( zoom > SETS->MAX_ZOOM )
 		zoom = SETS->MAX_ZOOM;
+*/
 
-	CRenderer::Instance()->SetCamera( playerCenter, zoom );
+	CRenderer::Instance()->SetCamera( view_center, zoom );
 }
 
 void CGameState::Update(float fTime)

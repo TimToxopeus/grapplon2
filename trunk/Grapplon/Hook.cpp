@@ -101,6 +101,17 @@ CHook::~CHook()
 
 }
 
+void CHook::SetVisibility(float alpha)
+{
+	SetAlpha(alpha);
+	for(unsigned int i = 0; i < chainLinks.size(); i++){
+		chainLinks[i]->SetAlpha(alpha);
+	}
+
+
+
+}
+
 void CHook::SetGrasped(PhysicsData* toGrasp)
 {
 	m_pGrabbedObject = toGrasp;
