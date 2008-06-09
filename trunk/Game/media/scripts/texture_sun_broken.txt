@@ -6,4 +6,5 @@ animations = idle
 [idle]
 file = "media/images/sun_broken.png"
 frames = 50
-speed = 20
+speed = 10
+rows = 5
