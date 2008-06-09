@@ -3,8 +3,8 @@ GENERAL
 ------------------------------------------------------------------------------------------------------------------
 
 [universe]
-width = 3000
-height = 2500
+width = 3200
+height = 2700
 boundaryforce = 20000000
 initspawn1 = -1500 500
 initspawn2 = 1500 -500
@@ -26,13 +26,13 @@ name = sun
 mass = 1000000
 image = sun_broken
 imageglow = sun_glow
-grav = 300
-radius = 340
-tempradius = 575
+grav = 350
+radius = 450
+tempradius = 580
 pos = 0 0
-scale = 2.0
+scale = 2.8
 emitter = "media/scripts/particle_fire_emitter.txt", far, 0, 0
-damagemult = 1.1
+damagemult = 2.0
 
 [ordinary]
 name = fire_planet1
@@ -58,7 +58,7 @@ imageglow = windglow
 imageorbit = orbit_circle
 grav = -500
 angle = 60
-scale = 1.1
+scale = 1.5
 radius = 100
 damagemult = 0.2
 
@@ -72,7 +72,7 @@ imageglow = windglow
 imageorbit = orbit_circle
 grav = -500
 angle = 120
-scale = 1.1
+scale = 1.5
 radius = 100
 damagemult = 0.2
 
@@ -100,7 +100,7 @@ imageglow = windglow
 imageorbit = orbit_circle
 grav = -500
 angle = 240
-scale = 1.1
+scale = 1.5
 radius = 100
 damagemult = 0.2
 
@@ -113,7 +113,7 @@ imageglow = windglow
 imageorbit = orbit_circle
 grav = -500
 angle = 300
-scale = 1.1
+scale = 1.5
 radius = 100
 damagemult = 0.2
 
