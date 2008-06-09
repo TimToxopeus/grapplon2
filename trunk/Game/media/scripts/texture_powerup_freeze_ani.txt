@@ -1,0 +1,10 @@
+[object]
+width = 200
+height = 200
+animations = idle
+
+[idle]
+file = "media/images/timefreeze.png"
+frames = 30
+rows = 3
+speed = 15
