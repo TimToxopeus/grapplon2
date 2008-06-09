@@ -396,7 +396,7 @@ void CPlayerObject::Update( float fTime )
 		SetDepth( -1.0f );
 		m_fInvincibleTime = 2.0f;
 		m_pHook->SetInvincibleTime( 2.0f );
-		m_oPhysicsData.m_bAffectedByGravity = false;
+		m_oPhysicsData.m_bAffectedByGravity = true;
 		m_fAlpha = 1.0f;
 		m_pHook->SetVisibility(1.0f);
 		m_pHook->GetPhysicsData()->m_bHasCollision = true;
@@ -465,7 +465,9 @@ void CPlayerObject::OnDie( CBaseObject *m_pKiller )
 	m_bHandleWiiMoteEvents = false;
 
 	m_pHook->GetPhysicsData()->m_bHasCollision = false;
+	m_pHook->GetPhysicsData()->m_bAffectedByGravity = false;
 	GetPhysicsData()->m_bHasCollision = false;
+	GetPhysicsData()->m_bAffectedByGravity = false;
 
 	SetForceFront(nullVec);
 	SetLinVelocity(nullVec);
