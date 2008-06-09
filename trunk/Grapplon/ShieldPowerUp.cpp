@@ -8,8 +8,8 @@
 
 CShieldPowerUp::CShieldPowerUp(void)
 {
-	m_ePowerUpType = GELLY;
-	m_pImage = new CAnimatedTexture("media/scripts/texture_powerup_shield.txt");
+	m_ePowerUpType = SHIELD;
+	m_pImage->SetAnimation(4);
 
 }
 

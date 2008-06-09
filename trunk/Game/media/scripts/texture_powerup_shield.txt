@@ -1,10 +1,9 @@
 [object]
-width = 160
-height = 160
+width = 72
+height = 72
 animations = idle
 
 [idle]
-file = "media/images/powerup_jelly.png"
-frames = 40
-rows = 5
-speed = 15
+file = "media/images/powerup_repair.png"
+frames = 1
+speed = 0
