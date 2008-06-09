@@ -83,7 +83,7 @@ public:
 
 	int			SCREEN_MARGIN;
 	float		VIEW_PERC;
-
+	float		SPAWN_ZOOM_TIME;
 
 	bool  Init();
 	

@@ -344,7 +344,8 @@ void CPlayerObject::Update( float fTime )
 		}
 
 		if(m_fRespawnTime >= 1.0f && m_fRespawnTime <= 2.0f){
-			SetPosition( GetPosition() + respawnDisplacement*(fTime) );
+			SetPosition( GetPosition() + respawnDisplacement*(fTime) / SETS->SPAWN_ZOOM_TIME);
+			if(m_fRespawnTime - 1 <= 1 - SETS->SPAWN_ZOOM_TIME) m_fRespawnTime = 1.01f;
 		}
 
 	}
@@ -530,7 +531,6 @@ void CPlayerObject::OnDie( CBaseObject *m_pKiller )
 
 void CPlayerObject::Respawn()
 {
-	SetPosition( respawnPosition );
 	m_iHitpoints = m_iMaxHitpoints;
 	m_pRespawnImage->SetAnimation(0);
 	m_pRespawnImage->SetFrame(0);

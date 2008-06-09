@@ -76,6 +76,7 @@ CGameSettings::CGameSettings()
 	FULLSCREEN				= false;
 	SCREEN_MARGIN			= -99999;
 	VIEW_PERC				= -9999.0f;
+	SPAWN_ZOOM_TIME			= -1;
 
 	Init();
 }
@@ -153,6 +154,7 @@ bool CGameSettings::Init()
 		else if ( tokens[0] == "Fullscreen" )			{ FULLSCREEN			=		 (tokens[2] == "1"); }
 		else if ( tokens[0] == "ScreenMargin" )			{ SCREEN_MARGIN			=		 atoi( tokens[2].c_str() );	}
 		else if ( tokens[0] == "ViewEdgePercentage" )	{ VIEW_PERC				= (float)atof( tokens[2].c_str() );	}
+		else if ( tokens[0] == "PlayerSpawnZoomTime" )	{ SPAWN_ZOOM_TIME		= (float)atof( tokens[2].c_str() );	}
 
 		in = ReadLine();
 	}
