@@ -12,6 +12,7 @@
 #include "Background.h"
 #include "HUD.h"
 #include "GameSettings.h"
+#include "WormHole.h"
 
 #include "PowerUp.h"
 
@@ -162,9 +163,27 @@ void CGameState::Render()
 			if(aabb_b < (int) playerPos[1]) aabb_b = (int) playerPos[1];
 		}
 
-		for(unsigned int i = 0; i < GetUniverse()->m_vBlackHoles.size(); i++){
+		
+		std::vector<CWormHole*>& whs = GetUniverse()->m_vWormHoles;
+		for(unsigned int i = 0; i < whs.size(); i++){
+			CWormHole* thisWH = whs[i];
+			CPlayerObject* curPlayer = m_pPlayers[i];
+			Vector WHPos = thisWH->GetPosition();
+			Vector PlayerPos = curPlayer->GetPosition();						
+			float distance = (WHPos - PlayerPos).Length();
+			if( distance < thisWH->m_fZoomRadius){
+				float perc = 1 - (distance - thisWH->GetPhysicsData()->m_fRadius) / (thisWH->m_fZoomRadius - thisWH->GetPhysicsData()->m_fRadius);
 
+				Vector DistanceToTwin = thisWH->twin->GetPosition() - WHPos;
+				Vector noticePoint = WHPos + DistanceToTwin*perc;
+				
 
+				if(aabb_l > (int) noticePoint[0]) aabb_l = (int) noticePoint[0];
+				if(aabb_r < (int) noticePoint[0]) aabb_r = (int) noticePoint[0];
+				if(aabb_t > (int) noticePoint[1]) aabb_t = (int) noticePoint[1];
+				if(aabb_b < (int) noticePoint[1]) aabb_b = (int) noticePoint[1];
+
+			}
 
 		}
 	}

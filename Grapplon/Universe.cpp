@@ -79,8 +79,8 @@ bool CUniverse::Load( std::string file )
 				
 				m_vPlanets.push_back(wh1);	
 				m_vPlanets.push_back(wh2);	
-				m_vBlackHoles.push_back(wh1);
-				m_vBlackHoles.push_back(wh2);
+				m_vWormHoles.push_back(wh1);
+				m_vWormHoles.push_back(wh2);
 
 				wh1->twin = wh2;
 				wh2->twin = wh1;
@@ -243,6 +243,7 @@ void CUniverse::ReadPlanet(ObjectType planType)
 		else if ( tokens[0] == "radius" )			planetData.radius			= atoi(tokens[2].c_str());
 		else if ( tokens[0] == "damagemult" )		planetData.damageMult		= (float) atof(tokens[2].c_str());
 		else if ( tokens[0] == "tempradius" )		planetData.tempradius		= atoi(tokens[2].c_str());
+		else if ( tokens[0] == "zoomradius" )		planetData.zoomradius		= (float) atof(tokens[2].c_str());
 		else if ( tokens[0] == "pos" )	
 		{
 			planetData.position[0]												= (float)atof(tokens[2].c_str());

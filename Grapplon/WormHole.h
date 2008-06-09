@@ -17,6 +17,7 @@ public:
 	void CollideWith(CBaseObject *pOther, Vector &pos);
 	CBaseObject* m_pToThrow;
 	virtual void Update(float fTime);
+	float m_fZoomRadius;
 
 private:
 	Vector m_pExitForce;

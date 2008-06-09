@@ -28,6 +28,23 @@ scale = 1.0
 rotation = 16
 damagemult = 1.0
 
+[wormhole]
+name = wormhole1
+pos = 2700 2700
+pos2 = -2700 -2700
+mass = 50000
+image = wormhole
+grav = 0
+angle = 0
+rotation = 10
+radius = 50
+exit1 = 50000 50000
+exit2 = -50000 -50000
+damagemult = 0.05
+imageglow = wormhole_glow_red
+zoomradius = 1000
+
+
 [asteroid]
 name = asteroid2
 orbit = sun 800 50
@@ -38,4 +55,3 @@ angle = 0
 rotation = 10
 radius = 50
 damagemult = 3.5
-

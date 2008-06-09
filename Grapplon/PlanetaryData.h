@@ -47,6 +47,7 @@ struct PlanetaryData
 	float damageMult;
 	float scale;
 	int rotation;
+	float zoomradius;
 
 	std::string emitter;
 	int offsetForward, offsetRight;
