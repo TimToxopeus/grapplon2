@@ -35,6 +35,7 @@ public:
 	PhysicsData *m_pGrabbedObject;				// Grabbed object
 
 
+	void SetVisibility(float alpha);
 	bool IsDisconnected() { return m_eHookState != CONNECTED; }
 	void Eject();								// Release the hook from the ship in order to grasp objects
 	void Grasp();								// Grasp the object

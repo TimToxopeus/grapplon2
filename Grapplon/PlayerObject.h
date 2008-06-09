@@ -29,7 +29,13 @@ private:
 	CAnimatedTexture *m_pShieldImage;
 	CAnimatedTexture *m_pRespawnImage;
 
-	bool m_bReInit;
+	Vector explosionPos;
+
+	Vector respawnPosition;
+	Vector respawnDisplacement;
+
+
+	bool m_bIsReinitialized;
 
 	std::vector<CollisionEffect *> m_vCollisionEffects;
 

@@ -79,10 +79,12 @@ bool CUniverse::Load( std::string file )
 				
 				m_vPlanets.push_back(wh1);	
 				m_vPlanets.push_back(wh2);	
+				m_vBlackHoles.push_back(wh1);
+				m_vBlackHoles.push_back(wh2);
 
 				wh1->twin = wh2;
 				wh2->twin = wh1;
-			
+
 			}
 		}
 

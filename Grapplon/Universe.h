@@ -12,6 +12,7 @@ class CTokenizer;
 class CPlanet;
 class Vector;
 class CPowerUp;
+class CWormHole;
 
 struct RespawnArea
 {
@@ -40,7 +41,7 @@ private:
 	CTokenizer *pTokenizer;
 	std::vector<PlanetaryData> m_vUniverse;
 
-	std::vector<CPlanet *> m_vPlanets;
+	std::vector<CPlanet*> m_vPlanets;
 
 	void SetUpOrbit( CPlanet* orbittee, CPlanet* orbitted );
 	int IndexByName( std::string name );
@@ -66,6 +67,9 @@ public:
 	std::vector<RespawnArea> m_vRespawnAreas;
 	std::list<PowerUpSetting> m_lIdlePowerUps;
 	std::list<PowerUpSetting> m_lPlacedPowerUps;
+
+	std::vector<CWormHole*> m_vBlackHoles;
+
 
 	bool Load( std::string file );
 	void Update( float fTime );
