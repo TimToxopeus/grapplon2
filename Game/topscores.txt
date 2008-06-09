@@ -1,3 +1,4 @@
+GOD 999999
 rrikk 146374
 tim 106923
 tim 61964
@@ -7,5 +8,4 @@ playe 51757
 pietepi 50389
 mick 50132
 player1 49832
-mat 49144
 
