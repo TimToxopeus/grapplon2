@@ -41,10 +41,12 @@ void CPowerUp::Respawn()
 	int x, y;
 
 	CRenderer *pRenderer = CRenderer::Instance();
+	CUniverse* universe = CODEManager::Instance()->m_pUniverse;
+	
 	do
 	{
-		x = rand()%4000 - 2000;
-		y = rand()%3000 - 1500;
+		x = rand()%((int) universe->m_fWidth*2)  - (int) universe->m_fWidth;
+		y = rand()%((int) universe->m_fHeight*2) - (int) universe->m_fHeight;
 	} while ( pRenderer->ObjectsInRange( x, y, 100 ) );
 
 	Vector v = Vector( (float)x, (float)y, 0.0f );

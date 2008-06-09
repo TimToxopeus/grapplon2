@@ -8,6 +8,7 @@
 #include "Asteroid.h"
 #include "Renderer.h"
 #include "LogManager.h"
+#include "Universe.h"
 
 #include "ODEManager.h"
 #include "Vector.h"
@@ -52,6 +53,9 @@ CPlayerObject::CPlayerObject( int iPlayer )
 	m_pShieldImage = new CAnimatedTexture(image);
 	m_pShieldImage->Scale( 0.9f );
 
+	m_pPUFrozenImage = new CAnimatedTexture("media/scripts/texture_powerup_freeze_ani.txt");
+	m_pPUFrozenImage->SetFrame(29);
+
 	image = "media/scripts/texture_ship_respawn" + itoa2(iPlayer + 1) + ".txt";
 	this->m_pRespawnImage = new CAnimatedTexture(image);
 	m_pRespawnImage->Scale( 0.18f * 0.9f);
@@ -91,6 +95,7 @@ void CPlayerObject::ResetStatus()
 		m_fPUSpeedTime = 0.0f;
 		m_fPUJellyTime = 0.0f;
 		m_fPUHealthTime = 0.0f;
+		m_fPUFreezeTime = 0.0f;
 		m_fElectroTime = 0.0f;
 		m_fEMPTime = 0.0f;
 		m_oPhysicsData.m_bAffectedByGravity = true;
@@ -117,7 +122,7 @@ void inline CPlayerObject::ApplyForceFront()
 
 bool CPlayerObject::HandleWiimoteEvent( wiimote_t* pWiimoteEvent )
 {
-	if (!m_bHandleWiiMoteEvents || m_fFreezeTime > 0.0f) return false;
+	if (!m_bHandleWiiMoteEvents || m_fFreezeTime > 0.0f || m_fPUFreezeTime > 0.0f) return false;
 
 	if ( pWiimoteEvent->event == WIIUSE_EVENT )
 	{
@@ -272,6 +277,18 @@ void CPlayerObject::Render()
 		RenderQuad( target, m_pJellyImage, m_fAngle);
 	}
 
+	// Render FreezePowerupDamage
+	if(m_fPUFreezeTime > 0.01f)
+	{
+		size = m_pPUFrozenImage->GetSize();
+		target.w = (int)((float)size.w * m_fSecondaryScale * GetScale()) * 2;
+		target.h = (int)((float)size.h * m_fSecondaryScale * GetScale()) * 2;
+		target.x = (int)GetX() - (target.w / 2);
+		target.y = (int)GetY() - (target.h / 2);
+
+		RenderQuad( target, m_pPUFrozenImage, m_fAngle);
+	}
+
 	// Render Shield
 	if(this->m_fPUShieldTime > 0.01f)
 	{
@@ -350,7 +367,7 @@ void CPlayerObject::Update( float fTime )
 
 	}
 
-	if(m_fFreezeTime > 0){
+	if(m_fFreezeTime > 0 || m_fPUFreezeTime > 0){
 		float mult = 1.0f;
 		if(m_pHook->m_pGrabbedObject != NULL
 		   && m_pHook->m_pGrabbedObject->m_pOwner->getType() == ASTEROID 
@@ -358,7 +375,13 @@ void CPlayerObject::Update( float fTime )
 			
 			   mult = SETS->FIRE_AST_MULT;
 		}
-		m_fFreezeTime -= fTime * mult;
+		if(m_fFreezeTime > 0) m_fFreezeTime -= fTime * mult;
+		if(m_fPUFreezeTime > 0) m_fPUFreezeTime -= fTime * mult;
+	}
+
+	if(m_fPUFreezeTime > 0.001){
+		m_fPUFreezeTime -= fTime;
+		m_pPUFrozenImage->SetFrame(30 - (int) (30 * m_fPUFreezeTime / SETS->PU_FREEZE_TIME));
 	}
 
 	if(this->m_fPUJellyTime > 0.001){
@@ -448,8 +471,21 @@ void CPlayerObject::Update( float fTime )
 		m_fEMPTime = SETS->EMP_TIME;
 	} 
 
-
 	CBaseMovableObject::Update( fTime );
+
+}
+
+void CPlayerObject::AffectedByFreezePU(){
+	
+	if(m_fPUJellyTime > 0){
+		m_fPUJellyTime = 0;
+	} else {
+		if(m_fPUShieldTime <= 0){
+			m_fFreezeTime = 0;
+			m_fPUFreezeTime = (float) SETS->PU_FREEZE_TIME;
+			m_pPUFrozenImage->SetFrame(0);
+		}
+	}
 
 }
 
@@ -479,6 +515,7 @@ void CPlayerObject::OnDie( CBaseObject *m_pKiller )
 	m_fPUJellyTime = 0.0f;
 	m_fPUShieldTime = 0.0f;
 	m_fPUSpeedTime = 0.0f;
+	m_fPUFreezeTime = 0.0f;
 	m_fEMPTime = 0.0f;
 	m_fElectroTime = 0.0f;
 	m_fRespawnTime = 3.0f;
@@ -513,10 +550,11 @@ void CPlayerObject::OnDie( CBaseObject *m_pKiller )
 	int x, y;
 
 	CRenderer *pRenderer = CRenderer::Instance();
+	CUniverse* universe = CODEManager::Instance()->m_pUniverse;
 	do
 	{
-		x = rand()%4000 - 2000;
-		y = rand()%3000 - 1500;
+		x = rand()%((int) universe->m_fWidth*2) -  (int) universe->m_fWidth;
+		y = rand()%((int) universe->m_fHeight*2) - (int) universe->m_fHeight;
 	} while ( pRenderer->ObjectsInRange( x, y, 200 ) );
 
 	respawnPosition = Vector( (float)x, (float)y, 0.0f );
@@ -541,8 +579,8 @@ void CPlayerObject::Respawn()
 
 void CPlayerObject::TookHealthPowerUp(){ m_iHitpoints	 = m_iMaxHitpoints; }
 void CPlayerObject::TookSpeedPowerUp() { m_fPUSpeedTime  = (float) SETS->PU_SPEED_TIME; }
-void CPlayerObject::TookJellyPowerUp() { m_fFreezeTime = 0; m_fPUJellyTime  = (float) SETS->PU_JELLY_TIME;  m_fPUShieldTime = 0; }
-void CPlayerObject::TookShieldPowerUp(){ m_fFreezeTime = 0; m_fPUShieldTime = (float) SETS->PU_SHIELD_TIME; m_fPUJellyTime = 0; }
+void CPlayerObject::TookJellyPowerUp() { m_fFreezeTime = 0; m_fPUFreezeTime = 0; m_fPUJellyTime  = (float) SETS->PU_JELLY_TIME;  m_fPUShieldTime = 0; }
+void CPlayerObject::TookShieldPowerUp(){ m_fFreezeTime = 0; m_fPUFreezeTime = 0; m_fPUShieldTime = (float) SETS->PU_SHIELD_TIME; m_fPUJellyTime = 0; }
 
 
 void CPlayerObject::IncreaseElectro(float timeIncrease)
@@ -662,6 +700,7 @@ void CPlayerObject::CollideWith( CBaseObject *pOther, Vector &pos)
 			else if(asteroid->m_eAsteroidState == FROZEN)
 			{
 				mult = SETS->ICE_DAMAGE_MULT;
+				m_fPUFreezeTime = 0;
 				m_fFreezeTime = SETS->FREEZE_TIME;
 				m_fPUJellyTime = 0;
 
