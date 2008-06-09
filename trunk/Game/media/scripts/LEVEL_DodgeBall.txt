@@ -3,16 +3,16 @@ GENERAL
 --------------------------------------------------------------------------------------------------------------------
 
 [universe]
-width = 2500
+width = 3000
 height = 2000
 boundaryforce = 20000000
-initspawn1 = -800 500
-initspawn2 = 800 -500
-initspawn3 = 800 500
-initspawn4 = -800 -500
+initspawn1 = -1600 500
+initspawn2 = 1600 -500
+initspawn3 = 1600 500
+initspawn4 = -1600 -500
 max_power_up = 1
 pu_freeze  = 20
-pu_health  = 10
+pu_health  = 20
 pu_shield = 5
 
 --------------------------------------------------------------------------------------------------------------------
@@ -110,7 +110,7 @@ grav = 10
 scale = 1.5
 radius = 140
 damagemult = 0.05
-pos = -2200 -1000
+pos = -2400 -800
 tempradius = 1
 
 [sun]
@@ -122,7 +122,7 @@ grav = 10
 scale = 1.5
 radius = 140
 damagemult = 0.05
-pos = -2200 1000
+pos = -2400 800
 tempradius = 1
 
 [sun]
@@ -134,7 +134,7 @@ grav = 10
 scale = 1.5
 radius = 140
 damagemult = 0.05
-pos = 2200 -1000
+pos = 2400 -800
 tempradius = 1
 
 [sun]
@@ -146,7 +146,7 @@ grav = 10
 scale = 1.5
 radius = 140
 damagemult = 0.05
-pos = 2200 1000
+pos = 2400 800
 tempradius = 1
 
 --------------------------------------------------------------------------------------------------------------------
@@ -154,7 +154,7 @@ ASTEROIDS
 --------------------------------------------------------------------------------------------------------------------
 
 [asteroid]
-name = asteroid1-1
+name = asteroid1
 orbit = astroidPlanet1 190 75
 mass = 40
 image = asteroid1
@@ -165,18 +165,7 @@ radius = 50
 damagemult = 3.5
 
 [asteroid]
-name = asteroid1-2
-orbit = astroidPlanet1 190 75
-mass = 40
-image = asteroid02
-grav = 0
-angle = 220
-rotation = 33
-radius = 50
-damagemult = 3.5
-
-[asteroid]
-name = asteroid2-2
+name = asteroid2
 orbit = astroidPlanet2 190 -75
 mass = 40
 image = asteroid02
@@ -187,18 +176,7 @@ radius = 50
 damagemult = 3.5
 
 [asteroid]
-name = asteroid2-3
-orbit = astroidPlanet2 190 -75
-mass = 40
-image = asteroid03
-grav = 0
-angle = 340
-rotation = 33
-radius = 50
-damagemult = 3.5
-
-[asteroid]
-name = asteroid3-1
+name = asteroid3
 orbit = astroidPlanet3 190 -75
 mass = 40
 image = asteroid1
@@ -209,34 +187,184 @@ radius = 50
 damagemult = 3.5
 
 [asteroid]
-name = asteroid3-2
-orbit = astroidPlanet3 190 -75
+name = asteroid4
+orbit = astroidPlanet4 190 75
+mass = 40
+image = asteroid1
+grav = 0
+angle = 100
+rotation = 33
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = asteroid5-1
+orbit = wind_planet1 275 75
+mass = 40
+image = asteroid03
+grav = 0
+angle = 45
+rotation = 33
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = asteroid5-2
+orbit = wind_planet1 275 75
 mass = 40
 image = asteroid02
 grav = 0
-angle = 220
+angle = 135
 rotation = 33
 radius = 50
 damagemult = 3.5
 
 [asteroid]
-name = asteroid4-1
-orbit = astroidPlanet4 190 75
+name = asteroid5-3
+orbit = wind_planet1 275 75
 mass = 40
-image = asteroid1
+image = asteroid02
 grav = 0
-angle = 100
+angle = 225
 rotation = 33
 radius = 50
 damagemult = 3.5
 
 [asteroid]
-name = asteroid4-3
-orbit = astroidPlanet4 190 75
+name = asteroid5-4
+orbit = wind_planet1 275 75
 mass = 40
 image = asteroid03
 grav = 0
-angle = 340
+angle = 315
 rotation = 33
 radius = 50
 damagemult = 3.5
+
+--------------------------------------------------------------------------------------------------------------------
+WORMHOLES
+--------------------------------------------------------------------------------------------------------------------
+
+[wormhole]
+name = wormhole1
+mass = 50
+pos = -1200 -1200
+pos2 = 1200 1200
+image = wormhole
+imageglow = wormhole_glow_green
+grav = 1
+radius = 100 
+scale = 1.0
+rotation = 0
+exit1 = 90 1000000
+exit2 = 90 -1000000
+damagemult = 0.001
+
+[wormhole]
+name = wormhole2
+mass = 50
+pos = -1200 1200
+pos2 = 1200 -1200
+image = wormhole
+imageglow = wormhole_glow_blue
+grav = 1
+radius = 100 
+scale = 1.0
+rotation = 0
+exit1 = 90 -1000000
+exit2 = 90 1000000
+damagemult = 0.001
+
+[wormhole]
+name = wormhole3
+mass = 50
+pos = -1600 -1200
+pos2 = 1600 1200
+image = wormhole
+imageglow = wormhole_glow_red
+grav = 1
+radius = 100 
+scale = 1.0
+rotation = 0
+exit1 = 90 1000000
+exit2 = 90 -1000000
+damagemult = 0.001
+
+[wormhole]
+name = wormhole4
+mass = 50
+pos = -1600 1200
+pos2 = 1600 -1200
+image = wormhole
+imageglow = wormhole_glow_yellow
+grav = 1
+radius = 100 
+scale = 1.0
+rotation = 0
+exit1 = 90 -1000000
+exit2 = 90 1000000
+damagemult = 0.001
+
+[wormhole]
+name = wormhole5
+mass = 50
+pos = -2000 -1200
+pos2 = 2000 1200
+image = wormhole
+imageglow = wormhole_glow_white
+grav = 1
+radius = 100 
+scale = 1.0
+rotation = 0
+exit1 = 90 1000000
+exit2 = 90 -1000000
+damagemult = 0.001
+
+[wormhole]
+name = wormhole6
+mass = 50
+pos = -2000 1200
+pos2 = 2000 -1200
+image = wormhole
+imageglow = wormhole_glow_purple
+grav = 1
+radius = 100 
+scale = 1.0
+rotation = 0
+exit1 = 90 -1000000
+exit2 = 90 1000000
+damagemult = 0.001
+
+--------------------------------------------------------------------------------------------------------------------
+Blackholes
+--------------------------------------------------------------------------------------------------------------------
+
+[sun]
+name = black_hole1
+mass = 1000000
+pos = -2750 0
+image = black_hole
+imageglow = black_hole_glow
+grav = 300
+angle = 10
+scale = 3
+radius = 10
+damagemult = 100
+tempradius = 1
+rotation = 40
+emitter = "media/scripts/particle_black_emitter.txt", far, 0, 0
+
+[sun]
+name = black_hole2
+mass = 1000000
+pos = 2750 0
+image = black_hole
+imageglow = black_hole_glow
+grav = 300
+angle = 10
+scale = 3
+radius = 10
+damagemult = 100
+tempradius = 1
+rotation = 40
+emitter = "media/scripts/particle_black_emitter.txt", far, 0, 0
