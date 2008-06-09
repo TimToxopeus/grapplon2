@@ -9,7 +9,7 @@
 CHealthPowerUp::CHealthPowerUp(void)
 {
 	m_ePowerUpType = HEALTH;
-	m_pImage->SetAnimation(2);
+	m_pImage = new CAnimatedTexture("media/scripts/texture_powerup_repair.txt");
 
 }
 
