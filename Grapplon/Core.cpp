@@ -78,6 +78,8 @@ bool CCore::SystemsInit()
 	m_bRunningValid = true;
 	m_pWiimoteManager->RegisterListener( m_pActiveState, -1 );
 
+	m_pLoading = new CAnimatedTexture("media/scripts/texture_loading.txt");
+
 	// All systems go!
 	CLogManager::Instance()->LogMessage("Initializion succesful.");
 	return true;
@@ -86,6 +88,8 @@ bool CCore::SystemsInit()
 void CCore::SystemsDestroy()
 {
 	CLogManager::Instance()->LogMessage("Terminating engine.");
+
+	delete m_pLoading;
 
 	// Terminate ODE Manager
 	if ( m_pODEManager )
@@ -224,6 +228,13 @@ void CCore::Run()
 		if ( !ShouldQuit() )
 		{
 			m_pRenderer->UnregisterAll();
+
+			SDL_Rect target;
+			target.w = 2048; target.h = 1536; target.x = -1024; target.y = -768;
+			m_pLoading->SetAnimation(rand()%m_pLoading->GetAnimCount());
+			m_pRenderer->RenderQuad( target, m_pLoading, 0, 1 );
+			SDL_GL_SwapBuffers();
+
 			if ( m_bThreaded )
 				m_pODEManager->StopEventThread();
 			CODEManager::Destroy();
