@@ -1,6 +1,6 @@
 [object]
-width = 72
-height = 69
+width = 150
+height = 150
 animations = enlarge, freeze, health, jelly, shield
 
 [enlarge]
