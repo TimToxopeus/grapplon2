@@ -1,6 +1,6 @@
 texture_level_main_screen02.txt
-texture_level_black_hole.txt texture_level_info_black_hole.txt 115 81 level_blackholemayhem.txt
-texture_level_battle.txt texture_level_info_battle.txt 610 320 level_BattleOfElements.txt
-texture_level_wind.txt texture_level_info_wind.txt 424 62 level_WindGalaxy.txt
-texture_level_door.txt texture_level_info_doors.txt 288 341 level_DodgeBall.txt
-texture_level_sun.txt texture_level_info_sun.txt 378 219 level_SolarGalaxy.txt
+texture_level_twosun.txt texture_level_info_twosun.txt 150 100 level_2sun.txt
+texture_level_smile.txt texture_level_info_smile.txt 539 74 level_SmileGalaxy.txt
+texture_level_chaos.txt texture_level_info_chaos.txt 178 367 level_ChaosGalaxy.txt
+texture_level_broken.txt texture_level_info_broken.txt 307 263 level_brokengalaxy.txt
+texture_level_tail.txt texture_level_info_tail.txt 553 288 level_Tail.txt
