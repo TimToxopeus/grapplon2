@@ -897,8 +897,11 @@ bool CMenuState::PushButton()
 			}
 			if ( m_vStates[i].m_pImage == m_pLevelGo && newState == state && state == LEVELSELECT )
 			{
-				m_bRunning = false;
-				return true;
+				if ( m_iSelectedLevel != -1 )
+				{
+					m_bRunning = false;
+					return true;
+				}
 			}
 			if ( m_vStates[i].m_pImage == m_pSelect && state == PLAYERSELECT )
 			{
