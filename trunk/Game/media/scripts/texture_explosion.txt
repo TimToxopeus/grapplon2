@@ -1,7 +1,7 @@
 [object]
 width = 166
 height = 166
-animations = large, small, blue
+animations = large, small, vaporize
 
 [large]
 file = "media/images/explosion_large.png"
@@ -17,7 +17,7 @@ rows = 5
 speed = 20
 loop = 0
 
-[blue]
+[vaporize]
 file = "media/images/explosion_vaporize.png"
 frames = 30
 rows = 5

@@ -29,8 +29,8 @@ CHUD::CHUD()
 	m_pGameEnd = new CAnimatedTexture( "media/scripts/texture_game_end.txt" );
 	m_pWins = new CAnimatedTexture( "media/scripts/texture_wins.txt" );
 	m_pPlayer = new CAnimatedTexture("media/scripts/texture_player.txt");
-	m_pExplosion = new CAnimatedTexture("media/scripts/texture_explosion.txt");
-	m_pExplosion->SetAnimation(2);
+	m_pExplosion = new CAnimatedTexture("media/scripts/texture_explosionship.txt");
+	m_pExplosion->Scale(1.5f);
 
 	m_fScoreTiming = 0.0f;
 	m_iSoundStep = 0;
@@ -66,6 +66,12 @@ void CHUD::SetPlayers( CPlayerObject *p1, CPlayerObject *p2, CPlayerObject *p3, 
 	m_pPlayers[1] = p2;
 	m_pPlayers[2] = p3;
 	m_pPlayers[3] = p4;
+
+	m_fPlayerOffset = 1.5f;
+	if ( m_pPlayers[2] )
+		m_fPlayerOffset = 1.0f;
+	if ( m_pPlayers[3] )
+		m_fPlayerOffset = 0.0f;
 }
 
 void CHUD::Update( float fTime )
@@ -142,28 +148,28 @@ void CHUD::Update( float fTime )
 			m_iSoundStep++;
 		}
 
-		if ( m_fScoreTiming >= 2.5f && m_iSoundStep == 3 )
+		if ( m_fScoreTiming >= 2.5f && m_iSoundStep == 3 && m_pPlayers[2] )
 		{
 			CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Collision_Schip_Asteroid.wav", RT_SOUND);
 			pSound->Play(true);
 			m_iSoundStep++;
 		}
 
-		if ( m_fScoreTiming >= 3.0f && m_iSoundStep == 4 )
+		if ( m_fScoreTiming >= 3.0f && m_iSoundStep == 4 && m_pPlayers[3] )
 		{
 			CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Collision_Schip_Asteroid.wav", RT_SOUND);
 			pSound->Play(true);
 			m_iSoundStep++;
 		}
 
-		if ( m_fScoreTiming >= 4.0f && m_iSoundStep == 5 )
+		if ( m_fScoreTiming >= (4.0f - m_fPlayerOffset) && m_iSoundStep >= 3 && m_iSoundStep <= 5 )
 		{
 			CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Explosion4.wav", RT_SOUND);
 			pSound->Play(true);
 			m_iSoundStep++;
 		}
 
-		if ( m_fScoreTiming >= 4.0f )
+		if ( m_fScoreTiming >= (4.0f - m_fPlayerOffset) )
 			m_pExplosion->UpdateFrame( fTime );
 	}
 }
@@ -320,7 +326,7 @@ void CHUD::Render()
 			DrawHitpointBar( -250, -250, 0, 0 );
 			DrawScoreBar( -80, -200, 0, m_pPlayers[0]->m_iScore, false );
 
-			if ( m_fScoreTiming < 4.0f || m_iWinner == 0 )
+			if ( m_fScoreTiming < (4.0f - m_fPlayerOffset) || m_iWinner == 0 )
 			{
 				m_pShips->SetAnimation(0);
 				target = m_pShips->GetSize();
@@ -331,8 +337,8 @@ void CHUD::Render()
 			else if ( !m_pExplosion->IsFinished() )
 			{
 				target = m_pExplosion->GetSize();
-				target.x = -(target.w) - 75;
-				target.y = -(target.h) - 100;
+				target.x = -(target.w) - 35;
+				target.y = -(target.h) - 90;
 				RenderQuad(target, m_pExplosion, 0, 1);
 			}
 		}
@@ -342,7 +348,7 @@ void CHUD::Render()
 			DrawHitpointBar( -80, -150, 1, 0 );
 			DrawScoreBar( 90, -100, 1, m_pPlayers[1]->m_iScore, true );
 
-			if ( m_fScoreTiming < 4.0f || m_iWinner == 1 )
+			if ( m_fScoreTiming < (4.0f - m_fPlayerOffset) || m_iWinner == 1 )
 			{
 				m_pShips->SetAnimation(1);
 				target = m_pShips->GetSize();
@@ -353,8 +359,8 @@ void CHUD::Render()
 			else if ( !m_pExplosion->IsFinished() )
 			{
 				target = m_pExplosion->GetSize();
-				target.x = -(target.w) + 240;
-				target.y = -(target.h);
+				target.x = -(target.w) + 280;
+				target.y = -(target.h) + 10;
 				RenderQuad(target, m_pExplosion, 0, 1);
 			}
 		}
@@ -366,7 +372,7 @@ void CHUD::Render()
 				DrawHitpointBar( -250, -50, 2, 0 );
 				DrawScoreBar( -80, 0, 2, m_pPlayers[2]->m_iScore, false );
 
-				if ( m_fScoreTiming < 4.0f || m_iWinner == 2 )
+				if ( m_fScoreTiming < (4.0f - m_fPlayerOffset) || m_iWinner == 2 )
 				{
 					m_pShips->SetAnimation(2);
 					target = m_pShips->GetSize();
@@ -377,8 +383,8 @@ void CHUD::Render()
 				else if ( !m_pExplosion->IsFinished() )
 				{
 					target = m_pExplosion->GetSize();
-					target.x = -(target.w) - 75;
-					target.y = -(target.h) + 100;
+					target.x = -(target.w) - 35;
+					target.y = -(target.h) + 110;
 					RenderQuad(target, m_pExplosion, 0, 1);
 				}
 			}
@@ -391,7 +397,7 @@ void CHUD::Render()
 				DrawHitpointBar( -80, 50, 3, 0 );
 				DrawScoreBar( 90, 100, 3, m_pPlayers[3]->m_iScore, true );
 
-				if ( m_fScoreTiming < 4.0f || m_iWinner == 3 )
+				if ( m_fScoreTiming < (4.0f - m_fPlayerOffset) || m_iWinner == 3 )
 				{
 					m_pShips->SetAnimation(3);
 					target = m_pShips->GetSize();
@@ -402,8 +408,8 @@ void CHUD::Render()
 				else if ( !m_pExplosion->IsFinished() )
 				{
 					target = m_pExplosion->GetSize();
-					target.x = -(target.w) + 240;
-					target.y = -(target.h) + 200;
+					target.x = -(target.w) + 280;
+					target.y = -(target.h) + 210;
 					RenderQuad(target, m_pExplosion, 0, 1);
 				}
 			}

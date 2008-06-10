@@ -4,7 +4,8 @@ height = 156
 animations = idle
 
 [idle]
-file = "media/images/explosion_small.png"
+file = "media/images/explosion_vaporize.png"
 frames = 30
 speed = 10
 rows = 5
+loop = 0
