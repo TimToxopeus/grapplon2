@@ -1,0 +1,10 @@
+[object]
+width = 885
+height = 501
+animations = idle
+
+[idle]
+file = "media/images/controls_bg.png"
+frames = 1
+speed = 1
+
