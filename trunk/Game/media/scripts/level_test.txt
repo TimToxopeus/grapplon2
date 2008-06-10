@@ -10,9 +10,9 @@ initspawn3 = -400 900
 initspawn4 = -600 -800
 max_power_up = 1
 pu_freeze  = 5
-pu_speed  = 80
+pu_speed  = 5
 pu_health  = 5
-pu_gelly = 5
+pu_gelly = 80
 pu_shield = 5
 
 [sun]
