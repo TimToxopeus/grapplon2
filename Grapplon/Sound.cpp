@@ -35,6 +35,11 @@ void CSound::Play(bool bOverride)
 		alSourcePlay( m_iSource );
 }
 
+void CSound::SetPitch(float pitch)
+{
+	alSourcef(m_iSource, AL_PITCH, (ALfloat) pitch);
+}
+
 void CSound::Clean()
 {
 	alDeleteSources( 1, &m_iSource );

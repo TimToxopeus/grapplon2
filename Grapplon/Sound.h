@@ -18,4 +18,6 @@ public:
 	void Play(bool bOverride = false);
 	void Clean();
 	bool IsPlaying();
+	void SetPitch(float pitch);
+
 };

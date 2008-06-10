@@ -9,7 +9,7 @@
 CShieldPowerUp::CShieldPowerUp(void)
 {
 	m_ePowerUpType = SHIELD;
-	m_pImage->SetAnimation(4);
+	m_pImage = new CAnimatedTexture("media/scripts/texture_powerup_shield.txt");
 
 }
 
