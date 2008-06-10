@@ -85,7 +85,8 @@ public:
 	int			SCREEN_MARGIN;
 	float		VIEW_PERC;
 	float		SPAWN_ZOOM_TIME;
-
+	int			MUSIC_SPEEDUP_TIME;
+	float		MUSIC_SPEEDUP_MULT;
 
 	bool  Init();
 	

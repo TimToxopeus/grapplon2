@@ -262,6 +262,13 @@ void CGameState::Render()
 
 void CGameState::Update(float fTime)
 {
+
+	if(m_fCountDown < 30){
+		CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/hook_throw.wav", RT_SOUND);
+		pSound->SetPitch(1.0f);
+	}
+
+
 	if ( m_fCountDown > -2.0f )
 		m_fCountDown -= fTime;
 	m_pHUD->SetCountdown( m_fCountDown );

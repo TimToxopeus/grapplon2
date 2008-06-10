@@ -96,9 +96,12 @@ void CPlayerObject::ResetStatus()
 		m_fPUJellyTime = 0.0f;
 		m_fPUHealthTime = 0.0f;
 		m_fPUFreezeTime = 0.0f;
+		m_fFreezeTime = 0.0f;
+		m_fPUShieldTime = 0.0f;
 		m_fElectroTime = 0.0f;
 		m_fEMPTime = 0.0f;
 		m_oPhysicsData.m_bAffectedByGravity = true;
+		m_oPhysicsData.m_bHasCollision = true;
 
 }
 
@@ -141,7 +144,7 @@ bool CPlayerObject::HandleWiimoteEvent( wiimote_t* pWiimoteEvent )
 		{
 			if ( m_pHook->m_eHookState == HOMING )
 				m_pHook->m_eHookState = RETRACTING;
-			else if( m_pHook->m_eHookState == SWINGING)
+			else if( m_pHook->m_eHookState == SWINGING && m_pHook->m_bIsRadialCorrected)
 				m_pHook->m_eHookState = THROWING;
 		}
 
@@ -519,6 +522,7 @@ void CPlayerObject::OnDie( CBaseObject *m_pKiller )
 	m_fPUShieldTime = 0.0f;
 	m_fPUSpeedTime = 0.0f;
 	m_fPUFreezeTime = 0.0f;
+	m_fPUHealthTime = 0.0f;
 	m_fEMPTime = 0.0f;
 	m_fElectroTime = 0.0f;
 	m_fRespawnTime = 3.0f;

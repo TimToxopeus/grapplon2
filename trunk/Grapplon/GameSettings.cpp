@@ -78,7 +78,10 @@ CGameSettings::CGameSettings()
 	VIEW_PERC				= -9999.0f;
 	SPAWN_ZOOM_TIME			= -1;
 	PU_FREEZE_TIME			= -1;
-	
+	MUSIC_SPEEDUP_TIME		= -1;
+	MUSIC_SPEEDUP_MULT		= -1;
+
+
 	Init();
 }
 
@@ -157,6 +160,12 @@ bool CGameSettings::Init()
 		else if ( tokens[0] == "ScreenMargin" )			{ SCREEN_MARGIN			=		 atoi( tokens[2].c_str() );	}
 		else if ( tokens[0] == "ViewEdgePercentage" )	{ VIEW_PERC				= (float)atof( tokens[2].c_str() );	}
 		else if ( tokens[0] == "PlayerSpawnZoomTime" )	{ SPAWN_ZOOM_TIME		= (float)atof( tokens[2].c_str() );	}
+		else if ( tokens[0] == "MusicSpeedUpTime" )		{ MUSIC_SPEEDUP_TIME	=		 atoi( tokens[2].c_str() );	}
+		else if ( tokens[0] == "MusicSpeedUpMult" )		{ MUSIC_SPEEDUP_MULT	= (float)atof( tokens[2].c_str() );	}
+
+	MUSIC_SPEEDUP_TIME		= -1;
+	MUSIC_SPEEDUP_MULT		= -1;
+
 
 		in = ReadLine();
 	}
