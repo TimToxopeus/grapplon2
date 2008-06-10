@@ -49,16 +49,18 @@ public:
 	bool IsClicked( int x, int y );
 };
 
-class LevelSelectOption
+class LevelNode
 {
 public:
-	LevelSelectOption( std::string szImage, std::string szInfoText, int x, int y, std::string szLevel );
-	~LevelSelectOption();
+	LevelNode();
+	~LevelNode();
 
-	CAnimatedTexture *m_pImage;
-	CAnimatedTexture *m_pInfoText;
+	std::string m_szName;
+	std::string m_szParent;
 	int x, y;
-	std::string m_szLevel;
+	CAnimatedTexture *m_pImage;
+	std::string m_szTarget;
+	CAnimatedTexture *m_pInfo;
 
 	bool IsClicked( int x, int y );
 };
@@ -119,7 +121,11 @@ protected:
 	bool PushButton();
 	void PrintScore( int pos, std::string szName, int iScore );
 
-	std::vector<LevelSelectOption *> m_vLevelSelectOptions;
+	std::vector<LevelNode *> m_vLevelNodes;
+	int m_iCurrentUniverseIndex;
+	int m_iSelectedLevel;
+	bool HandleLevelSelect( int x, int y );
+	int GetIndexByName( std::string szName );
 
 	// Score
 	std::string m_szNames[10];
@@ -131,7 +137,6 @@ protected:
 	std::string m_szInputName;
 
 	int m_iPlayersSelected;
-	int m_iSelectedLevel;
 	int m_iActivePlayer;
 	std::string ReadLine( FILE *pFile );
 

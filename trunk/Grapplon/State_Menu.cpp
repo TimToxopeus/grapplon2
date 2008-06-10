@@ -8,6 +8,54 @@
 #include "Vector.h"
 #include <math.h>
 
+LevelNode::LevelNode()
+{
+	m_szName = "";
+	m_szParent = "";
+	x = 0;
+	y = 0;
+	m_pImage = NULL;
+	m_szTarget = "";
+	m_pInfo = NULL;
+}
+
+LevelNode::~LevelNode()
+{
+	if ( m_pImage )
+		delete m_pImage;
+	if ( m_pInfo )
+		delete m_pInfo;
+}
+
+bool LevelNode::IsClicked( int x, int y )
+{
+	if ( this->x == 0 && this->y == 0 )
+		return false;
+
+	SDL_Rect target;
+	target = m_pImage->GetSize();
+
+	float radius = (float)sqrt((float)(target.w * target.w + target.h * target.h)) + 10;
+
+	target.w += target.w;
+	target.h += target.h;
+	target.x = -756 + this->x * 2;
+	target.y = -650 + this->y * 2;
+
+	Vector v1 = Vector((float)target.x, (float)target.y, 0);
+	Vector v2 = Vector((float)x, (float)y, 0);
+	Vector v3 = v1 - v2;
+	if ( v3.Length() < radius )
+		return true;
+	return false;
+
+	if ( x < target.x || x > target.x + target.w )
+		return false;
+	if ( y < target.y || y > target.y + target.h )
+		return false;
+	return true;
+}
+
 StateChange::StateChange( int iState, int iSkipState, CAnimatedTexture *pImage, StateStyle eStyle, bool bIncState, int iStayRendered, float fStartAlpha, float fTime, int iStartX, int iStartY, int iGoalX, int iGoalY, int iAnimation )
 {
 	m_iState = iState;
@@ -34,47 +82,6 @@ bool StateChange::IsClicked( int x, int y )
 	target.h += target.h;
 	target.x = m_iGoalX;
 	target.y = m_iGoalY;
-
-	if ( x < target.x || x > target.x + target.w )
-		return false;
-	if ( y < target.y || y > target.y + target.h )
-		return false;
-	return true;
-}
-
-LevelSelectOption::LevelSelectOption( std::string szImage, std::string szInfoText, int x, int y, std::string szLevel )
-{
-	m_pImage = new CAnimatedTexture( "media/scripts/" + szImage );
-	m_pInfoText = new CAnimatedTexture( "media/scripts/" + szInfoText );
-	this->x = x;
-	this->y = y;
-	m_szLevel = szLevel;
-}
-
-LevelSelectOption::~LevelSelectOption()
-{
-	delete m_pImage;
-	delete m_pInfoText;
-}
-
-bool LevelSelectOption::IsClicked( int x, int y )
-{
-	SDL_Rect target;
-	target = m_pImage->GetSize();
-
-	float radius = (float)sqrt((float)(target.w * target.w + target.h * target.h)) + 10;
-
-	target.w += target.w;
-	target.h += target.h;
-	target.x = -756 + this->x * 2;
-	target.y = -650 + this->y * 2;
-
-	Vector v1 = Vector((float)target.x, (float)target.y, 0);
-	Vector v2 = Vector((float)x, (float)y, 0);
-	Vector v3 = v1 - v2;
-	if ( v3.Length() < radius )
-		return true;
-	return false;
 
 	if ( x < target.x || x > target.x + target.w )
 		return false;
@@ -223,7 +230,7 @@ CMenuState::CMenuState( int iState, int iScore1, int iScore2, int iScore3, int i
 	m_vStates.push_back( StateChange( PLAYERSELECT, PLAYERSELECT, m_pScoreBack, INSTANT, false, PLAYERSELECT, 0.5f, 0.0f, -150, 448, -150, 448 ) );
 
 	m_vStates.push_back( StateChange( LEVELSELECT, LEVELSELECT, m_pTitle, INSTANT, false, HIGH, 1.0f, 2.0f, -1024, -768, -1024, -768 ) );
-	m_vStates.push_back( StateChange( LEVELSELECT, LEVELSELECT, m_pLevelMainScreen, INSTANT, false, LEVELSELECT, 1.0f, 0.0f, -756, -650, -756, -650, 0 ) );
+//	m_vStates.push_back( StateChange( LEVELSELECT, LEVELSELECT, m_pLevelMainScreen, INSTANT, false, LEVELSELECT, 1.0f, 0.0f, -756, -650, -756, -650, 0 ) );
 	m_vStates.push_back( StateChange( LEVELSELECT, LEVELSELECT, m_pLevelInfoBar, INSTANT, false, LEVELSELECT, 1.0f, 0.0f, -756, 250, -756, 250, 0 ) );
 	m_vStates.push_back( StateChange( LEVELSELECT, LEVELSELECT, m_pScoreBack, INSTANT, false, LEVELSELECT, 0.5f, 0.0f, 150, 540, 150, 540 ) );
 	m_vStates.push_back( StateChange( LEVELSELECT, LEVELSELECT, m_pLevelGo, INSTANT, false, LEVELSELECT, 0.5f, 0.0f, 470, 540, 470, 540 ) );
@@ -241,7 +248,7 @@ CMenuState::CMenuState( int iState, int iScore1, int iScore2, int iScore3, int i
 	}
 
 	m_iSelectedLevel = -1;
-	FILE *pFile = fopen( "media/scripts/levelselect.txt", "rt" );
+	FILE *pFile = fopen("media/scripts/universe.txt", "rt");
 	if ( pFile )
 	{
 		char in[256];
@@ -251,19 +258,32 @@ CMenuState::CMenuState( int iState, int iScore1, int iScore2, int iScore3, int i
 		while ( !feof(pFile) )
 		{
 			fgets(in, 256, pFile );
+			int len = strlen(in);
+			in[len-1] = 0;
 			input = in;
 			tokens = tokenizer.GetTokens(input);
 
-			if ( tokens.size() == 5 )
+			if ( tokens.size() == 7 )
 			{
-				m_vLevelSelectOptions.push_back( new LevelSelectOption( tokens[0], tokens[1], atoi(tokens[2].c_str()), atoi(tokens[3].c_str()), tokens[4] ) );
+				LevelNode *pNode = new LevelNode();
+				pNode->m_szName = tokens[0];
+				pNode->m_szParent = tokens[1];
+				pNode->x = atoi(tokens[2].c_str());
+				pNode->y = atoi(tokens[3].c_str());
+				if ( tokens[4] != "null" )
+					pNode->m_pImage = new CAnimatedTexture( "media/scripts/" + tokens[4] + ".txt" );
+				pNode->m_szTarget = tokens[5];
+				if ( tokens[6] != "null" )
+					pNode->m_pInfo = new CAnimatedTexture( "media/scripts/" + tokens[6] + ".txt" );
+				m_vLevelNodes.push_back( pNode );
 			}
-			else
+			else if ( tokens.size() > 0 )
 			{
-				CLogManager::Instance()->LogMessage("Incorrect amount of parameters in levelselect.txt : " + input);
+				CLogManager::Instance()->LogMessage("Incorrect amount of parameters in universe.txt : " + input);
 			}
 		}
 	}
+	m_iCurrentUniverseIndex = 0;
 
 	for ( int i = 0; i<IR_AVG; i++ )
 	{
@@ -315,9 +335,9 @@ CMenuState::~CMenuState()
 
 	delete m_pAVIKit;
 
-	for ( unsigned int i = 0; i<m_vLevelSelectOptions.size(); i++ )
-		delete m_vLevelSelectOptions[i];
-	m_vLevelSelectOptions.clear();
+	for ( unsigned int i = 0; i<m_vLevelNodes.size(); i++ )
+		delete m_vLevelNodes[i];
+	m_vLevelNodes.clear();
 }
 
 void CMenuState::Render()
@@ -404,7 +424,7 @@ void CMenuState::Render()
 
 	if ( state == LEVELSELECT )
 	{
-		for ( unsigned int i = 0; i<m_vLevelSelectOptions.size(); i++ )
+/*		for ( unsigned int i = 0; i<m_vLevelSelectOptions.size(); i++ )
 		{
 			target = m_vLevelSelectOptions[i]->m_pImage->GetSize();
 			target.x = -756 + m_vLevelSelectOptions[i]->x * 2 - target.w;
@@ -413,7 +433,7 @@ void CMenuState::Render()
 			target.h += target.h;
 			RenderQuad( target, m_vLevelSelectOptions[i]->m_pImage, 0, 1 );
 		}
-
+		
 		if ( m_iSelectedLevel != -1 )
 		{
 			target = m_pLevelCursor->GetSize();
@@ -429,6 +449,43 @@ void CMenuState::Render()
 			target.w += target.w;
 			target.h += target.h;
 			RenderQuad( target, m_vLevelSelectOptions[m_iSelectedLevel]->m_pInfoText, 0, 1 );
+		}
+*/
+
+		for ( unsigned int i = 0; i<m_vLevelNodes.size(); i++ )
+		{
+			if ( (m_vLevelNodes[i]->m_szParent == m_vLevelNodes[m_iCurrentUniverseIndex]->m_szName &&
+				m_vLevelNodes[i]->x != 0 && m_vLevelNodes[i]->y != 0) || i == m_iCurrentUniverseIndex )
+			{
+				target = m_vLevelNodes[i]->m_pImage->GetSize();
+				target.x = -756;
+				target.y = -650;
+				if ( m_vLevelNodes[i]->x != 0 && m_vLevelNodes[i]->y != 0 )
+				{
+					target.x += m_vLevelNodes[i]->x * 2 - target.w;
+					target.y += m_vLevelNodes[i]->y * 2 - target.h;
+				}
+				target.w += target.w;
+				target.h += target.h;
+				RenderQuad( target, m_vLevelNodes[i]->m_pImage, 0, 1 );
+			}
+		}
+
+		if ( m_iSelectedLevel != -1 )
+		{
+			target = m_pLevelCursor->GetSize();
+			target.x = -756 + m_vLevelNodes[m_iSelectedLevel]->x * 2 - target.w;
+			target.y = -650 + m_vLevelNodes[m_iSelectedLevel]->y * 2 - target.h;
+			target.w += target.w;
+			target.h += target.h;
+			RenderQuad( target, m_pLevelCursor, m_fLevelCursorAngle, m_fLevelCursorAlpha );
+
+			target = m_vLevelNodes[m_iSelectedLevel]->m_pInfo->GetSize();
+			target.x = -756;
+			target.y = 250;
+			target.w += target.w;
+			target.h += target.h;
+			RenderQuad( target, m_vLevelNodes[m_iSelectedLevel]->m_pInfo, 0, 1 );
 		}
 	}
 
@@ -688,9 +745,9 @@ void CMenuState::Update(float fTime)
 		}
 	}
 
-	for ( unsigned int i = 0; i<m_vLevelSelectOptions.size(); i++ )
+	for ( unsigned int i = 0; i<m_vLevelNodes.size(); i++ )
 	{
-		m_vLevelSelectOptions[i]->m_pImage->UpdateFrame( fTime );
+		m_vLevelNodes[i]->m_pImage->UpdateFrame( fTime );
 	}
 }
 
@@ -782,14 +839,7 @@ int CMenuState::HandleSDLEvent(SDL_Event event)
 //				m_iSelectedLevel = -1;
 				int icursorX = (cursorX * 2 - 1024);
 				int icursorY = (cursorY * 2 - 768);
-				for ( unsigned int i = 0; i<m_vLevelSelectOptions.size(); i++ )
-				{
-					if ( m_vLevelSelectOptions[i]->IsClicked( icursorX, icursorY ) )
-					{
-						m_iSelectedLevel = i;
-						break;
-					}
-				}
+				HandleLevelSelect( icursorX, icursorY );
 			}
 		}
 		else
@@ -1085,7 +1135,7 @@ std::string CMenuState::GetSelectedLevel()
 {
 	if ( m_iSelectedLevel < 0 )
 		return SETS->LEVEL;
-	return "media/scripts/" + m_vLevelSelectOptions[m_iSelectedLevel]->m_szLevel.substr(0,m_vLevelSelectOptions[m_iSelectedLevel]->m_szLevel.length()-1);
+	return "media/scripts/" + m_vLevelNodes[m_iSelectedLevel]->m_szTarget + ".txt";
 }
 
 void CMenuState::AddCursorXY( int x, int y )
@@ -1127,22 +1177,18 @@ void CMenuState::HandleButtonPress( wiimote_t* pWiimoteEvent )
 	if ( state == ABMENU )
 	{
 		if ( IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_A) && IS_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_B) ||
-			 IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_B) && IS_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_A) ||
-			 IS_JUST_PRESSED(pWiimoteEvent, NUNCHUK_BUTTON_Z) && IS_PRESSED(pWiimoteEvent, NUNCHUK_BUTTON_C) ||
-			 IS_JUST_PRESSED(pWiimoteEvent, NUNCHUK_BUTTON_C) && IS_PRESSED(pWiimoteEvent, NUNCHUK_BUTTON_Z))
+			 IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_B) && IS_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_A))
 			state++;
 	}
 	else if ( state < GAMEMENU )
 	{
 		if (IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_A) ||
-			IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_B) ||
-			IS_JUST_PRESSED(pWiimoteEvent, NUNCHUK_BUTTON_C) ||
-			IS_JUST_PRESSED(pWiimoteEvent, NUNCHUK_BUTTON_Z))
+			IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_B))
 			m_bNext = true;
 	}
 	else if ( state == SCOREINPUT )
 	{
-		if ( IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_A) || IS_JUST_PRESSED(pWiimoteEvent, NUNCHUK_BUTTON_C) )
+		if ( IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_A) )
 		{
 			if ( pWiimoteEvent->unid == m_iActivePlayer )
 			{
@@ -1151,16 +1197,14 @@ void CMenuState::HandleButtonPress( wiimote_t* pWiimoteEvent )
 				PushKeyboard( icursorX, icursorY );
 			}
 		}
-		if ( IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_B) || IS_JUST_PRESSED(pWiimoteEvent, NUNCHUK_BUTTON_Z) )
+		if ( IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_B) )
 		{
 			m_szInputName = m_szInputName.substr(0, m_szInputName.length()-1);
 		}
 	}
 
 	if (IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_A) ||
-		IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_B)||
-		IS_JUST_PRESSED(pWiimoteEvent, NUNCHUK_BUTTON_C)||
-		IS_JUST_PRESSED(pWiimoteEvent, NUNCHUK_BUTTON_Z))
+		IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_B))
 	{
 		m_pCursor->SetAnimation(1);
 
@@ -1171,23 +1215,52 @@ void CMenuState::HandleButtonPress( wiimote_t* pWiimoteEvent )
 			if ( pSound )
 				pSound->Play(true);
 		}
-		if ( state == LEVELSELECT && !pushed )
+		if ( state == LEVELSELECT && !pushed && !IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_B) )
 		{
 //			m_iSelectedLevel = -1;
 			int icursorX = (cursorX * 2 - 1024);
 			int icursorY = (cursorY * 2 - 768);
-			for ( unsigned int i = 0; i<m_vLevelSelectOptions.size(); i++ )
+			HandleLevelSelect( icursorX, icursorY );
+		}
+		if ( state == LEVELSELECT && IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_B) )
+		{
+			if ( m_vLevelNodes[m_iCurrentUniverseIndex]->m_szParent != "null" )
 			{
-				if ( m_vLevelSelectOptions[i]->IsClicked( icursorX, icursorY ) )
-				{
-					m_iSelectedLevel = i;
-					break;
-				}
+				int index = GetIndexByName( m_vLevelNodes[m_iCurrentUniverseIndex]->m_szParent );
+				if ( index != -1 )
+					m_iCurrentUniverseIndex = index;
 			}
 		}
 	}
 
-	if ( !IS_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_A) && !IS_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_B) &&
-		 !IS_PRESSED(pWiimoteEvent, NUNCHUK_BUTTON_C) && !IS_PRESSED(pWiimoteEvent, NUNCHUK_BUTTON_Z))
+	if ( !IS_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_A) && !IS_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_B))
 		m_pCursor->SetAnimation(0);
+}
+
+bool CMenuState::HandleLevelSelect( int x, int y )
+{
+	int oldSelected = m_iSelectedLevel;
+	for ( unsigned int i = 0; i<m_vLevelNodes.size(); i++ )
+	{
+		if ( m_vLevelNodes[i]->m_szParent == m_vLevelNodes[m_iCurrentUniverseIndex]->m_szName && m_vLevelNodes[i]->IsClicked( x, y ) )
+		{
+			if ( m_vLevelNodes[i]->m_szTarget.substr(0, 6) == "level_" )
+				m_iSelectedLevel = i;
+			else
+				m_iCurrentUniverseIndex = i;
+			break;
+		}
+	}
+
+	return (oldSelected != m_iSelectedLevel);
+}
+
+int CMenuState::GetIndexByName( std::string szName )
+{
+	for ( unsigned int i = 0; i<m_vLevelNodes.size(); i++ )
+	{
+		if ( m_vLevelNodes[i]->m_szName == szName )
+			return i;
+	}
+	return -1;
 }
