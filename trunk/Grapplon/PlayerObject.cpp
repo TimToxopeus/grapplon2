@@ -51,7 +51,7 @@ CPlayerObject::CPlayerObject( int iPlayer )
 	m_pJellyImage->SetFramerate(0);
 	image = "media/scripts/texture_ship_shield" + itoa2(iPlayer + 1) + ".txt";
 	m_pShieldImage = new CAnimatedTexture(image);
-	m_pShieldImage->Scale( 0.9f );
+	m_pShieldImage->Scale( 1.1f );
 
 	m_pPUFrozenImage = new CAnimatedTexture("media/scripts/texture_powerup_freeze_ani.txt");
 	m_pPUFrozenImage->SetFrame(29);
@@ -270,8 +270,8 @@ void CPlayerObject::Render()
 	if(this->m_fPUJellyTime > 0.01f)
 	{
 		size = m_pJellyImage->GetSize();
-		target.w = (int)(((float)size.w * 1.2f) * m_fSecondaryScale * GetScale());
-		target.h = (int)(((float)size.h * 1.2f) * m_fSecondaryScale * GetScale());
+		target.w = (int)(((float)size.w) * m_fSecondaryScale * GetScale());
+		target.h = (int)(((float)size.h) * m_fSecondaryScale * GetScale());
 		target.x = (int)GetX() - (target.w / 2);
 		target.y = (int)GetY() - (target.h / 2);
 
