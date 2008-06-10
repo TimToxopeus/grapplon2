@@ -26,8 +26,8 @@ private:
 	std::string m_szScriptFile;
 	SDL_Rect size;
 
-	unsigned char m_iCurAnim;
-	unsigned char m_iCurFrame;
+	unsigned int m_iCurAnim;
+	unsigned int m_iCurFrame;
 	std::vector<Animation> m_vAnimations;
 	float m_fTimeFrameChange, m_fDesiredFramesPerSecond;
 
