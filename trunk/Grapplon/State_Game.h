@@ -19,6 +19,8 @@ private:
 
 	float m_fMatchTimeLeft;
 	float m_fCountDown;
+	float m_fBuoyAngle;
+	CAnimatedTexture* m_pBuoyImage;
 
 	CBackground *m_pBackground;
 	CHUD *m_pHUD;

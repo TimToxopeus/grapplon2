@@ -12,7 +12,9 @@ CAnimatedTexture::CAnimatedTexture( std::string name )
 	m_fTimeFrameChange = 0.0f;
 
 	m_fOverrideHeight = -1.0f;
-	m_bLoaded = false;
+	
+	m_bLoaded = true;
+	//m_bLoaded = false;			TODO: Waarom dit??
 	m_bValid = true;
 }
 

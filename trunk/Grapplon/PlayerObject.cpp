@@ -365,7 +365,11 @@ void CPlayerObject::Update( float fTime )
 		}
 
 		if(m_fRespawnTime >= 1.0f && m_fRespawnTime <= 2.0f){
-			SetPosition( GetPosition() + respawnDisplacement*(fTime) / SETS->SPAWN_ZOOM_TIME);
+			timeTillDeath += fTime;
+			float displacement = sqrt(timeTillDeath / SETS->SPAWN_ZOOM_TIME);
+			SetPosition( diePosition + respawnDisplacement*displacement );
+			//SetPosition( GetPosition() + respawnDisplacement*(fTime) / SETS->SPAWN_ZOOM_TIME);
+			
 			if(m_fRespawnTime - 1 <= 1 - SETS->SPAWN_ZOOM_TIME) m_fRespawnTime = 1.01f;
 		}
 
@@ -567,7 +571,9 @@ void CPlayerObject::OnDie( CBaseObject *m_pKiller )
 
 	respawnPosition = Vector( (float)x, (float)y, 0.0f );
 	respawnDisplacement = respawnPosition - GetPosition();
-	
+	diePosition = GetPosition();
+	timeTillDeath = 0;
+
 	Vector n;
 	m_oPhysicsData.m_pOwner->SetLinVelocity(n);
 	m_oPhysicsData.m_pOwner->SetAngVelocity(n);

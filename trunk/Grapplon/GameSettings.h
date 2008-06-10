@@ -88,6 +88,9 @@ public:
 	int			MUSIC_SPEEDUP_TIME;
 	float		MUSIC_SPEEDUP_MULT;
 
+	int			BUOY_AMOUNT;
+	int			BUOY_DISTANCE;
+
 	bool  Init();
 	
 };
