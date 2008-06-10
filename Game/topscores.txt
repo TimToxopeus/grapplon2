@@ -7,4 +7,4 @@ roy 55011
 playe 51757
 pietepi 50389
 mick 50132
-tim 1000
+player1 1000
