@@ -265,7 +265,7 @@ void CPlayerObject::Render()
 	}
 
 	// Render Jelly
-	if(true)//this->m_fPUJellyTime > 0.01f)
+	if(this->m_fPUJellyTime > 0.01f)
 	{
 		size = m_pJellyImage->GetSize();
 		target.w = (int)(((float)size.w / 2.0f) * m_fSecondaryScale * GetScale());
