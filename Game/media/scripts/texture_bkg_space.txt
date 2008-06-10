@@ -1,9 +1,24 @@
 [object]
 width = 1024
 height = 1024
-animations = idle
+animations = 1, 2, 3, 4
 
-[idle]
-file = "media/images/bkg_space.png"
+[1]
+file = "media/images/starbg_HD01.png"
+frames = 1
+speed = 1
+
+[2]
+file = "media/images/starbg_HD02.png"
+frames = 1
+speed = 1
+
+[3]
+file = "media/images/starbg_HD03.png"
+frames = 1
+speed = 1
+
+[4]
+file = "media/images/starbg_HD04.png"
 frames = 1
 speed = 1
