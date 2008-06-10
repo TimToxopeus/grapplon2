@@ -298,11 +298,13 @@ void CHook::Swing()
 		} 
 	}
 
-	CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/hook_swing.wav", RT_SOUND);
-	float pitch = GetLinVelocity().Length() / 1500 + 0.5f;
+	CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Hook_Swing.wav", RT_SOUND);
+	float pitch = (GetLinVelocity() - m_pOwner->GetLinVelocity()).Length() / 1500 + 0.7f;
+	
+	
 	pSound->SetPitch(pitch);
 	if ( pSound && !pSound->IsPlaying() ){
-		if(pitch > 0.8){
+		if(pitch > 1.0){
 			pSound->Play();
 		}
 	}
@@ -375,8 +377,8 @@ void CHook::Throw(bool playerDied)
 	if(!playerDied) m_pGrabbedObject->m_pOwner->AddForce(forward * (shipVel.Length() + hookVel.Length()) * SETS->THROW_FORCE);
 	m_pGrabbedObject = NULL;
 
-	CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/hook_swing.wav", RT_SOUND);
-	pSound->SetPitch(1.0f);
+	//CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/hook_swing.wav", RT_SOUND);
+	//pSound->SetPitch(1.0f);
 
 
 	m_eHookState = RETRACTING;

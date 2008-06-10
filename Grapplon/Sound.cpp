@@ -14,8 +14,11 @@ bool CSound::CreateSource()
 		Clean();
 
 	alGenSources(1, &m_iSource);
-	if (alGetError() != AL_NO_ERROR)
+	
+	ALenum error = alGetError();
+	if (alGetError() != AL_NO_ERROR){
 		return false;
+	}
 
 	alSourcei(m_iSource, AL_BUFFER, m_iSound);
 	if (alGetError() != AL_NO_ERROR)
