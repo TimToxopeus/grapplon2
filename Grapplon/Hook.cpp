@@ -377,10 +377,6 @@ void CHook::Throw(bool playerDied)
 	if(!playerDied) m_pGrabbedObject->m_pOwner->AddForce(forward * (shipVel.Length() + hookVel.Length()) * SETS->THROW_FORCE);
 	m_pGrabbedObject = NULL;
 
-	//CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/hook_swing.wav", RT_SOUND);
-	//pSound->SetPitch(1.0f);
-
-
 	m_eHookState = RETRACTING;
 }
 
