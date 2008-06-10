@@ -1,14 +1,9 @@
 [object]
 width = 1024
 height = 768
-animations = 1, 2
+animations = 1
 
 [1]
 file = "media/images/loading/loading1.png"
-frames = 1
-speed = 1
-
-[2]
-file = "media/images/loading/loading2.png"
 frames = 1
 speed = 1

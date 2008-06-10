@@ -1,0 +1,10 @@
+[object]
+width = 80
+height = 80
+animations = 1
+
+[1]
+file = "media/images/loading/rotor.png"
+frames = 8
+rows = 2
+speed = 1
