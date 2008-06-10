@@ -27,6 +27,9 @@ CGameState::CGameState()
 	m_bRunning = true;
 	m_bQuit = false;
 
+	m_fBuoyAngle = 0;
+	m_pBuoyImage = new CAnimatedTexture("media/scripts/texture_buoy.txt");
+
 	box.x = 20;
 	box.y = 10;
 	box.w = 256;
@@ -261,10 +264,52 @@ void CGameState::Render()
 */
 
 	CRenderer::Instance()->SetCamera( view_center, zoom );
+
+	// Draw buoys
+
+	int width_interval = (2*level_width + 2*SETS->BUOY_DISTANCE) / (SETS->BUOY_AMOUNT - 1);
+	int height_interval = (2*level_height + 2*SETS->BUOY_DISTANCE) / (SETS->BUOY_AMOUNT - 1);
+
+	SDL_Rect target, size;
+
+	for(int i = 0; i < SETS->BUOY_AMOUNT - 1; i++){
+
+		size = m_pBuoyImage->GetSize();
+		target.w = size.w;
+		target.h = size.h;
+
+		if( i != 0){
+			// Vertical buoys 
+			target.y = (i * height_interval - level_height) - (target.h / 2);
+			target.x = -(level_width + SETS->BUOY_AMOUNT) - (target.w / 2);
+			RenderQuad(target, m_pBuoyImage, m_fBuoyAngle);
+			target.x = (level_width + SETS->BUOY_AMOUNT) - (target.w / 2);
+			RenderQuad(target, m_pBuoyImage, m_fBuoyAngle);
+		}
+
+		// Horizontal buoys 
+		target.x = (i * width_interval - level_width) - (target.w / 2);
+		target.y = -(level_height + SETS->BUOY_AMOUNT) - (target.h / 2);
+		RenderQuad( target, m_pBuoyImage, m_fBuoyAngle);
+		target.y = (level_height + SETS->BUOY_AMOUNT) - (target.h / 2);
+		RenderQuad( target, m_pBuoyImage, m_fBuoyAngle);
+
+
+	}
+
+	target.x = level_width + SETS->BUOY_DISTANCE - (target.w / 2);
+	RenderQuad( target, m_pBuoyImage, m_fBuoyAngle);
+	target.y = -(level_height + SETS->BUOY_AMOUNT) - (target.h / 2);
+	RenderQuad( target, m_pBuoyImage, m_fBuoyAngle);
+	
+
 }
 
 void CGameState::Update(float fTime)
 {
+
+	m_fBuoyAngle += 1;
+	m_pBuoyImage->UpdateFrame(fTime);
 
 	if ( m_fCountDown > -2.0f )
 		m_fCountDown -= fTime;

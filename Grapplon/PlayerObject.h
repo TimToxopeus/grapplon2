@@ -33,7 +33,10 @@ private:
 	Vector explosionPos;
 
 	Vector respawnPosition;
+	Vector diePosition;
+	float timeTillDeath;
 	Vector respawnDisplacement;
+
 
 
 	bool m_bIsReinitialized;

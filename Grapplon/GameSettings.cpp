@@ -162,6 +162,9 @@ bool CGameSettings::Init()
 		else if ( tokens[0] == "PlayerSpawnZoomTime" )	{ SPAWN_ZOOM_TIME		= (float)atof( tokens[2].c_str() );	}
 		else if ( tokens[0] == "MusicSpeedUpTime" )		{ MUSIC_SPEEDUP_TIME	=		 atoi( tokens[2].c_str() );	}
 		else if ( tokens[0] == "MusicSpeedUpMult" )		{ MUSIC_SPEEDUP_MULT	= (float)atof( tokens[2].c_str() );	}
+		else if ( tokens[0] == "BuoyAmount" )			{ BUOY_AMOUNT			=		 atoi( tokens[2].c_str() );	}
+		else if ( tokens[0] == "BuoyDistance" )			{ BUOY_DISTANCE			=		 atoi( tokens[2].c_str() );	}
+
 
 	MUSIC_SPEEDUP_TIME		= -1;
 	MUSIC_SPEEDUP_MULT		= -1;

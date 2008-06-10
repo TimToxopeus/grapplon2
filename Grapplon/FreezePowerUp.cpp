@@ -9,7 +9,7 @@
 CFreezePowerUp::CFreezePowerUp(void)
 {
 	m_ePowerUpType = FREEZE;
-	m_pImage->SetAnimation(1);
+	m_pImage = new CAnimatedTexture("media/scripts/texture_powerup_freeze.txt");
 
 }
 
