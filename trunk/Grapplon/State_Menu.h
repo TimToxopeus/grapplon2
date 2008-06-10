@@ -2,7 +2,7 @@
 
 #include "StateManager.h"
 #include "AnimatedTexture.h"
-#include <avikit.h>
+#include "avikit.h"
 
 #include <vector>
 #include <string>
