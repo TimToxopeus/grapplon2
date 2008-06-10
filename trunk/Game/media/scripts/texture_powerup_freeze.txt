@@ -1,29 +1,10 @@
 [object]
 width = 150
 height = 150
-animations = enlarge, freeze, health, jelly, shield
+animations = idle
 
-[enlarge]
-file = "media/images/powerup_enlarge.png"
-frames = 1
-speed = 0
-
-[freeze]
+[idle]
 file = "media/images/powerup_freeze.png"
-frames = 1
-speed = 0
-
-[health]
-file = "media/images/powerup_health.png"
-frames = 1
-speed = 0
-
-[jelly]
-file = "media/images/powerup_jelly.png"
-frames = 1
-speed = 0
-
-[shield]
-file = "media/images/powerup_shield.png"
-frames = 1
-speed = 0
+frames = 20
+rows = 2
+speed = 15
