@@ -47,11 +47,11 @@ CPlayerObject::CPlayerObject( int iPlayer )
 	m_pFrozenImage = new CAnimatedTexture("media/scripts/texture_ship_frozen.txt");
 	m_pFrozenImage->Scale( 0.9f );
 	m_pJellyImage = new CAnimatedTexture("media/scripts/texture_ship_jelly_hit.txt");
-	m_pJellyImage->Scale( 0.40f );
+	m_pJellyImage->Scale( 0.70f );
 	m_pJellyImage->SetFramerate(0);
 	image = "media/scripts/texture_ship_shield" + itoa2(iPlayer + 1) + ".txt";
 	m_pShieldImage = new CAnimatedTexture(image);
-	m_pShieldImage->Scale( 1.1f );
+	m_pShieldImage->Scale( 0.9f );
 
 	m_pPUFrozenImage = new CAnimatedTexture("media/scripts/texture_powerup_freeze_ani.txt");
 	m_pPUFrozenImage->SetFrame(29);
