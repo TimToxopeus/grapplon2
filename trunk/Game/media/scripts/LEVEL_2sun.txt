@@ -7,11 +7,11 @@ initspawn2 = -1600 1000
 initspawn3 = -1600 -1000
 initspawn4 = 1600 -1000
 max_power_up = 3
-pu_freeze  = 20
+pu_freeze  = 10
 pu_speed  = 35
-pu_health  = 20
+pu_health  = 25
 pu_gelly = 15
-pu_shield = 10
+pu_shield = 15
 
 [sun]
 name = sun
