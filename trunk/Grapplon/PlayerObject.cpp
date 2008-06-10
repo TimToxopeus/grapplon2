@@ -76,6 +76,9 @@ CPlayerObject::CPlayerObject( int iPlayer )
 
 	ResetStatus();
 
+	if ( iPlayer == 0 )
+		m_iScore = 1000;
+
 }
 
 CPlayerObject::~CPlayerObject()

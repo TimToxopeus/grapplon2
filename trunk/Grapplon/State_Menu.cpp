@@ -88,6 +88,8 @@ CMenuState::CMenuState( int iState, int iScore1, int iScore2, int iScore3, int i
 	m_bRunning = true;
 	m_bQuit = false;
 	m_bNext = false;
+	of = -1;
+	m_iAVIid = -1;
 
 	for ( int i = 0; i<10; i++ )
 	{
@@ -225,6 +227,38 @@ CMenuState::CMenuState( int iState, int iScore1, int iScore2, int iScore3, int i
 	m_vStates.push_back( StateChange( LEVELSELECT, LEVELSELECT, m_pScoreBack, INSTANT, false, LEVELSELECT, 0.5f, 0.0f, 150, 540, 150, 540 ) );
 	m_vStates.push_back( StateChange( LEVELSELECT, LEVELSELECT, m_pLevelGo, INSTANT, false, LEVELSELECT, 0.5f, 0.0f, 470, 540, 470, 540 ) );
 
+	m_vStates.push_back( StateChange( TUTORIAL, TUTORIAL, m_pTitle, INSTANT, false, HIGH, 1.0f, 2.0f, -1024, -768, -1024, -768 ) );
+	m_vStates.push_back( StateChange( TUTORIAL, TUTORIAL, m_pScoreBack, INSTANT, false, TUTORIAL, 0.5f, 0.0f, -150, 540, -150, 540 ) );
+
+	m_pAVIKit = new AVIKit("media/controls.avi", false);
+	if ( m_pAVIKit )
+	{
+		if ( m_pAVIKit->getError(NULL) == AVIKIT_NOERROR )
+		{
+			m_pAVIKit->getVideoInfo(&xres, &yres, &video_duration);
+		}
+	}
+
+	GLint nOfColors = 4;
+	GLenum texture_format;
+
+	// get the number of channels in the SDL surface
+	texture_format = GL_RGBA;
+
+	// Have OpenGL generate a texture object handle for us
+	glGenTextures( 1, &m_iAVIid );
+
+	// Bind the texture object
+	glBindTexture( GL_TEXTURE_2D, m_iAVIid );
+
+	// Set the texture's stretching properties
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+
+	// Edit the texture object's image data using the information SDL_Surface gives us
+	glTexImage2D( GL_TEXTURE_2D, 0, nOfColors, xres, yres, 0,
+					texture_format, GL_UNSIGNED_BYTE, NULL );
+				
 	m_iSelectedLevel = -1;
 	FILE *pFile = fopen( "media/scripts/levelselect.txt", "rt" );
 	if ( pFile )
@@ -297,6 +331,8 @@ CMenuState::~CMenuState()
 	delete m_pLevelInfoBar;
 	delete m_pLevelGo;
 	delete m_pLevelCursor;
+
+	delete m_pAVIKit;
 
 	for ( unsigned int i = 0; i<m_vLevelSelectOptions.size(); i++ )
 		delete m_vLevelSelectOptions[i];
@@ -414,6 +450,48 @@ void CMenuState::Render()
 		}
 	}
 
+	if ( state == TUTORIAL )
+	{
+		// update the current frame, if necessary
+		glBindTexture( GL_TEXTURE_2D, m_iAVIid );
+		if (f != of)
+		{
+			m_pAVIKit->getVideoFrame(m_AVIdata, f);
+			glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, xres, yres, GL_RGB, GL_UNSIGNED_BYTE, m_AVIdata);
+			of = f;
+		}
+
+		Coords texture;
+		texture.x = texture.y = 0;
+		texture.w = texture.h = 1;
+
+		int w = xres;
+		int h = yres;
+
+		glTranslatef( 20.0f, -64.0f, 0.0f );
+
+		// Draw the quad
+		glBegin(GL_QUADS);
+			// Top left corner
+			glTexCoord2f( texture.x, texture.y );
+			glVertex3f((float)-w, (float)h, 0.0f);
+
+			// Bottom left corner
+			glTexCoord2f( texture.x, texture.y + texture.h );
+			glVertex3f((float)-w, (float)-h, 0.0f);
+
+			// Bottom right corner
+			glTexCoord2f( texture.x + texture.w, texture.y + texture.h );
+			glVertex3f((float)w, (float)-h, 0.0f);
+
+			// Top right corner
+			glTexCoord2f( texture.x + texture.w, texture.y );
+			glVertex3f((float)w, (float)h, 0.0f);
+		glEnd();
+
+		glTranslatef( -20.0f, 64.0f, 0.0f );
+	}
+
 //	if ( state == GAMEMENU || state == SCORE || state == SCOREINPUT || state == PLAYERSELECT || state == LEVELSELECT )
 //	{
 		target = m_pCursor->GetSize();
@@ -429,6 +507,11 @@ void CMenuState::Render()
 
 void CMenuState::Update(float fTime)
 {
+	video_position += fTime;
+	if ( video_position > video_duration )
+		video_position = 0;
+	f = m_pAVIKit->getVideoFrameNumber(video_position);
+
 	m_fLevelCursorAngle += 180.0f * fTime;
 	if ( m_fLevelCursorAngle >= 360.0f )
 		m_fLevelCursorAngle -= 360.0f;
@@ -509,7 +592,7 @@ void CMenuState::Update(float fTime)
 								m_vStates[a].m_fAlpha = 1.0f;
 								CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Menu_button_mouseon.wav", RT_SOUND);
 								if ( pSound )
-									pSound->Play();
+									pSound->Play(true);
 							}
 						}
 						else
@@ -519,7 +602,7 @@ void CMenuState::Update(float fTime)
 						m_vStates[a].m_fAlpha = 0.5f;
 				}
 			}
-			if ( state == SCORE )
+			if ( state == SCORE || state == TUTORIAL )
 			{
 				int icursorX = (cursorX * 2 - 1024);
 				int icursorY = (cursorY * 2 - 768);
@@ -534,7 +617,7 @@ void CMenuState::Update(float fTime)
 								m_vStates[a].m_fAlpha = 1.0f;
 								CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Menu_button_mouseon.wav", RT_SOUND);
 								if ( pSound )
-									pSound->Play();
+									pSound->Play(true);
 							}
 						}
 						else
@@ -554,12 +637,13 @@ void CMenuState::Update(float fTime)
 					{
 						if ( icursorY > m_vStates[a].m_iStartY && icursorY < m_vStates[a].m_iStartY + m_vStates[a].m_pImage->GetSize().h * 2 )
 						{
-							if ( m_vStates[a].m_pImage->GetFrame() != 1 )
+							int frame = m_vStates[a].m_pImage->GetFrame();
+							if ( frame != 1 )
 							{
 								m_vStates[a].m_pImage->SetFrame(1);
 								CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Menu_button_mouseon.wav", RT_SOUND);
 								if ( pSound )
-									pSound->Play();
+									pSound->Play(true);
 							}
 						}
 						else
@@ -584,7 +668,7 @@ void CMenuState::Update(float fTime)
 								m_vStates[a].m_fAlpha = 1.0f;
 								CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Menu_button_mouseon.wav", RT_SOUND);
 								if ( pSound )
-									pSound->Play();
+									pSound->Play(true);
 							}
 						}
 						else
@@ -609,7 +693,7 @@ void CMenuState::Update(float fTime)
 								m_vStates[a].m_fAlpha = 1.0f;
 								CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Menu_button_mouseon.wav", RT_SOUND);
 								if ( pSound )
-									pSound->Play();
+									pSound->Play(true);
 							}
 						}
 						else
@@ -702,14 +786,14 @@ int CMenuState::HandleSDLEvent(SDL_Event event)
 		{
 			NextState();
 		}
-		else if ( state < SCOREINPUT || state == PLAYERSELECT || state == LEVELSELECT )
+		else if ( state < SCOREINPUT || state == PLAYERSELECT || state == LEVELSELECT || state == TUTORIAL )
 		{
 			bool pushed = PushButton();
 			if ( pushed )
 			{
 				CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Menu_button_mouseclick.wav", RT_SOUND);
 				if ( pSound )
-					pSound->Play();
+					pSound->Play(true);
 			}
 			if ( state == LEVELSELECT && !pushed )
 			{
@@ -774,6 +858,12 @@ bool CMenuState::PushButton()
 	{
 		if ( m_vStates[i].IsClicked(icursorX, icursorY) )
 		{
+			if ( m_vStates[i].m_pImage == m_pMenuSingleplayer && state == GAMEMENU )
+			{
+				//m_bRunning = false;
+				newState = TUTORIAL;
+				m_iActivePlayer = 1;
+			}
 			if ( m_vStates[i].m_pImage == m_pMenuMultiplayer && state == GAMEMENU )
 			{
 				//m_bRunning = false;
@@ -791,7 +881,7 @@ bool CMenuState::PushButton()
 				m_bQuit = true;
 				return true;
 			}
-			if ( m_vStates[i].m_pImage == m_pScoreBack && newState == state && (state == SCORE || state == PLAYERSELECT) )
+			if ( m_vStates[i].m_pImage == m_pScoreBack && newState == state && (state == SCORE || state == PLAYERSELECT || state == TUTORIAL) )
 			{
 				newState = GAMEMENU;
 				m_iActivePlayer = 1;
@@ -934,7 +1024,7 @@ void CMenuState::PushKeyboard( int x, int y )
 					m_szInputName += tokens[t];
 					CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Menu_button_mouseclick.wav", RT_SOUND);
 					if ( pSound )
-						pSound->Play();
+						pSound->Play(true);
 					return;
 				}
 			}
@@ -946,7 +1036,7 @@ void CMenuState::PushKeyboard( int x, int y )
 		m_szInputName = m_szInputName.substr(0, m_szInputName.length()-1);
 		CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Menu_button_mouseclick.wav", RT_SOUND);
 		if ( pSound )
-			pSound->Play();
+			pSound->Play(true);
 	}
 	if ( icursorX > 364 && icursorX < 620 && icursorY > 225 && icursorY < 317 )
 	{
@@ -1072,7 +1162,7 @@ void CMenuState::HandleButtonPress( wiimote_t* pWiimoteEvent )
 		{
 			CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Menu_button_mouseclick.wav", RT_SOUND);
 			if ( pSound )
-				pSound->Play();
+				pSound->Play(true);
 		}
 		if ( state == LEVELSELECT && !pushed )
 		{

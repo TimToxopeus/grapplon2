@@ -234,6 +234,8 @@ void CAnimatedTexture::SetAnimation( int iAnimation )
 {
 	if ( iAnimation < 0 || iAnimation >= (int)m_vAnimations.size() )
 		return;
+	if ( iAnimation == m_iCurAnim )
+		return;
 	
 	m_iCurAnim = iAnimation;
 	m_iCurFrame = 0;

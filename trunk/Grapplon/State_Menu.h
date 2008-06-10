@@ -2,6 +2,7 @@
 
 #include "StateManager.h"
 #include "AnimatedTexture.h"
+#include <avikit.h>
 
 #include <vector>
 #include <string>
@@ -12,6 +13,7 @@
 #define SCOREINPUT 18
 #define PLAYERSELECT 19
 #define LEVELSELECT 20
+#define TUTORIAL 21
 #define HIGH 25
 #define IR_AVG 1
 
@@ -95,6 +97,14 @@ protected:
 	float m_fLevelCursorAngle;
 	float m_fLevelCursorAlpha;
 	bool m_bLevelCursorIncrease;
+
+	AVIKit *m_pAVIKit;
+	char m_AVIdata[1024*1024*3];
+	long xres, yres;
+	float video_duration;
+	float video_position;
+	int of, f;
+	GLuint m_iAVIid;
 
 	bool m_bNext;
 
