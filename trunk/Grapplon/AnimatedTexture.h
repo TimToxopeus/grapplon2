@@ -38,6 +38,7 @@ private:
 	std::string ReadLine();
 
 	float m_fOverrideHeight;
+	bool m_bLoaded, m_bValid;
 
 public:
 	CAnimatedTexture( std::string name );
