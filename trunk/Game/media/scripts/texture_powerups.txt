@@ -10,7 +10,8 @@ speed = 0
 
 [freeze]
 file = "media/images/powerup_freeze.png"
-frames = 1
+frames = 20
+rows = 2
 speed = 0
 
 [health]
