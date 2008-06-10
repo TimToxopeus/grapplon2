@@ -4,7 +4,7 @@ tim 106923
 tim 61964
 monkey 56149
 roy 55011
+rik 54128
 playe 51757
 pietepi 50389
 mick 50132
-player1 1000
