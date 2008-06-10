@@ -61,9 +61,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="sdl.lib opengl32.lib wiiuse.lib sdl_image.lib ode.lib OpenAL32.lib alut.lib ogg_static.lib vorbis_static.lib vorbisfile_static.lib  vfw32.lib msacm32.lib avikit_d.lib"
+				AdditionalDependencies="sdl.lib opengl32.lib wiiuse.lib sdl_image.lib ode.lib OpenAL32.lib alut.lib ogg_static.lib vorbis_static.lib vorbisfile_static.lib  vfw32.lib msacm32.lib"
 				LinkIncremental="2"
-				IgnoreDefaultLibraryNames="LIBCMTd.lib msvcprtd.lib"
+				IgnoreDefaultLibraryNames="LIBCMT.lib"
 				AddModuleNamesToAssembly=""
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -137,9 +137,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="sdl.lib opengl32.lib wiiuse.lib sdl_image.lib ode.lib OpenAL32.lib alut.lib ogg_static.lib vorbis_static.lib vorbisfile_static.lib vfw32.lib msacm32.lib avikit.lib"
+				AdditionalDependencies="sdl.lib opengl32.lib wiiuse.lib sdl_image.lib ode.lib OpenAL32.lib alut.lib ogg_static.lib vorbis_static.lib vorbisfile_static.lib vfw32.lib msacm32.lib"
 				LinkIncremental="1"
-				IgnoreDefaultLibraryNames="LIBCMT.lib msvcprt.lib"
+				IgnoreDefaultLibraryNames="LIBCMT.lib"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -186,6 +186,10 @@
 			</File>
 			<File
 				RelativePath=".\AnimatedTexture.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\avikit.cpp"
 				>
 			</File>
 			<File
@@ -444,6 +448,10 @@
 			</File>
 			<File
 				RelativePath=".\AnimatedTexture.h"
+				>
+			</File>
+			<File
+				RelativePath=".\avikit.h"
 				>
 			</File>
 			<File
