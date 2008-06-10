@@ -161,30 +161,24 @@ void CGameState::Render()
 			if(aabb_r < (int) playerPos[0]) aabb_r = (int) playerPos[0];
 			if(aabb_t > (int) playerPos[1]) aabb_t = (int) playerPos[1];
 			if(aabb_b < (int) playerPos[1]) aabb_b = (int) playerPos[1];
-		}
 
-		
-		std::vector<CWormHole*>& whs = GetUniverse()->m_vWormHoles;
-		for(unsigned int i = 0; i < whs.size(); i++){
-			CWormHole* thisWH = whs[i];
-			CPlayerObject* curPlayer = m_pPlayers[i];
-			Vector WHPos = thisWH->GetPosition();
-			Vector PlayerPos = curPlayer->GetPosition();						
-			float distance = (WHPos - PlayerPos).Length();
-			if( distance < thisWH->m_fZoomRadius){
-				float perc = 1 - (distance - thisWH->GetPhysicsData()->m_fRadius) / (thisWH->m_fZoomRadius - thisWH->GetPhysicsData()->m_fRadius);
+			std::vector<CWormHole*>& whs = GetUniverse()->m_vWormHoles;
+			for(unsigned int w = 0; w < whs.size(); w++){
+				CWormHole* thisWH = whs[w];
+				Vector WHPos = thisWH->GetPosition();
+				float distance = (WHPos - playerPos).Length();
+				if( distance < thisWH->m_fZoomRadius){
+					float perc = 1 - (distance - thisWH->GetPhysicsData()->m_fRadius) / (thisWH->m_fZoomRadius - thisWH->GetPhysicsData()->m_fRadius);
 
-				Vector DistanceToTwin = thisWH->twin->GetPosition() - WHPos;
-				Vector noticePoint = WHPos + DistanceToTwin*perc;
-				
-
-				if(aabb_l > (int) noticePoint[0]) aabb_l = (int) noticePoint[0];
-				if(aabb_r < (int) noticePoint[0]) aabb_r = (int) noticePoint[0];
-				if(aabb_t > (int) noticePoint[1]) aabb_t = (int) noticePoint[1];
-				if(aabb_b < (int) noticePoint[1]) aabb_b = (int) noticePoint[1];
-
+					Vector DistanceToTwin = (thisWH->twin->GetPosition() - playerPos);
+					Vector noticePoint = playerPos + DistanceToTwin*perc;
+					
+					if(aabb_l > (int) noticePoint[0]) aabb_l = (int) noticePoint[0];
+					if(aabb_r < (int) noticePoint[0]) aabb_r = (int) noticePoint[0];
+					if(aabb_t > (int) noticePoint[1]) aabb_t = (int) noticePoint[1];
+					if(aabb_b < (int) noticePoint[1]) aabb_b = (int) noticePoint[1];
+				}
 			}
-
 		}
 	}
 

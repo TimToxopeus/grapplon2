@@ -81,7 +81,7 @@ bool CCore::SystemsInit()
 		SDL_GL_SwapBuffers();
 
 		m_pActiveState = new CGameState();
-		((CGameState *)m_pActiveState)->Init( 2 );
+		((CGameState *)m_pActiveState)->Init( SETS->PLAYERS );
 	}
 	m_bRunningValid = true;
 	m_pWiimoteManager->RegisterListener( m_pActiveState, -1 );
