@@ -28,6 +28,8 @@ struct ActiveObjectSort
 CRenderer::CRenderer()
 {
 	m_bSorted = true;
+	m_vCameraPosition = Vector();
+	m_fZoom = 1.0f;
 }
 
 CRenderer::~CRenderer()

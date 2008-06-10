@@ -33,6 +33,9 @@ CGameState::CGameState()
 	box.h = 256;
 
 	SetDepth( -10.0f );
+
+	m_fMatchTimeLeft = 180.0f;
+	m_fCountDown = 3.0f;
 }
 
 bool CGameState::Init( int iPlayers, std::string level )
