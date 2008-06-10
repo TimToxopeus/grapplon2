@@ -270,8 +270,8 @@ void CPlayerObject::Render()
 	if(this->m_fPUJellyTime > 0.01f)
 	{
 		size = m_pJellyImage->GetSize();
-		target.w = (int)(((float)size.w) * m_fSecondaryScale * GetScale());
-		target.h = (int)(((float)size.h) * m_fSecondaryScale * GetScale());
+		target.w = (int)(((float)size.w * 1.2f) * m_fSecondaryScale * GetScale());
+		target.h = (int)(((float)size.h * 1.2f) * m_fSecondaryScale * GetScale());
 		target.x = (int)GetX() - (target.w / 2);
 		target.y = (int)GetY() - (target.h / 2);
 
