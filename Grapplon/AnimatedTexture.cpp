@@ -12,6 +12,8 @@ CAnimatedTexture::CAnimatedTexture( std::string name )
 	m_fTimeFrameChange = 0.0f;
 
 	m_fOverrideHeight = -1.0f;
+	m_bLoaded = false;
+	m_bValid = true;
 }
 
 void CAnimatedTexture::LoadTextureData()
@@ -23,6 +25,7 @@ void CAnimatedTexture::LoadTextureData()
 	if ( !pFile )
 	{
 		CLogManager::Instance()->LogMessage( "Cannot open: " + m_szScriptFile );
+		m_bValid = false;
 		return;
 	}
 
@@ -42,10 +45,13 @@ void CAnimatedTexture::LoadTextureData()
 	fclose( pFile );
 
 	SetAnimation( 0 );
+	m_bLoaded = true;
 }
 
 void CAnimatedTexture::UpdateFrame(float fTime)
 {
+	if ( !m_bLoaded || !m_bValid ) return;
+
 	m_fTimeFrameChange += fTime;
 
 	float step = m_fTimeFrameChange / m_fDesiredFramesPerSecond;
@@ -181,6 +187,7 @@ void CAnimatedTexture::ReadAnimation(std::string anim)
 			if ( !m_vAnimations[index].m_pTexture )
 			{
 				CLogManager::Instance()->LogMessage( "Cannot load texture: " + tokens[2] + " (" + m_szScriptFile + ")" );
+				m_bValid = false;
 			}
 		}
 		else if ( tokens[0] == "frames" )

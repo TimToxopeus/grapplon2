@@ -245,6 +245,11 @@ CMenuState::CMenuState( int iState, int iScore1, int iScore2, int iScore3, int i
 		{
 			m_pAVIKit->getVideoInfo(&xres, &yres, &video_duration);
 		}
+		else
+		{
+			delete m_pAVIKit;
+			m_pAVIKit = NULL;
+		}
 	}
 
 	m_iSelectedLevel = -1;
@@ -259,7 +264,8 @@ CMenuState::CMenuState( int iState, int iScore1, int iScore2, int iScore3, int i
 		{
 			fgets(in, 256, pFile );
 			int len = strlen(in);
-			in[len-1] = 0;
+			if ( in[len-1] == '\n' )
+				in[len-1] = 0;
 			input = in;
 			tokens = tokenizer.GetTokens(input);
 
@@ -333,7 +339,8 @@ CMenuState::~CMenuState()
 	delete m_pLevelGo;
 	delete m_pLevelCursor;
 
-	delete m_pAVIKit;
+	if ( m_pAVIKit )
+		delete m_pAVIKit;
 
 	for ( unsigned int i = 0; i<m_vLevelNodes.size(); i++ )
 		delete m_vLevelNodes[i];
@@ -489,46 +496,49 @@ void CMenuState::Render()
 		}
 	}
 
-	if ( state == TUTORIAL )
+	if ( state == TUTORIAL  )
 	{
-		// update the current frame, if necessary
-		glBindTexture( GL_TEXTURE_2D, m_iAVIid );
-		if (f != of)
+		if ( m_pAVIKit )
 		{
-			m_pAVIKit->getVideoFrame(m_AVIdata, f);
-			glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, xres, yres, GL_RGB, GL_UNSIGNED_BYTE, m_AVIdata);
-			of = f;
+			// update the current frame, if necessary
+			glBindTexture( GL_TEXTURE_2D, m_iAVIid );
+			if (f != of)
+			{
+				m_pAVIKit->getVideoFrame(m_AVIdata, f);
+				glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, xres, yres, GL_RGB, GL_UNSIGNED_BYTE, m_AVIdata);
+				of = f;
+			}
+
+			Coords texture;
+			texture.x = texture.y = 0;
+			texture.w = texture.h = 1;
+
+			int w = xres;
+			int h = yres;
+
+			glTranslatef( 20.0f, -64.0f, 0.0f );
+
+			// Draw the quad
+			glBegin(GL_QUADS);
+				// Top left corner
+				glTexCoord2f( texture.x, texture.y );
+				glVertex3f((float)-w, (float)h, 0.0f);
+
+				// Bottom left corner
+				glTexCoord2f( texture.x, texture.y + texture.h );
+				glVertex3f((float)-w, (float)-h, 0.0f);
+
+				// Bottom right corner
+				glTexCoord2f( texture.x + texture.w, texture.y + texture.h );
+				glVertex3f((float)w, (float)-h, 0.0f);
+
+				// Top right corner
+				glTexCoord2f( texture.x + texture.w, texture.y );
+				glVertex3f((float)w, (float)h, 0.0f);
+			glEnd();
+
+			glTranslatef( -20.0f, 64.0f, 0.0f );
 		}
-
-		Coords texture;
-		texture.x = texture.y = 0;
-		texture.w = texture.h = 1;
-
-		int w = xres;
-		int h = yres;
-
-		glTranslatef( 20.0f, -64.0f, 0.0f );
-
-		// Draw the quad
-		glBegin(GL_QUADS);
-			// Top left corner
-			glTexCoord2f( texture.x, texture.y );
-			glVertex3f((float)-w, (float)h, 0.0f);
-
-			// Bottom left corner
-			glTexCoord2f( texture.x, texture.y + texture.h );
-			glVertex3f((float)-w, (float)-h, 0.0f);
-
-			// Bottom right corner
-			glTexCoord2f( texture.x + texture.w, texture.y + texture.h );
-			glVertex3f((float)w, (float)-h, 0.0f);
-
-			// Top right corner
-			glTexCoord2f( texture.x + texture.w, texture.y );
-			glVertex3f((float)w, (float)h, 0.0f);
-		glEnd();
-
-		glTranslatef( -20.0f, 64.0f, 0.0f );
 	}
 
 //	if ( state == GAMEMENU || state == SCORE || state == SCOREINPUT || state == PLAYERSELECT || state == LEVELSELECT )
@@ -549,7 +559,8 @@ void CMenuState::Update(float fTime)
 	video_position += fTime;
 	if ( video_position > video_duration )
 		video_position = 0;
-	f = m_pAVIKit->getVideoFrameNumber(video_position);
+	if ( m_pAVIKit )
+		f = m_pAVIKit->getVideoFrameNumber(video_position);
 
 	m_fLevelCursorAngle += 180.0f * fTime;
 	if ( m_fLevelCursorAngle >= 360.0f )
