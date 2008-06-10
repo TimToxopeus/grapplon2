@@ -280,18 +280,18 @@ void CGameState::Render()
 
 		if( i != 0){
 			// Vertical buoys 
-			target.y = (i * height_interval - level_height) - (target.h / 2);
-			target.x = -(level_width + SETS->BUOY_AMOUNT) - (target.w / 2);
+			target.y = i * height_interval - (level_height + SETS->BUOY_DISTANCE + target.h / 2);
+			target.x = -(level_width + SETS->BUOY_DISTANCE) - (target.w / 2);
 			RenderQuad(target, m_pBuoyImage, m_fBuoyAngle);
-			target.x = (level_width + SETS->BUOY_AMOUNT) - (target.w / 2);
+			target.x = (level_width + SETS->BUOY_DISTANCE) - (target.w / 2);
 			RenderQuad(target, m_pBuoyImage, m_fBuoyAngle);
 		}
 
 		// Horizontal buoys 
-		target.x = (i * width_interval - level_width) - (target.w / 2);
-		target.y = -(level_height + SETS->BUOY_AMOUNT) - (target.h / 2);
+		target.x = i * width_interval - (level_width + SETS->BUOY_DISTANCE + target.w / 2);
+		target.y = -(level_height + SETS->BUOY_DISTANCE) - (target.h / 2);
 		RenderQuad( target, m_pBuoyImage, m_fBuoyAngle);
-		target.y = (level_height + SETS->BUOY_AMOUNT) - (target.h / 2);
+		target.y = (level_height + SETS->BUOY_DISTANCE) - (target.h / 2);
 		RenderQuad( target, m_pBuoyImage, m_fBuoyAngle);
 
 
@@ -299,7 +299,7 @@ void CGameState::Render()
 
 	target.x = level_width + SETS->BUOY_DISTANCE - (target.w / 2);
 	RenderQuad( target, m_pBuoyImage, m_fBuoyAngle);
-	target.y = -(level_height + SETS->BUOY_AMOUNT) - (target.h / 2);
+	target.y = -(level_height + SETS->BUOY_DISTANCE) - (target.h / 2);
 	RenderQuad( target, m_pBuoyImage, m_fBuoyAngle);
 	
 
