@@ -253,7 +253,7 @@ void CPlayerObject::Render()
 	}
 
 	// Render Freeze
-	if(m_fFreezeTime > 0.01f)
+	if(m_fFreezeTime > 0.01f || m_fPUFreezeTime > 0.01f)
 	{
 		size = m_pFrozenImage->GetSize();
 		target.w = (int)((float)size.w * m_fSecondaryScale * GetScale());
@@ -393,6 +393,9 @@ void CPlayerObject::Update( float fTime )
 
 	if(this->m_fPUShieldTime > 0.001){
 		m_fPUShieldTime -= fTime;
+		m_oPhysicsData.m_bAffectedByGravity = false;
+		if ( m_fPUShieldTime <= 0.0f )
+			m_oPhysicsData.m_bAffectedByGravity = true;
 	}
 
 	if(this->m_fPUSpeedTime > 0.001){
