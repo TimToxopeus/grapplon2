@@ -64,6 +64,8 @@ bool CCore::SystemsInit()
 	if ( !m_pSoundManager->Init() )
 		return false;
 
+	m_pLoading = new CAnimatedTexture("media/scripts/texture_loading.txt");
+
 	// Initialize active state
 	m_bMenu = SETS->MENU_ON;
 	if ( m_bMenu )
@@ -72,13 +74,17 @@ bool CCore::SystemsInit()
 	}
 	else
 	{
+		SDL_Rect target;
+		target.w = 2048; target.h = 1536; target.x = -1024; target.y = -768;
+		m_pLoading->SetAnimation(rand()%m_pLoading->GetAnimCount());
+		m_pRenderer->RenderQuad( target, m_pLoading, 0, 1 );
+		SDL_GL_SwapBuffers();
+
 		m_pActiveState = new CGameState();
 		((CGameState *)m_pActiveState)->Init( 2 );
 	}
 	m_bRunningValid = true;
 	m_pWiimoteManager->RegisterListener( m_pActiveState, -1 );
-
-	m_pLoading = new CAnimatedTexture("media/scripts/texture_loading.txt");
 
 	// All systems go!
 	CLogManager::Instance()->LogMessage("Initializion succesful.");
