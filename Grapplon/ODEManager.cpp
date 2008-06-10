@@ -9,6 +9,7 @@
 #include "Universe.h"
 #include "PowerUp.h"
 #include "Core.h"
+#include "Renderer.h"
 
 #include "ResourceManager.h"
 #include "Sound.h"
@@ -28,10 +29,12 @@ int ODEManagerThread(void *data)
 	CODEManager *pODE = CODEManager::Instance();
 	Uint32 time, lastUpdate;
 	time = lastUpdate = SDL_GetTicks();
+	CRenderer *pRenderer = CRenderer::Instance();
 	while ( pCore->IsRunning() && pODE->ShouldThreadStop() == false )
 	{
 		time = SDL_GetTicks();
 		float timeSinceLastUpdate = (float)(time - lastUpdate) / 1000.0f;
+		pRenderer->Update( timeSinceLastUpdate );
 		pODE->ProcessBuffer();
 		pODE->Update(timeSinceLastUpdate);
  		SDL_Delay( 5 );
