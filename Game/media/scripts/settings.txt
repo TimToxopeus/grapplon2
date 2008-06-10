@@ -1,4 +1,4 @@
-Level = media/scripts/LEVEL_test.txt    Level
+Level = media/scripts/LEVEL_dodgeball.txt    Level
 PitchAccelOut = 40						 					 Accelaratie nodig om haak uit te slaan. Als 0, dan kun je alleen uitslaan met de A-knop
 PitchAccelIn = 0							 					 Accelaratie nodig om haak in te nemem. Als 0, dan kun je alleen inmemen met de B-knop
 MinAccelForProcess = 4				 					 Minimale accelartie die nodig is voordat de beweging verwerkt wordt (dit voorkomt jitteringen, vanwege kleine bewegingen)
