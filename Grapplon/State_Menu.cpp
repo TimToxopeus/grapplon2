@@ -90,6 +90,7 @@ CMenuState::CMenuState( int iState, int iScore1, int iScore2, int iScore3, int i
 	m_bNext = false;
 	of = -1;
 	m_iAVIid = -1;
+	m_pAVIKit = NULL;
 
 	for ( int i = 0; i<10; i++ )
 	{
@@ -239,26 +240,6 @@ CMenuState::CMenuState( int iState, int iScore1, int iScore2, int iScore3, int i
 		}
 	}
 
-	GLint nOfColors = 4;
-	GLenum texture_format;
-
-	// get the number of channels in the SDL surface
-	texture_format = GL_RGBA;
-
-	// Have OpenGL generate a texture object handle for us
-	glGenTextures( 1, &m_iAVIid );
-
-	// Bind the texture object
-	glBindTexture( GL_TEXTURE_2D, m_iAVIid );
-
-	// Set the texture's stretching properties
-	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-
-	// Edit the texture object's image data using the information SDL_Surface gives us
-	glTexImage2D( GL_TEXTURE_2D, 0, nOfColors, xres, yres, 0,
-					texture_format, GL_UNSIGNED_BYTE, NULL );
-				
 	m_iSelectedLevel = -1;
 	FILE *pFile = fopen( "media/scripts/levelselect.txt", "rt" );
 	if ( pFile )
@@ -352,7 +333,8 @@ void CMenuState::Render()
 			target.x = m_vStates[a].m_iX;
 			target.y = m_vStates[a].m_iY;
 
-			m_vStates[a].m_pImage->SetAnimation( m_vStates[a].m_iAnimation );
+			if ( m_vStates[a].m_pImage != m_pScoreBackspace && m_vStates[a].m_pImage != m_pScoreEnter )
+				m_vStates[a].m_pImage->SetAnimation( m_vStates[a].m_iAnimation );
 			RenderQuad( target, m_vStates[a].m_pImage, 0, m_vStates[a].m_fAlpha );
 		}
 	}
@@ -863,6 +845,28 @@ bool CMenuState::PushButton()
 				//m_bRunning = false;
 				newState = TUTORIAL;
 				m_iActivePlayer = 1;
+				if ( m_iAVIid == -1 )
+				{
+					GLint nOfColors = 4;
+					GLenum texture_format;
+
+					// get the number of channels in the SDL surface
+					texture_format = GL_RGBA;
+
+					// Have OpenGL generate a texture object handle for us
+					glGenTextures( 1, &m_iAVIid );
+
+					// Bind the texture object
+					glBindTexture( GL_TEXTURE_2D, m_iAVIid );
+
+					// Set the texture's stretching properties
+					glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+					glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+
+					// Edit the texture object's image data using the information SDL_Surface gives us
+					glTexImage2D( GL_TEXTURE_2D, 0, nOfColors, xres, yres, 0,
+									texture_format, GL_UNSIGNED_BYTE, NULL );
+				}
 			}
 			if ( m_vStates[i].m_pImage == m_pMenuMultiplayer && state == GAMEMENU )
 			{
