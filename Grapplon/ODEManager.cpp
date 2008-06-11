@@ -182,7 +182,7 @@ void CODEManager::CreatePhysicsData( CBaseObject *pOwner, PhysicsData* d, float 
 	if ( d->body )
 		dBodyDestroy(d->body);
 
-	bool hasGeom = (fRadius != 0.0f);
+	bool hasGeom = (fRadius != 0);
 
 	d->m_pOwner = pOwner;
 	d->body = CreateBody();
@@ -203,7 +203,7 @@ void CODEManager::CreatePhysicsData( CBaseObject *pOwner, PhysicsData* d, float 
 		d->geom = NULL;
 	}
 	
-		AddData( d );
+		AddData(d);
 
 }
 
