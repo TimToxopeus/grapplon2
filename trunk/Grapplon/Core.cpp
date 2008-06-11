@@ -11,6 +11,8 @@
 #include "ParticleSystemManager.h"
 #include "GameSettings.h"
 
+#include <time.h>
+
 CCore *CCore::m_pInstance = NULL;
 bool m_bThreaded = false;
 
@@ -34,6 +36,11 @@ bool CCore::SystemsInit()
 {
 	m_bRunningValid = false;
 	CLogManager::Instance()->LogMessage("Initializing engine.");
+
+	unsigned int seed = (unsigned int)time(NULL);
+	CLogManager::Instance()->LogMessage("Seeding game: " + itoa2(seed));
+	srand( seed );
+
 
 	CGameSettings::Instance();
 
