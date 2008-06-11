@@ -1,0 +1,10 @@
+[object]
+width = 409
+height = 349
+animations = idle
+
+[idle]
+file = "media/images/electric_green.png"
+rows = 4
+frames = 20
+speed = 10
