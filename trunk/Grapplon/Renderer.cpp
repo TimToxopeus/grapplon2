@@ -16,6 +16,8 @@
 #define PERC 0.5
 
 CRenderer *CRenderer::m_pInstance = 0;
+HDC currentDC;
+HGLRC currentContext;
 
 struct ActiveObjectSort
 {
@@ -131,6 +133,9 @@ bool CRenderer::Init()
 	m_vCameraPosition = Vector( 0, 0, 0 );
 	m_fZoom = 2.0f;
 	SetOrtho();
+
+	currentDC = wglGetCurrentDC();
+	currentContext = wglGetCurrentContext();
 
 	CLogManager::Instance()->LogMessage("Initialization renderer succesful.");
 	return true;

@@ -10,6 +10,8 @@ using namespace std;
 #include "LogManager.h"
 #include "SoundManager.h"
 
+#include "LoadingScreen.h"
+
 CResourceManager *CResourceManager::m_pInstance = 0;
 
 CResourceManager::CResourceManager()
@@ -84,6 +86,8 @@ IResource *CResourceManager::LoadTexture( std::string name )
 {
 	CLogManager::Instance()->LogMessage("Attempting to load texture: " + name);
 
+	CLoadingScreen *pLoading = CLoadingScreen::Instance();
+
 	SDL_Surface *pSurface = NULL;
 	if ( name.find(".bmp") != string::npos )
 		pSurface = SDL_LoadBMP( name.c_str() );
@@ -137,7 +141,9 @@ IResource *CResourceManager::LoadTexture( std::string name )
 			SDL_FreeSurface( pSurface );
 			return NULL;
 		}
-        
+
+		pLoading->RequestContext();
+
 		// Have OpenGL generate a texture object handle for us
 		glGenTextures( 1, &iGLTexture );
  
@@ -153,6 +159,8 @@ IResource *CResourceManager::LoadTexture( std::string name )
 						texture_format, GL_UNSIGNED_BYTE, pSurface->pixels );
 
 		GLenum error = glGetError();
+
+		pLoading->ReturnContext();
 
 		CTexture *pTexture = new CTexture( name, pSurface->w, pSurface->h, iGLTexture );
 		SDL_FreeSurface( pSurface );

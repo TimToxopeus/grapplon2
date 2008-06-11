@@ -7,4 +7,4 @@ animations = 1
 file = "media/images/loading/rotor.png"
 frames = 8
 rows = 2
-speed = 1
+speed = 12

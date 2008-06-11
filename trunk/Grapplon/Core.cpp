@@ -13,6 +13,8 @@
 
 #include <time.h>
 
+#include "LoadingScreen.h"
+
 CCore *CCore::m_pInstance = NULL;
 bool m_bThreaded = false;
 
@@ -71,7 +73,7 @@ bool CCore::SystemsInit()
 	if ( !m_pSoundManager->Init() )
 		return false;
 
-	m_pLoading = new CAnimatedTexture("media/scripts/texture_loading.txt");
+	CLoadingScreen::Instance()->Init();
 
 	// Initialize active state
 	m_bMenu = SETS->MENU_ON;
@@ -81,12 +83,6 @@ bool CCore::SystemsInit()
 	}
 	else
 	{
-		SDL_Rect target;
-		target.w = 2048; target.h = 1536; target.x = -1024; target.y = -768;
-		m_pLoading->SetAnimation(rand()%m_pLoading->GetAnimCount());
-		m_pRenderer->RenderQuad( target, m_pLoading, 0, 1 );
-		SDL_GL_SwapBuffers();
-
 		m_pActiveState = new CGameState();
 		((CGameState *)m_pActiveState)->Init( SETS->PLAYERS );
 	}
@@ -101,8 +97,6 @@ bool CCore::SystemsInit()
 void CCore::SystemsDestroy()
 {
 	CLogManager::Instance()->LogMessage("Terminating engine.");
-
-	delete m_pLoading;
 
 	// Terminate ODE Manager
 	if ( m_pODEManager )
@@ -240,13 +234,8 @@ void CCore::Run()
 
 		if ( !ShouldQuit() )
 		{
+			CLoadingScreen::Instance()->StartRendering();
 			m_pRenderer->UnregisterAll();
-
-			SDL_Rect target;
-			target.w = 2048; target.h = 1536; target.x = -1024; target.y = -768;
-			m_pLoading->SetAnimation(rand()%m_pLoading->GetAnimCount());
-			m_pRenderer->RenderQuad( target, m_pLoading, 0, 1 );
-			SDL_GL_SwapBuffers();
 
 			if ( m_bThreaded )
 				m_pODEManager->StopEventThread();
@@ -290,6 +279,7 @@ void CCore::Run()
 				m_pODEManager->StartEventThread();
 			m_pWiimoteManager->RegisterListener( m_pActiveState, -1 );
 			m_bMenu = !m_bMenu;
+			CLoadingScreen::Instance()->StopRendering();
 		}
 	}
 
