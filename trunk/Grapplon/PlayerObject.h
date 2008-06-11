@@ -29,6 +29,8 @@ private:
 	CAnimatedTexture *m_pShieldImage;
 	CAnimatedTexture *m_pRespawnImage;
 	CAnimatedTexture *m_pPUFrozenImage;
+	CAnimatedTexture *m_pElectricImage;
+
 
 	Vector explosionPos;
 

@@ -24,9 +24,6 @@ CPlayerObject::CPlayerObject( int iPlayer )
 	m_iPlayer = iPlayer, 
 	m_eType = SHIP;
 	m_fShipVel = SETS->SHIP_VELOCITY;
-	//y = 10.0f;
-	//p = 10.0f;
-	//r = 10.0f;
 
 	m_fEMPTime			= 0;
 	m_fElectroTime		= 0;
@@ -60,6 +57,12 @@ CPlayerObject::CPlayerObject( int iPlayer )
 	this->m_pRespawnImage = new CAnimatedTexture(image);
 	m_pRespawnImage->Scale( 0.18f * 0.9f);
 	m_pRespawnImage->SetFrame(8);
+
+	image = "media/scripts/texture_electric_ship" + itoa2(iPlayer + 1) + ".txt";
+	m_pElectricImage = new CAnimatedTexture(image);
+	m_pElectricImage->Scale( 0.33f );
+	m_pElectricImage->SetFrame(0);
+
 
 	m_pExplosion = new CAnimatedTexture("media/scripts/texture_explosion.txt");
 
@@ -237,7 +240,18 @@ void CPlayerObject::Render()
 
 	RenderQuad( target, m_pRadius, m_fAngle, colour );
 
-	CBaseMovableObject::Render();		// Render schip
+	if(m_fEMPTime > 0.001){
+		size = m_pElectricImage->GetSize();
+		target.w = (int)((float)size.w * m_fSecondaryScale * GetScale());
+		target.h = (int)((float)size.h * m_fSecondaryScale * GetScale());
+		target.x = (int)GetX() - (target.w / 2);
+		target.y = (int)GetY() - (target.h / 2);
+
+		RenderQuad( target, m_pElectricImage, m_fAngle);
+	
+	} else {
+		CBaseMovableObject::Render();		// Render schip
+	}
 	// Render EMP-State
 
 	// Render Damage
@@ -467,6 +481,7 @@ void CPlayerObject::Update( float fTime )
 
 	if(m_fEMPTime > 0.0001f){
 		m_fEMPTime -= fTime;
+		m_pElectricImage->UpdateFrame(fTime);
 	}
 
 	if(!m_bElectroChangedThisFrame && m_fElectroTime > 0.0001f)
@@ -479,6 +494,7 @@ void CPlayerObject::Update( float fTime )
 	if(m_fElectroTime == SETS->TIME_FOR_EMP)
 	{
 		m_fElectroTime = 0;
+		m_pElectricImage->SetFrame(0);
 		m_fEMPTime = SETS->EMP_TIME;
 	} 
 
