@@ -139,9 +139,8 @@ CGameState::~CGameState()
 
 void CGameState::Render()
 {
-
-	int level_width = (int) GetUniverse()->m_fWidth;
-	int level_height = (int) GetUniverse()->m_fHeight;
+	int level_width = (int) m_pUniverse->m_fWidth;
+	int level_height = (int) m_pUniverse->m_fHeight;
 
 	// Note: m_fWidth is actually half the width (same for height)
 	int level_l = -level_width;

@@ -38,28 +38,46 @@ public:
 	virtual void SetAlpha( float fAlpha ) { m_fAlpha = fAlpha; }
 
 	virtual ObjectType getType() { return m_eType; }
-	std::string getTypeStr(){ 
-		if(m_eType == UNSET)
+	std::string getTypeStr()
+	{
+		switch ( m_eType )
+		{
+		default:
+		case UNSET:
 			return "UNSET";
-		if(m_eType == STATE)
+		case STATE:
 			return "STATE";
-		if(m_eType == PARTICLESYSTEM)
+		case HUD:
+			return "HUD";
+		case PARTICLESYSTEM:
 			return "PARTICLESYSTEM";
-		if(m_eType == SHIP)
+		case SHIP:
 			return "SHIP";
-		if(m_eType == HOOK)
+		case HOOK:
 			return "HOOK";
-		if(m_eType == ORDINARY)
+		case ORDINARY:
 			return "ORDINARY";
-		if(m_eType == ICE)
-			return "ICE";
-		if(m_eType == SUN)
+		case ASTEROID:
+			return "ASTEROID";
+		case SUN:
 			return "SUN";
-		if(m_eType == BROKEN)
+		case ICE:
+			return "ICE";
+		case BROKEN:
 			return "BROKEN";
-		if(m_eType == CHAINLINK)
+		case CHAINLINK:
 			return "CHAINLINK";
+		case FIRE:
+			return "FIRE";
+		case POWERUP:
+			return "POWERUP";
+		case WORMHOLE:
+			return "WORMHOLE";
+		case ELECTRO:
+			return "ELECTRO";
+		}
 	}
+
 
 	virtual bool ShouldBeDeleted() { return m_bDeleteMe; }
 };
