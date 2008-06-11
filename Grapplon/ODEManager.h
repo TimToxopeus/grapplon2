@@ -42,7 +42,6 @@ private:
 	dWorldID m_oWorld;
 	dSpaceID m_oSpace;
 	dJointGroupID m_oContactgroup;
-	dJointGroupID m_oJointgroup;
 
 	std::vector<dJointID> m_vJoints;
 
@@ -70,11 +69,11 @@ private:
 
 public:
 
-	std::vector<PhysicsData *> m_vAsteroids;
-	std::vector<PhysicsData *> m_vPlanets;	
-	std::vector<PhysicsData *> m_vPlayers;	
-	std::vector<PhysicsData *> m_vOthers;
-	std::vector<PhysicsData *> m_vPowerUps;	
+	std::vector<PhysicsData*> m_vAsteroids;
+	std::vector<PhysicsData*> m_vPlanets;	
+	std::vector<PhysicsData*> m_vPlayers;	
+	std::vector<PhysicsData*> m_vOthers;
+	std::vector<PhysicsData*> m_vPowerUps;	
 
 	CUniverse* m_pUniverse;
 
@@ -88,13 +87,8 @@ public:
 	void CreatePhysicsData( CBaseObject *pOwner, PhysicsData* d, float fRadius = 70.0f);
 
 	void Update( float fTime );
-	dJointID createHingeJoint(char* name);
-	dJointID CreateJoint( dBodyID b1, dBodyID b2, float x = 0, float y = 0 );
+	dJointID createHingeJoint();
 	void DestroyJoint( dJointID joint );
-
-	//int m_iWidth;
-	//int m_iHeight;
-	//int m_iBoundaryForce;
 
 	void BodyAddForce( dBodyID body, Vector force );
 	void BodySetForce( dBodyID body, Vector force );

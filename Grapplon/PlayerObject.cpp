@@ -87,6 +87,15 @@ CPlayerObject::~CPlayerObject()
 	delete m_pRadius;
 	delete m_pImageDamage;
 	delete m_pExplosion;
+	delete m_pFrozenImage;
+	delete m_pJellyImage;
+	delete m_pShieldImage;
+	delete m_pRespawnImage;
+	delete m_pPUFrozenImage;
+	delete m_pElectricImage;
+
+	delete m_pHook;
+
 }
 
 

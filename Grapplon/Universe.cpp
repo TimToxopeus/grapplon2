@@ -298,9 +298,7 @@ void CUniverse::SetUpOrbit( CPlanet* orbitter, CPlanet* orbitted )
 
 	Vector hingePos = orbitted->GetPosition();
 	// Create joint
-	orbitter->orbitJoint = CODEManager::Instance()->createHingeJoint("Orbit Joint");
-	//dJointAttach( orbitter->orbitJoint, orbitted->GetBody(), orbitter->GetBody() );
-	//dJointSetHingeAnchor(orbitter->orbitJoint, hingePos[0], hingePos[1], 0.0f);
+	orbitter->orbitJoint = CODEManager::Instance()->createHingeJoint();
 	CODEManager::Instance()->JointAttach( orbitter->orbitJoint, orbitted->GetBody(), orbitter->GetBody() );
 	CODEManager::Instance()->JointSetHingeAnchor(orbitter->orbitJoint, hingePos);
 	orbitter->m_bIsInOrbit = true;

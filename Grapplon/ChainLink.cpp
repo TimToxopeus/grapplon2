@@ -34,7 +34,8 @@ CChainLink::CChainLink( CPlayerObject *pOwner )
 
 CChainLink::~CChainLink()
 {
-	delete m_pImage;
+	//delete m_pImage;			Deleted by BaseObject
+	delete m_pFrozenImage;
 }
 
 void CChainLink::Update( float fTime )

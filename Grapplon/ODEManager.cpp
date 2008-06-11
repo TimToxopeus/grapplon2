@@ -62,7 +62,6 @@ CODEManager::CODEManager()
 	m_oSpace = dHashSpaceCreate(0);
 
 	m_oContactgroup = dJointGroupCreate(MAX_CONTACTS);
-	m_oJointgroup = dJointGroupCreate(MAX_HINGES);
 
 	m_pThread = NULL;
 	m_bForceThreadStop = false;
@@ -74,11 +73,15 @@ CODEManager::~CODEManager()
 {
 	CLogManager::Instance()->LogMessage("Terminating ODE manager.");
 
-	dJointGroupDestroy(m_oJointgroup);
-	dJointGroupDestroy( m_oContactgroup );
+	dJointGroupDestroy(m_oContactgroup );
 
 	CLogManager::Instance()->LogMessage("Cleanin' up da bodies..");
 
+	for ( unsigned int i = 0; i<m_vJoints.size(); i++ )
+	{
+		dJointDestroy( m_vJoints[i] );
+	}
+	m_vJoints.clear();
 
 	for ( unsigned int i = 0; i<m_vPlanets.size(); i++ )
 	{
@@ -103,10 +106,18 @@ CODEManager::~CODEManager()
 
 	for ( unsigned int i = 0; i<m_vOthers.size(); i++ )
 	{
-		//if(m_vOthers[i]->geom != NULL) dGeomDestroy( m_vOthers[i]->geom );		// Chainlinks have no geom
-		//if(m_vOthers[i]->body != NULL) dBodyDestroy( m_vOthers[i]->body );
+		if(m_vOthers[i]->geom != NULL) dGeomDestroy( m_vOthers[i]->geom );		// Chainlinks have no geom
+		if(m_vOthers[i]->body != NULL) dBodyDestroy( m_vOthers[i]->body );
 	}
 	m_vOthers.clear();
+
+	for ( unsigned int i = 0; i<m_vPowerUps.size(); i++ )
+	{
+		dGeomDestroy( m_vPowerUps[i]->geom );		// Chainlinks have no geom
+		dBodyDestroy( m_vPowerUps[i]->body );
+	}
+	m_vOthers.clear();
+
 
 	dWorldDestroy( m_oWorld );
 	dSpaceDestroy( m_oSpace );
@@ -477,22 +488,12 @@ void CODEManager::AddData( PhysicsData *pData )
 	(*list).push_back(pData);
 }
 
-
-dJointID CODEManager::createHingeJoint(char* name)
+dJointID CODEManager::createHingeJoint()
 {
 	dJointID joint = dJointCreateHinge(m_oWorld, 0);
-	dJointSetData(joint, name);
 	dJointSetHingeAxis(joint, 0, 0, 1);
 	dJointSetHingeParam(joint, dParamStopCFM, SETS->CFM ); 
 	dJointSetHingeParam(joint, dParamStopERP, SETS->ERP ); 
-	return joint;
-}
-
-dJointID CODEManager::CreateJoint( dBodyID b1, dBodyID b2, float x, float y )
-{
-	dJointID joint = dJointCreateBall( m_oWorld, 0 );
-	dJointAttach( joint, b1, b2 );
-	dJointSetBallAnchor( joint, x, y, 0 );
 	m_vJoints.push_back( joint );
 	return joint;
 }

@@ -20,8 +20,7 @@
 #include "State_Game.h"
 
 CHook::CHook( CPlayerObject *pOwner )
-	: m_pOwner(pOwner), m_eHookState(CONNECTED), m_bIsRadialCorrected(false), m_bHasAutoAim(true), m_pGrabbedObject(NULL), m_oHookGrabJoint(NULL), 
-	  m_pLastChainJoint(NULL), m_oMiddleChainJoint(NULL), m_oAngleJoint(NULL)
+	: m_pOwner(pOwner), m_eHookState(CONNECTED), m_bIsRadialCorrected(false), m_bHasAutoAim(true), m_pGrabbedObject(NULL)
 {
 	// State logic settings
 	m_eType = HOOK;
@@ -45,10 +44,10 @@ CHook::CHook( CPlayerObject *pOwner )
 	this->SetPosition(shipPosition + forward*SETS->CENT_DIST_HOOK);
 
 	// Joints
-	m_pLastChainJoint = ode->createHingeJoint("Last ChainJoint");
-	m_oMiddleChainJoint = ode->createHingeJoint("Middle ChainJoint");
-	m_oHookGrabJoint = ode->createHingeJoint("Hook GrabJoint");
-	m_oAngleJoint = ode->createHingeJoint("Angle ChainJoint");
+	m_pLastChainJoint = ode->createHingeJoint();
+	m_oMiddleChainJoint = ode->createHingeJoint();
+	m_oHookGrabJoint = ode->createHingeJoint();
+	m_oAngleJoint = ode->createHingeJoint();
 
 	// Create chains
 	dJointID curJointID;
@@ -62,26 +61,20 @@ CHook::CHook( CPlayerObject *pOwner )
 		// New chainlink
 		curLink = new CChainLink(pOwner);
 		chainLinks.push_back(curLink);
-		//dBodySetPosition( curLink->GetBody(), centerPos[0], centerPos[1], centerPos[2] );
 		CODEManager::Instance()->BodySetPosition( curLink->GetBody(), centerPos );
 
 		// Joint with previous link / ship
-		curJointID = ode->createHingeJoint("A LinkJoint");
+		curJointID = ode->createHingeJoint();
 		chainJoints.push_back(curJointID);
-		//dJointAttach(curJointID, prevBodyID, curLink->GetBody());
 		CODEManager::Instance()->JointAttach(curJointID, prevBodyID, curLink->GetBody());
 		anchorPoint = (i % 2 == 0 ? shipPosition : shipPosition + Vector(SETS->LINK_LENGTH, 0.0f, 0.0f));
-		//dJointSetHingeAnchor(curJointID, anchorPoint[0], anchorPoint[1], anchorPoint[2]);
 		CODEManager::Instance()->JointSetHingeAnchor(curJointID, anchorPoint);
 
 		prevBodyID = curLink->GetBody();		// Current chain will be joint in the next iteration
 	}
 
 	// Atach Ship to last ChainLink
-	chainJoints.push_back(curJointID);
-	//dJointAttach(m_pLastChainJoint, prevBodyID, this->m_pOwner->GetBody());
 	CODEManager::Instance()->JointAttach(m_pLastChainJoint, prevBodyID, this->m_pOwner->GetBody());
-	//dJointSetHingeAnchor(m_pLastChainJoint, shipPosition[0] , shipPosition[1], shipPosition[2]);
 	CODEManager::Instance()->JointSetHingeAnchor(m_pLastChainJoint, shipPosition);
 }
 
@@ -90,15 +83,10 @@ CHook::~CHook()
 	
 	for(int i = 0; i < SETS->LINK_AMOUNT * 2; i++)
 	{
-		dJointDestroy(chainJoints[i]);
 		delete chainLinks[i];
 	}
 
-	if(m_pLastChainJoint)	dJointDestroy(m_pLastChainJoint);	
-	if(m_oMiddleChainJoint)	dJointDestroy(m_oMiddleChainJoint);
-	if(m_oHookGrabJoint) dJointDestroy(m_oHookGrabJoint);
-	if(m_oAngleJoint) dJointDestroy(m_oAngleJoint);
-
+	delete m_pFrozenImage;
 }
 
 void CHook::SetVisibility(float alpha)
