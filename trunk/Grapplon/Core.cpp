@@ -83,8 +83,10 @@ bool CCore::SystemsInit()
 	}
 	else
 	{
+		CLoadingScreen::Instance()->StartRendering();
 		m_pActiveState = new CGameState();
 		((CGameState *)m_pActiveState)->Init( SETS->PLAYERS );
+		CLoadingScreen::Instance()->StopRendering();
 	}
 	m_bRunningValid = true;
 	m_pWiimoteManager->RegisterListener( m_pActiveState, -1 );
