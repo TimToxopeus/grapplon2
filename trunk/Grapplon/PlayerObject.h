@@ -19,11 +19,10 @@ struct CollisionEffect
 class CPlayerObject : public CBaseMovableObject, public IWiimoteListener
 {
 private:
-	float y,p,r;
 	float m_fShipVel;
 	CAnimatedTexture *m_pRadius;
-	CAnimatedTexture* m_pImageDamage;
-	CAnimatedTexture* m_pFrozenImage;
+	CAnimatedTexture *m_pImageDamage;
+	CAnimatedTexture *m_pFrozenImage;
 	CAnimatedTexture *m_pExplosion;
 	CAnimatedTexture *m_pJellyImage;
 	CAnimatedTexture *m_pShieldImage;
@@ -38,9 +37,6 @@ private:
 	Vector diePosition;
 	float timeTillDeath;
 	Vector respawnDisplacement;
-
-
-
 	bool m_bIsReinitialized;
 
 	std::vector<CollisionEffect *> m_vCollisionEffects;

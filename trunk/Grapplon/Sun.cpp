@@ -7,7 +7,7 @@ CSun::CSun(PlanetaryData &data)
 	m_eType = SUN;
 	m_iTempRadius = data.tempradius;
 
-	dJointID sunJoint = CODEManager::Instance()->createHingeJoint("Sun joint");
+	dJointID sunJoint = CODEManager::Instance()->createHingeJoint();
 	Vector pos = GetPosition();
 	//dJointAttach(sunJoint, m_oPhysicsData.body, 0);
 	//dJointSetHingeAnchor(sunJoint , pos[0], pos[1], 0.0f);
