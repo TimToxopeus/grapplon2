@@ -43,6 +43,7 @@
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;dNODEBUG"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
+				SmallerTypeCheck="false"
 				RuntimeLibrary="1"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
@@ -119,7 +120,9 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				Optimization="2"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE"
+				BasicRuntimeChecks="0"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -226,6 +229,10 @@
 			</File>
 			<File
 				RelativePath=".\HUD.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\LoadingScreen.cpp"
 				>
 			</File>
 			<File
@@ -484,6 +491,10 @@
 			</File>
 			<File
 				RelativePath=".\HUD.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LoadingScreen.h"
 				>
 			</File>
 			<File
