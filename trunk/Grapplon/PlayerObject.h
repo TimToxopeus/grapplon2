@@ -33,7 +33,6 @@ private:
 
 	Vector explosionPos;
 
-	Vector respawnPosition;
 	Vector diePosition;
 	float timeTillDeath;
 	Vector respawnDisplacement;
@@ -65,7 +64,6 @@ private:
 	float m_fEMPTime;
 
 	int m_iJellyFrame;
-	int m_iJellyIter;
 
 public:
 

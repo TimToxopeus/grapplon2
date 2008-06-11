@@ -28,7 +28,6 @@ CPlayerObject::CPlayerObject( int iPlayer )
 	m_fEMPTime			= 0;
 	m_fElectroTime		= 0;
 	m_iJellyFrame		= 44;
-	m_iJellyIter		= 0;
 
 	m_bIsReinitialized = true;
 
@@ -67,9 +66,9 @@ CPlayerObject::CPlayerObject( int iPlayer )
 	m_pExplosion = new CAnimatedTexture("media/scripts/texture_explosion.txt");
 
 	CODEManager* ode = CODEManager::Instance(); 
-	ode->CreatePhysicsData(this, &m_oPhysicsData, 50.0f);
-	SetMass( 1000.0f );
-	m_oPhysicsData.m_fAirDragConst = 3000.0f;
+	ode->CreatePhysicsData(this, &m_oPhysicsData, 50);
+	SetMass(1000);
+	m_oPhysicsData.m_fAirDragConst = 3000;
 	m_oPhysicsData.m_bAffectedByTemperature = true;
 
 	m_pHook = new CHook( this );
@@ -103,16 +102,16 @@ void CPlayerObject::ResetStatus()
 {
 		m_iScore = 0;
 		m_bHandleWiiMoteEvents = true;
-		timeSinceNoInput = 5.0f;
-		m_fRespawnTime = 0.0f;
-		m_fPUSpeedTime = 0.0f;
-		m_fPUJellyTime = 0.0f;
-		m_fPUHealthTime = 0.0f;
-		m_fPUFreezeTime = 0.0f;
-		m_fFreezeTime = 0.0f;
-		m_fPUShieldTime = 0.0f;
-		m_fElectroTime = 0.0f;
-		m_fEMPTime = 0.0f;
+		timeSinceNoInput = 5;
+		m_fRespawnTime = 0;
+		m_fPUSpeedTime = 0;
+		m_fPUJellyTime = 0;
+		m_fPUHealthTime = 0;
+		m_fPUFreezeTime = 0;
+		m_fFreezeTime = 0;
+		m_fPUShieldTime = 0;
+		m_fElectroTime = 0;
+		m_fEMPTime = 0;
 		m_oPhysicsData.m_bAffectedByGravity = true;
 		m_oPhysicsData.m_bHasCollision = true;
 
@@ -172,10 +171,6 @@ bool CPlayerObject::HandleWiimoteEvent( wiimote_t* pWiimoteEvent )
 			{
 				m_pHook->AddChainForce(0, 0);
 			}
-
-			//y = pWiimoteEvent->orient.yaw;
-			//p = pWiimoteEvent->orient.pitch;
-			//r = pWiimoteEvent->orient.roll;
 
 		}
 
@@ -410,26 +405,26 @@ void CPlayerObject::Update( float fTime )
 		if(m_fPUFreezeTime > 0) m_fPUFreezeTime -= fTime * mult;
 	}
 
-	if(m_fPUFreezeTime > 0.001){
+	if(m_fPUFreezeTime > 0){
 		m_fPUFreezeTime -= fTime;
 		m_pPUFrozenImage->SetFrame(30 - (int) (30 * m_fPUFreezeTime / SETS->PU_FREEZE_TIME));
 	}
 
-	if(this->m_fPUJellyTime > 0.001){
+	if(this->m_fPUJellyTime > 0){
 		m_fPUJellyTime -= fTime;
 		if(m_iJellyFrame != 44) m_iJellyFrame++;
 	} else {
 		m_iJellyFrame = 44;
 	}
 
-	if(this->m_fPUShieldTime > 0.001){
+	if(this->m_fPUShieldTime > 0){
 		m_fPUShieldTime -= fTime;
 		m_oPhysicsData.m_bAffectedByGravity = false;
 		if ( m_fPUShieldTime <= 0.0f )
 			m_oPhysicsData.m_bAffectedByGravity = true;
 	}
 
-	if(this->m_fPUSpeedTime > 0.001){
+	if(this->m_fPUSpeedTime > 0){
 		m_fPUSpeedTime -= fTime;
 	}
 
@@ -488,12 +483,12 @@ void CPlayerObject::Update( float fTime )
 		}
 	}
 
-	if(m_fEMPTime > 0.0001f){
+	if(m_fEMPTime > 0){
 		m_fEMPTime -= fTime;
 		m_pElectricImage->UpdateFrame(fTime);
 	}
 
-	if(!m_bElectroChangedThisFrame && m_fElectroTime > 0.0001f)
+	if(!m_bElectroChangedThisFrame && m_fElectroTime > 0)
 	{
 		m_fElectroTime -= fTime;
 	}
@@ -546,20 +541,20 @@ void CPlayerObject::OnDie( CBaseObject *m_pKiller )
 	SetLinVelocity(nullVec);
 	SetAngVelocity(nullVec);
 
-	m_fFreezeTime = 0.0f;	
-	m_fInvincibleTime = 4.0f;
-	m_fPUJellyTime = 0.0f;
-	m_fPUShieldTime = 0.0f;
-	m_fPUSpeedTime = 0.0f;
-	m_fPUFreezeTime = 0.0f;
-	m_fPUHealthTime = 0.0f;
-	m_fEMPTime = 0.0f;
-	m_fElectroTime = 0.0f;
-	m_fRespawnTime = 3.0f;
+	m_fFreezeTime		= 0;	
+	m_fInvincibleTime	= 4;
+	m_fPUJellyTime		= 0;
+	m_fPUShieldTime		= 0;
+	m_fPUSpeedTime		= 0;
+	m_fPUFreezeTime		= 0;
+	m_fPUHealthTime		= 0;
+	m_fEMPTime			= 0;
+	m_fElectroTime		= 0;
+	m_fRespawnTime		= 3;
 
-	m_pHook->SetInvincibleTime( 4.0f );
-	SetAlpha( 0.0f );
-	m_pHook->SetVisibility( 0.0f);
+	m_pHook->SetInvincibleTime(4);
+	SetAlpha(0);
+	m_pHook->SetVisibility(0);
 	// Spawn emitter
 	Vector direction = m_pKiller->GetPosition() - GetPosition();
 	direction.Normalize();
@@ -594,8 +589,7 @@ void CPlayerObject::OnDie( CBaseObject *m_pKiller )
 		y = rand()%((int) universe->m_fHeight*2) - (int) universe->m_fHeight;
 	} while ( pRenderer->ObjectsInRange( x, y, 200 ) );
 
-	respawnPosition = Vector( (float)x, (float)y, 0.0f );
-	respawnDisplacement = respawnPosition - GetPosition();
+	respawnDisplacement = Vector( (float)x, (float)y, 0 ) - GetPosition();
 	diePosition = GetPosition();
 	timeTillDeath = 0;
 

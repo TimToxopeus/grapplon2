@@ -23,8 +23,6 @@ private:
 	bool m_bHasAutoAim;							// Should throwing be auto-aimed?
 	CAnimatedTexture* m_pFrozenImage;
 	
-	void ResetStatus();
-
 public:
 	
 	CHook( CPlayerObject *pOwner );

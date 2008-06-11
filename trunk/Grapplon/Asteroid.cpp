@@ -8,11 +8,12 @@
 #include "GameSettings.h"
 
 CAsteroid::CAsteroid(PlanetaryData &data) 
-	: 	CPlanet(data), 	m_pThrowingPlayer(NULL), m_fThrowTime(0), m_iWallBounces(0), m_bIsGrabable(true), m_fRespawnTime(0.0f), 
-		m_fBounceToggleTime(0.0f), m_eAsteroidState(NORMAL), m_bTempChangedThisFrame(false), m_fTemperatureTime(0)
+	: 	CPlanet(data), 	m_pThrowingPlayer(NULL), m_pHoldingPlayer(NULL), m_fThrowTime(0), m_iWallBounces(0), m_bIsGrabable(true), 
+		m_fRespawnTime(0.0f), m_fBounceToggleTime(0.0f), m_eAsteroidState(NORMAL), m_bTempChangedThisFrame(false), m_fTemperatureTime(0)
 {
 
 	m_pImage->SetFrame(4);
+	m_iMilliSecsInOrbit = 0;
 
 	m_fTempTime = SETS->TEMP_TIME;
 	m_fThrowTime = 0;
@@ -98,9 +99,7 @@ void CAsteroid::ReposAtOrbit()
 	SetPosition( pos );
 
 	// Create joint
-	//dJointAttach( orbitJoint, m_pOrbitOwner->GetBody(), this->GetBody() );
 	CODEManager::Instance()->JointAttach( orbitJoint, m_pOrbitOwner->GetBody(), this->GetBody() );
-//	dJointSetHingeAnchor(orbitJoint, hingePos[0], hingePos[1], 0.0f);
 	CODEManager::Instance()->JointSetHingeAnchor(orbitJoint, hingePos);
 	m_bIsInOrbit = true;
 
@@ -128,7 +127,7 @@ void CAsteroid::Respawn()
 	m_oPhysicsData.m_pOwner->SetAngVelocity(n);
 	SetForce(n);
 
-	m_fThrowTime = -1;
+	m_fThrowTime = 0;
 	m_fTemperatureTime = 0.0f;
 	m_iMilliSecsInOrbit = 0;
 	m_iWallBounces = 0;

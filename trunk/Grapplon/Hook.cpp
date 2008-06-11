@@ -31,7 +31,7 @@ CHook::CHook( CPlayerObject *pOwner )
 
 	// Physics settings
 	CODEManager* ode = CODEManager::Instance();
-	ode->CreatePhysicsData(this, &m_oPhysicsData, 32.0f);
+	ode->CreatePhysicsData(this, &m_oPhysicsData, 32);
 	m_oPhysicsData.ToggleIgnore( pOwner->GetPhysicsData() );
 	m_oPhysicsData.m_bAffectedByGravity = false;
 	m_oPhysicsData.m_bHasCollision = false;
@@ -117,7 +117,6 @@ void CHook::Grasp()
 	if ( m_pGrabbedObject->m_pOwner->getType() == ASTEROID )
 	{
 		CAsteroid* asteroid = dynamic_cast<CAsteroid*>(m_pGrabbedObject->m_pOwner);
-		//dJointAttach(asteroid->orbitJoint, NULL, NULL);
 		CODEManager::Instance()->JointAttach(asteroid->orbitJoint, NULL, NULL);
 		asteroid->m_bIsInOrbit = false;
 		asteroid->m_bIsGrabable = false;
@@ -176,8 +175,6 @@ void CHook::Eject()
 	Vector lastChainPos = chainLinks[SETS->LINK_AMOUNT*2 - 1]->GetPosition();
 	SetPosition(lastChainPos + this->GetForwardVector()*25);			// Displacement from center
 	
-
-
 	// Attach last chain to the hook
 	CODEManager::Instance()->JointAttach(m_pLastChainJoint, chainLinks[SETS->LINK_AMOUNT * 2 - 1]->GetBody(), m_oPhysicsData.body);
 	CODEManager::Instance()->JointSetHingeAnchor(m_pLastChainJoint, lastChainPos);
@@ -195,7 +192,7 @@ void CHook::Eject()
 
 void CHook::Retract(bool playerDied)
 {
-	if ( m_eHookState != RETRACTING )
+	if ( !playerDied )
 	{
 		CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/hook_retract.wav", RT_SOUND);
 		if ( pSound )
@@ -218,8 +215,9 @@ void CHook::Retract(bool playerDied)
 		lastLink->SetPosition(shipPos);
 		lastLink->SetAngVelocity(nullVec);
 		lastLink->SetLinVelocity(nullVec);
-		m_oPhysicsData.m_pOwner->SetLinVelocity(nullVec);
-		m_oPhysicsData.m_pOwner->SetAngVelocity(nullVec);
+		SetLinVelocity(nullVec);
+		SetAngVelocity(nullVec);
+		SetForce(nullVec);
 		CODEManager::Instance()->JointAttach(m_pLastChainJoint, lastLink->GetBody(), m_pOwner->GetBody());
 		CODEManager::Instance()->JointSetHingeAnchor(m_pLastChainJoint, shipPos);
 
@@ -245,7 +243,7 @@ void CHook::Retract(bool playerDied)
 
 void CHook::Swing()
 {
-	Vector hookPos  = this->GetPosition();
+	Vector hookPos  = GetPosition();
 
 	if(!m_bIsRadialCorrected)
 	{
@@ -258,12 +256,12 @@ void CHook::Swing()
 			// Joint between ship and before-middle link
 			int LINK_GRASP_CON = SETS->LINK_GRASP_CON;
 			chainLinks[LINK_GRASP_CON - 1]->SetPosition(shipPos);
-			CODEManager::Instance()->JointAttach( chainJoints[LINK_GRASP_CON], chainLinks[LINK_GRASP_CON - 1]->GetBody(), this->m_pOwner->GetBody() );
+			CODEManager::Instance()->JointAttach( chainJoints[LINK_GRASP_CON], chainLinks[LINK_GRASP_CON - 1]->GetBody(), m_pOwner->GetBody() );
 			CODEManager::Instance()->JointSetHingeAnchor(chainJoints[LINK_GRASP_CON], shipPos);
 
 			// Joint between ship and middle link
 			chainLinks[LINK_GRASP_CON]->SetPosition(shipPos);
-			CODEManager::Instance()->JointAttach( m_oMiddleChainJoint, chainLinks[LINK_GRASP_CON]->GetBody(), this->m_pOwner->GetBody() );
+			CODEManager::Instance()->JointAttach( m_oMiddleChainJoint, chainLinks[LINK_GRASP_CON]->GetBody(), m_pOwner->GetBody() );
 			CODEManager::Instance()->JointSetHingeAnchor(m_oMiddleChainJoint, shipPos);
 
 			diff.Normalize();
@@ -310,7 +308,7 @@ void CHook::Throw(bool playerDied)
 	if(m_pGrabbedObject->m_pOwner->getType() == ASTEROID)
 	{
 		CAsteroid* asteroid = dynamic_cast<CAsteroid*>(m_pGrabbedObject->m_pOwner);
-		asteroid->m_pThrowingPlayer = m_pOwner;
+		asteroid->m_pThrowingPlayer = (playerDied ? NULL : m_pOwner);
 		asteroid->m_pHoldingPlayer = NULL;
 		asteroid->m_fThrowTime = time(NULL);
 		asteroid->m_iMilliSecsInOrbit = 0;
@@ -320,8 +318,7 @@ void CHook::Throw(bool playerDied)
 
 	if(m_pGrabbedObject->m_pOwner->getType() == POWERUP)
 	{
-		CPowerUp* powerup = dynamic_cast<CPowerUp*>(m_pGrabbedObject->m_pOwner);
-		powerup->m_bIsGrabable = true;
+		dynamic_cast<CPowerUp*>(m_pGrabbedObject->m_pOwner)->m_bIsGrabable = true;
 	}
 
 
@@ -408,8 +405,6 @@ void CHook::ApplyForceFront()
 		}
 
 		dBodyAddForce(m_oPhysicsData.body, tangent[0] * 300.0f, tangent[1] * 300.0f, 0.0f);
-		//AddForce( Vector( tangent[0] * 300.0f, tangent[1] * 300.0f, 0 ) );
-
 
 	} else if (m_eHookState == HOMING) {
 
