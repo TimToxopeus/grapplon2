@@ -15,21 +15,20 @@ int LoadingScreenThread(void *data)
 
 	if ( !wglMakeCurrent(currentDC, currentContext) )
 		CLogManager::Instance()->LogMessage( "Error binding renderer to loading screen thread" );
-	pLoading->SetContext( 2 );
 
 	while ( pLoading->IsRunning() )
 	{
-		pLoading->CheckContext();
+		pLoading->ThreadClaimContext();
 		time = SDL_GetTicks();
 		float timeSinceLastUpdate = (float)(time - lastUpdate) / 1000.0f;
 		pLoading->Render( timeSinceLastUpdate );
+		pLoading->ThreadReleaseContext();
  		SDL_Delay( 5 );
 		lastUpdate = time;
 	}
 
 	if ( !wglMakeCurrent(0, 0) )
 		CLogManager::Instance()->LogMessage( "Error releasing renderer from loading screen thread" );
-	pLoading->SetContext( 0 );
 
 	return 0;
 }
@@ -41,7 +40,10 @@ CLoadingScreen::CLoadingScreen()
 	m_pThread = NULL;
 
 	m_bRendering = false;
-	m_iContextState = 0;
+
+	m_pMutex = SDL_CreateMutex();
+	m_pThreadCondition = SDL_CreateCond();
+	m_pEngineCondition = SDL_CreateCond();
 }
 
 void CLoadingScreen::Init()
@@ -56,14 +58,18 @@ CLoadingScreen::~CLoadingScreen()
 	m_pBackground = NULL;
 	delete m_pSpinning;
 	m_pSpinning = NULL;
+
+	SDL_DestroyMutex( m_pMutex );
+	SDL_DestroyCond( m_pThreadCondition );
+	SDL_DestroyCond( m_pEngineCondition );
 }
 
 void CLoadingScreen::StartRendering()
 {
 	if ( !wglMakeCurrent(0, 0) )
 		CLogManager::Instance()->LogMessage( "Error removing the renderer from the main thread" );
-	m_iContextState = 0;
 
+	m_iContext = 1;
 	m_bRendering = true;
 	m_pBackground->SetAnimation(rand()%m_pBackground->GetAnimCount());
 	if ( m_pThread == NULL )
@@ -100,45 +106,49 @@ void CLoadingScreen::Render( float fTime )
 	SDL_GL_SwapBuffers();
 }
 
-void CLoadingScreen::RequestContext()
+void CLoadingScreen::ThreadClaimContext()
+{
+	SDL_mutexP( m_pMutex );
+
+	if ( m_iContext == 0 )
+	{
+		SDL_CondWait( m_pEngineCondition, m_pMutex );
+	}
+
+	wglMakeCurrent( currentDC, currentContext );
+	m_iContext = 1;
+}
+
+void CLoadingScreen::ThreadReleaseContext()
+{
+	wglMakeCurrent( 0, 0 ); // Release context
+
+	SDL_mutexV( m_pMutex );
+	SDL_CondSignal( m_pThreadCondition );
+}
+
+void CLoadingScreen::EngineClaimContext()
 {
 	if ( m_bRendering )
 	{
-		while ( m_iContextState == 0 )
+		SDL_mutexP( m_pMutex );
+		if ( m_iContext == 1 )
 		{
-			SDL_Delay(5);
+			SDL_CondWait( m_pThreadCondition, m_pMutex );
 		}
-		m_iContextState = 3;
-		while ( m_iContextState != 4 )
-		{
-			SDL_Delay(5);
-		}
+
 		wglMakeCurrent( currentDC, currentContext );
+		m_iContext = 0;
 	}
 }
 
-void CLoadingScreen::ReturnContext()
+void CLoadingScreen::EngineReleaseContext()
 {
 	if ( m_bRendering )
 	{
-		wglMakeCurrent( 0, 0 );
-		m_iContextState = 1;
-	}
-}
+		wglMakeCurrent( 0, 0 ); // Release context
 
-void CLoadingScreen::CheckContext()
-{
-	while ( m_iContextState != 2 )
-	{
-		if ( m_iContextState == 1 )
-		{
-			wglMakeCurrent( currentDC, currentContext );
-			m_iContextState = 2;
-		}
-		if ( m_iContextState == 3 )
-		{
-			wglMakeCurrent( 0, 0 );
-			m_iContextState = 4;
-		}
+		SDL_mutexV( m_pMutex );
+		SDL_CondSignal( m_pEngineCondition );
 	}
 }

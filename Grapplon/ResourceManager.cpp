@@ -142,7 +142,7 @@ IResource *CResourceManager::LoadTexture( std::string name )
 			return NULL;
 		}
 
-		pLoading->RequestContext();
+		pLoading->EngineClaimContext();
 
 		// Have OpenGL generate a texture object handle for us
 		glGenTextures( 1, &iGLTexture );
@@ -160,7 +160,7 @@ IResource *CResourceManager::LoadTexture( std::string name )
 
 		GLenum error = glGetError();
 
-		pLoading->ReturnContext();
+		pLoading->EngineReleaseContext();
 
 		CTexture *pTexture = new CTexture( name, pSurface->w, pSurface->h, iGLTexture );
 		SDL_FreeSurface( pSurface );
