@@ -4,6 +4,6 @@ height = 203
 animations = idle
 
 [idle]
-file = "media/images/level_info_doors.png"
+file = "media/images/level_info_dodgeball.png"
 frames = 1
 speed = 1
