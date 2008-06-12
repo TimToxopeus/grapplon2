@@ -1,0 +1,11 @@
+[object]
+width = 260
+height = 260
+animations = idle
+
+[idle]
+file = "media/images/electric_planet_overlay.png"
+frames = 50
+rows = 5
+speed = 15
+
