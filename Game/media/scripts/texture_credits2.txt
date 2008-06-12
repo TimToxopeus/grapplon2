@@ -1,0 +1,9 @@
+[object]
+width = 726
+height = 2335
+animations = idle
+
+[idle]
+file = "media/images/credits2.png"
+frames = 1
+speed = 1
