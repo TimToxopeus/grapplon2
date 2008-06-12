@@ -184,6 +184,8 @@ CMenuState::CMenuState( int iState, int iScore1, int iScore2, int iScore3, int i
 
 	m_pTutorialBorder = new CAnimatedTexture("media/scripts/texture_controls_bg.txt");
 
+	m_pCredits = new CAnimatedTexture("media/scripts/texture_title.txt");
+
 	m_vStates.push_back( StateChange( 0, 2, m_pSplash1, FADE_IN, true, 0, 0.0f, 2.0f, -1024, -768, -1024, -768 ) );
 	m_vStates.push_back( StateChange( 1, 2, m_pSplash1, FADE_OUT, true, 1, 0.0f, 2.0f, -1024, -768, -1024, -768 ) );
 	m_vStates.push_back( StateChange( 2, 4, m_pSplash2, FADE_IN, true, 2, 0.0f, 2.0f, -1024, -768, -1024, -768 ) );
@@ -239,6 +241,8 @@ CMenuState::CMenuState( int iState, int iScore1, int iScore2, int iScore3, int i
 	m_vStates.push_back( StateChange( TUTORIAL, TUTORIAL, m_pTitle, INSTANT, false, HIGH, 1.0f, 2.0f, -1024, -768, -1024, -768 ) );
 	m_vStates.push_back( StateChange( TUTORIAL, TUTORIAL, m_pTutorialBorder, INSTANT, false, TUTORIAL, 1.0f, 0.0f, -885, -560, -885, -560 ) );
 	m_vStates.push_back( StateChange( TUTORIAL, TUTORIAL, m_pScoreBack, INSTANT, false, TUTORIAL, 0.5f, 0.0f, -150, 480, -150, 480 ) );
+
+	m_vStates.push_back( StateChange( CREDITS, CREDITS, m_pCredits, MOVE_UP, true, CREDITS, 1.0f, 2.0f, -1024, 768, -1024, -2304 ) );
 
 	m_pAVIKit = new AVIKit("media/controls.avi", false);
 	if ( m_pAVIKit )
@@ -339,6 +343,7 @@ CMenuState::~CMenuState()
 	delete m_pSelectHowMany;
 
 	delete m_pTutorialBorder;
+	delete m_pCredits;
 
 	delete m_pLevelInfoBar;
 	delete m_pLevelGo;
@@ -579,6 +584,13 @@ void CMenuState::Render()
 
 void CMenuState::Update(float fTime)
 {
+	if ( state == EXIT )
+	{
+		m_bRunning = false;
+		m_bQuit = true;
+		return;
+	}
+
 	video_position += fTime;
 	if ( video_position > video_duration )
 		video_position = 0;
@@ -990,9 +1002,7 @@ bool CMenuState::PushButton()
 			}
 			if ( m_vStates[i].m_pImage == m_pMenuExit && state == GAMEMENU )
 			{
-				m_bRunning = false;
-				m_bQuit = true;
-				return true;
+				newState = CREDITS;
 			}
 			if ( m_vStates[i].m_pImage == m_pScoreBack && newState == state && (state == SCORE || state == PLAYERSELECT || state == TUTORIAL) )
 			{
@@ -1305,7 +1315,7 @@ void CMenuState::HandleButtonPress( wiimote_t* pWiimoteEvent )
 			}
 			else
 			{
-				m_iCurrentUniverseIndex = GetIndexByName( m_vLevelNodes[m_iCurrentUniverseIndex]->m_szParent );
+				m_iCurrentUniverseIndex = 0;//GetIndexByName( m_vLevelNodes[m_iCurrentUniverseIndex]->m_szParent );
 			}
 		}
 		else if ( state == SCORE )
