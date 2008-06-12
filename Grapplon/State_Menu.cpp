@@ -569,8 +569,8 @@ void CMenuState::Render()
 		target = m_pCursor->GetSize();
 		target.w += target.w;
 		target.h += target.h;
-		int icursorX = (cursorX * 2 - 1024);
-		int icursorY = (cursorY * 2 - 768);
+		int icursorX = (cursorX * 2 - 1024) + 20;
+		int icursorY = (cursorY * 2 - 768) + 20;
 		target.x = icursorX - (target.w / 2);
 		target.y = icursorY - (target.h / 2);
 		RenderQuad( target, m_pCursor, 0, 1 );
