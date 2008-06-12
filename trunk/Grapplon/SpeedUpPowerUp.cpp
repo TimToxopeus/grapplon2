@@ -22,7 +22,7 @@ void CSpeedUpPowerUp::CollideWith(CBaseObject* pOther, Vector &pos)
 	{
 		dynamic_cast<CPlayerObject*>(pOther)->TookSpeedPowerUp();
 
-		CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/powerup_pickup.wav", RT_SOUND);
+		CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Powerup_Speed.wav", RT_SOUND);
 		if ( pSound )
 			pSound->Play();
 

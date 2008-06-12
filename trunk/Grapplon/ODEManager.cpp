@@ -450,6 +450,10 @@ void CODEManager::HandleCollisions()
 			{
 				pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Collision_Schip_Asteroid.wav", RT_SOUND);
 			}
+			else if ( d1->m_pOwner->getType() == ASTEROID && d2->m_pOwner->getType() == ASTEROID )
+			{
+				pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Collision_Asteroid_Asteroid.wav", RT_SOUND);
+			}
 			if ( pSound )
 				pSound->Play();
 
