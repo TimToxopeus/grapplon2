@@ -98,15 +98,6 @@ void CHook::SetVisibility(float alpha)
 
 }
 
-void CHook::SetFreezeTime(float time){
-
-	//m_fFreezeTime = time;
-	//for(unsigned int i = 0; i < chainLinks.size(); i++){
-	//	chainLinks[i]->SetFreezeTime(time);
-	//}
-	
-};
-
 void CHook::SetGrasped(PhysicsData* toGrasp)
 {
 	m_pGrabbedObject = toGrasp;
