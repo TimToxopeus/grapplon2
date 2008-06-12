@@ -1,7 +1,7 @@
 [object]
 width = 166
 height = 166
-animations = large, small, vaporize
+animations = large, small
 
 [large]
 file = "media/images/explosion_large.png"
