@@ -64,6 +64,7 @@ CPlayerObject::CPlayerObject( int iPlayer )
 
 
 	m_pExplosion = new CAnimatedTexture("media/scripts/texture_explosion.txt");
+	m_pRespawnRing = new CAnimatedTexture("media/scripts/texture_respawn_ring.txt");
 
 	CODEManager* ode = CODEManager::Instance(); 
 	ode->CreatePhysicsData(this, &m_oPhysicsData, 50);
@@ -90,9 +91,9 @@ CPlayerObject::~CPlayerObject()
 	delete m_pRespawnImage;
 	delete m_pPUFrozenImage;
 	delete m_pElectricImage;
+	delete m_pRespawnRing;
 
 	delete m_pHook;
-
 }
 
 
@@ -358,6 +359,15 @@ void CPlayerObject::Render()
 		target.y = (int)GetY() - (target.h / 2);
 
 		RenderQuad( target, m_pRespawnImage, m_fAngle, 1);
+
+		target = m_pRespawnRing->GetSize();
+		target.w = (int)((float)target.w * (8.0f * m_fRespawnTime));
+		target.h = (int)((float)target.h * (8.0f * m_fRespawnTime));
+		target.x = (int)GetX() - (target.w / 2);
+		target.y = (int)GetY() - (target.h / 2);
+
+		m_pRespawnRing->SetAnimation( m_iPlayer );
+		RenderQuad( target, m_pRespawnRing, 0, 1.0f - m_fRespawnTime);
 	}
 }
 
@@ -391,11 +401,13 @@ void CPlayerObject::Update( float fTime )
 
 	}
 
-	if(m_fFreezeTime > 0 || m_fPUFreezeTime > 0){
+	if(m_fFreezeTime > 0 || m_fPUFreezeTime > 0)
+	{
 		float mult = 1.0f;
 		if(m_pHook->m_pGrabbedObject != NULL
 		   && m_pHook->m_pGrabbedObject->m_pOwner->getType() == ASTEROID 
-		   && dynamic_cast<CAsteroid*>(m_pHook->m_pGrabbedObject->m_pOwner)->m_eAsteroidState == ON_FIRE){
+		   && dynamic_cast<CAsteroid*>(m_pHook->m_pGrabbedObject->m_pOwner)->m_eAsteroidState == ON_FIRE)
+		{
 			
 			   mult = SETS->FIRE_AST_MULT;
 		}
@@ -403,26 +415,32 @@ void CPlayerObject::Update( float fTime )
 		if(m_fPUFreezeTime > 0) m_fPUFreezeTime -= fTime * mult;
 	}
 
-	if(m_fPUFreezeTime > 0){
+	if(m_fPUFreezeTime > 0)
+	{
 		m_fPUFreezeTime -= fTime;
 		m_pPUFrozenImage->SetFrame(30 - (int) (30 * m_fPUFreezeTime / SETS->PU_FREEZE_TIME));
 	}
 
-	if(this->m_fPUJellyTime > 0){
+	if(this->m_fPUJellyTime > 0)
+	{
 		m_fPUJellyTime -= fTime;
 		if(m_iJellyFrame != 44) m_iJellyFrame++;
-	} else {
+	}
+	else
+	{
 		m_iJellyFrame = 44;
 	}
 
-	if(this->m_fPUShieldTime > 0){
+	if(this->m_fPUShieldTime > 0)
+	{
 		m_fPUShieldTime -= fTime;
 		m_oPhysicsData.m_bAffectedByGravity = false;
 		if ( m_fPUShieldTime <= 0.0f )
 			m_oPhysicsData.m_bAffectedByGravity = true;
 	}
 
-	if(this->m_fPUSpeedTime > 0){
+	if(this->m_fPUSpeedTime > 0)
+	{
 		m_fPUSpeedTime -= fTime;
 	}
 
@@ -440,9 +458,12 @@ void CPlayerObject::Update( float fTime )
 
 	//m_fAngle = GetPosition().CalculateAngle( GetPosition() + Vector(m_oPhysicsData.body->lvel) );
 
-	if ( !m_pRespawnImage->IsFinished() ){
+	if ( !m_pRespawnImage->IsFinished() )
+	{
 		m_pRespawnImage->UpdateFrame( fTime );
-	} else if(!m_bIsReinitialized){
+	}
+	else if(!m_bIsReinitialized)
+	{
 		m_bHandleWiiMoteEvents = true;
 		SetDepth( -1.0f );
 		m_fInvincibleTime = 2.0f;
@@ -481,7 +502,8 @@ void CPlayerObject::Update( float fTime )
 		}
 	}
 
-	if(m_fEMPTime > 0){
+	if(m_fEMPTime > 0)
+	{
 		m_fEMPTime -= fTime;
 		m_pElectricImage->UpdateFrame(fTime);
 	}
@@ -504,18 +526,21 @@ void CPlayerObject::Update( float fTime )
 
 }
 
-void CPlayerObject::AffectedByFreezePU(){
-	
-	if(m_fPUJellyTime > 0){
+void CPlayerObject::AffectedByFreezePU()
+{
+	if(m_fPUJellyTime > 0)
+	{
 		m_fPUJellyTime = 0;
-	} else {
-		if(m_fPUShieldTime <= 0){
+	}
+	else
+	{
+		if(m_fPUShieldTime <= 0)
+		{
 			m_fFreezeTime = 0;
 			m_fPUFreezeTime = (float) SETS->PU_FREEZE_TIME;
 			m_pPUFrozenImage->SetFrame(0);
 		}
 	}
-
 }
 
 void CPlayerObject::OnDie( CBaseObject *m_pKiller )
@@ -595,7 +620,6 @@ void CPlayerObject::OnDie( CBaseObject *m_pKiller )
 	m_oPhysicsData.m_pOwner->SetLinVelocity(n);
 	m_oPhysicsData.m_pOwner->SetAngVelocity(n);
 	SetForce(n);
-
 }
 
 void CPlayerObject::Respawn()
@@ -604,8 +628,6 @@ void CPlayerObject::Respawn()
 	m_pRespawnImage->SetAnimation(0);
 	m_pRespawnImage->SetFrame(0);
 	m_bIsReinitialized = false;
-
-
 }
 
 void CPlayerObject::TookHealthPowerUp(){ m_iHitpoints	 = m_iMaxHitpoints; }
