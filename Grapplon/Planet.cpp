@@ -61,9 +61,6 @@ CPlanet::CPlanet(PlanetaryData &data, int index)
 	{
 		m_pOrbit = new CAnimatedTexture( "media/scripts/texture_" + data.imageOrbit + ".txt" );
 	}
-
-
-
 }
 
 CPlanet::~CPlanet()
