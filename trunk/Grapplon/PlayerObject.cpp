@@ -359,7 +359,9 @@ void CPlayerObject::Render()
 		target.y = (int)GetY() - (target.h / 2);
 
 		RenderQuad( target, m_pRespawnImage, m_fAngle, 1);
-
+	}
+	if ( m_fRespawnTime > 0.0f && m_fRespawnTime <= 1.0f )
+	{
 		target = m_pRespawnRing->GetSize();
 		target.w = (int)((float)target.w * (8.0f * m_fRespawnTime));
 		target.h = (int)((float)target.h * (8.0f * m_fRespawnTime));
