@@ -95,6 +95,33 @@ void CHUD::Update( float fTime )
 		pSound->Play();
 	}
 
+	if ( m_fCountdown > -1.0f )
+	{
+		if ( m_fCountdown > 2.0f )
+		{
+			m_pCountDown[0]->UpdateFrame(fTime);
+		}
+		else if ( m_fCountdown > 1.0f )
+		{
+			m_pCountDown[0]->UpdateFrame(fTime);
+			m_pCountDown[1]->UpdateFrame(fTime);
+		}
+		else if ( m_fCountdown > 0.0f )
+		{
+			m_pCountDown[1]->UpdateFrame(fTime);
+			m_pCountDown[2]->UpdateFrame(fTime);
+		}
+		else if ( m_fCountdown > -1.0f )
+		{
+			m_pCountDown[2]->UpdateFrame(fTime);
+			m_pCountDown[3]->UpdateFrame(fTime);
+		}
+		else if ( m_fCountdown > -2.0f )
+		{
+			m_pCountDown[3]->UpdateFrame(fTime);
+		}
+	}
+
 	if ( m_fMatchTimeLeft == 0.0f )
 	{
 		if ( m_iWinner == -1 )
