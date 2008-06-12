@@ -45,7 +45,6 @@ public:
 	void AddChainForce(float x_force, float y_force);
 	void adjustPos(Vector displacement);
 	void HandlePlayerDied();
-	void SetFreezeTime(float time);
 
 	virtual void ApplyForceFront();
 	virtual void Update( float fTime );

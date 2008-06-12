@@ -107,7 +107,6 @@ void CPlayerObject::ResetStatus()
 		m_fPUHealthTime = 0;
 		m_fPUFreezeTime = 0;
 		m_fFreezeTime = 0;
-		m_pHook->SetFreezeTime(0);
 		m_fPUShieldTime = 0;
 		m_fElectroTime = 0;
 		m_fEMPTime = 0;
@@ -400,7 +399,7 @@ void CPlayerObject::Update( float fTime )
 			
 			   mult = SETS->FIRE_AST_MULT;
 		}
-		if(m_fFreezeTime > 0) {m_fFreezeTime -= fTime * mult; m_pHook->SetFreezeTime(m_fFreezeTime);}
+		if(m_fFreezeTime > 0) m_fFreezeTime -= fTime * mult;
 		if(m_fPUFreezeTime > 0) m_fPUFreezeTime -= fTime * mult;
 	}
 
@@ -512,7 +511,6 @@ void CPlayerObject::AffectedByFreezePU(){
 	} else {
 		if(m_fPUShieldTime <= 0){
 			m_fFreezeTime = 0;
-			m_pHook->SetFreezeTime(0);
 			m_fPUFreezeTime = (float) SETS->PU_FREEZE_TIME;
 			m_pPUFrozenImage->SetFrame(0);
 		}
@@ -541,7 +539,6 @@ void CPlayerObject::OnDie( CBaseObject *m_pKiller )
 	SetLinVelocity(nullVec);
 	SetAngVelocity(nullVec);
 
-	m_pHook->SetFreezeTime(0);
 	m_fFreezeTime		= 0;	
 	m_fInvincibleTime	= 4;
 	m_fPUJellyTime		= 0;
@@ -613,8 +610,8 @@ void CPlayerObject::Respawn()
 
 void CPlayerObject::TookHealthPowerUp(){ m_iHitpoints	 = m_iMaxHitpoints; }
 void CPlayerObject::TookSpeedPowerUp() { m_fPUSpeedTime  = (float) SETS->PU_SPEED_TIME; }
-void CPlayerObject::TookJellyPowerUp() { m_fFreezeTime = 0; m_pHook->SetFreezeTime(0); m_fPUFreezeTime = 0; m_fPUJellyTime  = (float) SETS->PU_JELLY_TIME;  m_fPUShieldTime = 0; }
-void CPlayerObject::TookShieldPowerUp(){ m_fFreezeTime = 0; m_pHook->SetFreezeTime(0); m_fPUFreezeTime = 0; m_fPUShieldTime = (float) SETS->PU_SHIELD_TIME; m_fPUJellyTime = 0; }
+void CPlayerObject::TookJellyPowerUp() { m_fFreezeTime = 0; m_fPUFreezeTime = 0; m_fPUJellyTime  = (float) SETS->PU_JELLY_TIME;  m_fPUShieldTime = 0; }
+void CPlayerObject::TookShieldPowerUp(){ m_fFreezeTime = 0; m_fPUFreezeTime = 0; m_fPUShieldTime = (float) SETS->PU_SHIELD_TIME; m_fPUJellyTime = 0; }
 
 
 void CPlayerObject::IncreaseElectro(float timeIncrease)
@@ -736,7 +733,6 @@ void CPlayerObject::CollideWith( CBaseObject *pOther, Vector &pos)
 				mult = SETS->ICE_DAMAGE_MULT;
 				m_fPUFreezeTime = 0;
 				m_fFreezeTime = SETS->FREEZE_TIME;
-				m_pHook->SetFreezeTime(SETS->FREEZE_TIME);
 				m_fPUJellyTime = 0;
 
 				CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/freeze_object.wav", RT_SOUND);
