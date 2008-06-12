@@ -1036,10 +1036,12 @@ bool CMenuState::PushButton()
 				if ( m_iCurrentUniverseIndex == 0 )
 				{
 					newState = PLAYERSELECT;
+					m_iSelectedLevel = -1;
 				}
 				else
 				{
-					m_iCurrentUniverseIndex = 0;//GetIndexByName( m_vLevelNodes[m_iCurrentUniverseIndex]->m_szParent );
+					m_iSelectedLevel = -1;
+					m_iCurrentUniverseIndex = 0;
 				}
 				m_iActivePlayer = 1;
 			}
@@ -1336,10 +1338,12 @@ void CMenuState::HandleButtonPress( wiimote_t* pWiimoteEvent )
 			if ( m_iCurrentUniverseIndex == 0 )
 			{
 				state = PLAYERSELECT;
+				m_iSelectedLevel = -1;
 			}
 			else
 			{
-				m_iCurrentUniverseIndex = 0;//GetIndexByName( m_vLevelNodes[m_iCurrentUniverseIndex]->m_szParent );
+				m_iCurrentUniverseIndex = 0;
+				m_iSelectedLevel = -1;
 			}
 		}
 		else if ( state == SCORE )
