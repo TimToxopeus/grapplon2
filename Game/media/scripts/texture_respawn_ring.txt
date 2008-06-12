@@ -1,0 +1,24 @@
+[object]
+width = 400
+height = 400
+animations = green, red, blue, purple
+
+[green]
+file = "media/images/respawn_ring_green.png"
+frames = 1
+speed = 1
+
+[red]
+file = "media/images/respawn_ring_red.png"
+frames = 1
+speed = 1
+
+[blue]
+file = "media/images/respawn_ring_blue.png"
+frames = 1
+speed = 1
+
+[purple]
+file = "media/images/respawn_ring_purple.png"
+frames = 1
+speed = 1
