@@ -6,7 +6,7 @@ CElectroPlanet::CElectroPlanet(PlanetaryData &data)
 {
 	m_eType = ELECTRO;
 	m_iTempRadius = data.tempradius;
-	m_pElectric = new CAnimatedTexture( "media/scripts/texture_electricplanet_overlay.txt" );
+	m_pElectric = new CAnimatedTexture( "media/scripts/texture_electroplanet_overlay.txt" );
 }
 
 CElectroPlanet::~CElectroPlanet()
