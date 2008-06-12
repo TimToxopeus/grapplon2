@@ -1,7 +1,7 @@
 [object]
 width = 150
 height = 150
-animations = speedup, freeze, health, jelly, shield, hook
+animations = speedup, freeze, health, jelly, shield
 
 [speedup]
 file = "media/images/powerup_speedup.png"
@@ -31,8 +31,3 @@ file = "media/images/powerup_shield.png"
 frames = 20
 rows = 2
 speed = 20
-
-[hook]
-file = "media/images/powerup_hook.png"
-frames = 1
-speed = 0

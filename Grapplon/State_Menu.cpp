@@ -1332,7 +1332,7 @@ bool CMenuState::HandleLevelSelect( int x, int y )
 			if ( m_vLevelNodes[i]->m_szTarget.substr(0, 6) == "level_" )
 				m_iSelectedLevel = i;
 			else
-				m_iCurrentUniverseIndex = i;
+				m_iCurrentUniverseIndex = GetIndexByName( m_vLevelNodes[i]->m_szTarget );
 			break;
 		}
 	}
