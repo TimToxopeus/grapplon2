@@ -142,7 +142,6 @@ CMenuState::CMenuState( int iState, int iScore1, int iScore2, int iScore3, int i
 				m_iActivePlayer = 3;
 			else if ( m_iNewScores[3] > m_iScores[9] )
 				m_iActivePlayer = 4;
-			m_szInputName = "player" + itoa2(m_iActivePlayer);
 			state = skipstate = SCOREINPUT;
 		}
 	}
@@ -162,6 +161,7 @@ CMenuState::CMenuState( int iState, int iScore1, int iScore2, int iScore3, int i
 	m_pMenuMultiplayer = new CAnimatedTexture("media/scripts/texture_menu_multiplayer.txt");
 	m_pMenuTopscore = new CAnimatedTexture("media/scripts/texture_menu_highscore.txt");
 	m_pMenuExit = new CAnimatedTexture("media/scripts/texture_menu_exit.txt");
+	m_pMenuRestart = new CAnimatedTexture("media/scripts/texture_menu_restart.txt");
 
 	m_pScoreBack = new CAnimatedTexture("media/scripts/texture_topscores_back.txt");
 	m_pScoreBackground = new CAnimatedTexture("media/scripts/texture_topscores_bg.txt");
@@ -176,7 +176,6 @@ CMenuState::CMenuState( int iState, int iScore1, int iScore2, int iScore3, int i
 	m_pSelect = new CAnimatedTexture("media/scripts/texture_menu_select.txt");
 	m_pSelectHowMany = new CAnimatedTexture("media/scripts/texture_menu_select_howmany.txt");
 
-	m_pLevelMainScreen = new CAnimatedTexture("media/scripts/texture_level_main_screen.txt");
 	m_pLevelInfoBar = new CAnimatedTexture("media/scripts/texture_level_infobar.txt");
 	m_pLevelGo = new CAnimatedTexture("media/scripts/texture_level_go.txt");
 	
@@ -217,7 +216,8 @@ CMenuState::CMenuState( int iState, int iScore1, int iScore2, int iScore3, int i
 
 	m_vStates.push_back( StateChange( SCORE, SCORE, m_pTitle, INSTANT, false, HIGH, 1.0f, 2.0f, -1024, -768, -1024, -768 ) );
 	m_vStates.push_back( StateChange( SCORE, SCORE, m_pScoreBackground, INSTANT, false, SCORE, 1.0f, 0.0f, -488, -416, -488, -416 ) );
-	m_vStates.push_back( StateChange( SCORE, SCORE, m_pScoreBack, INSTANT, false, SCORE, 0.5f, 0.0f, -150, 448, -150, 448 ) );
+	m_vStates.push_back( StateChange( SCORE, SCORE, m_pMenuRestart, INSTANT, false, SCORE, 0.5f, 0.0f, -490, 448, -490, 448 ) );
+	m_vStates.push_back( StateChange( SCORE, SCORE, m_pScoreBack, INSTANT, false, SCORE, 0.5f, 0.0f, 190, 448, 190, 448 ) );
 
 	m_vStates.push_back( StateChange( SCOREINPUT, SCOREINPUT, m_pTitle, INSTANT, false, HIGH, 1.0f, 2.0f, -1024, -768, -1024, -768 ) );
 	m_vStates.push_back( StateChange( SCOREINPUT, SCOREINPUT, m_pScoreInputBG, INSTANT, false, SCOREINPUT, 1.0f, 0.0f, -797, -352, -797, -352 ) );
@@ -232,7 +232,6 @@ CMenuState::CMenuState( int iState, int iScore1, int iScore2, int iScore3, int i
 	m_vStates.push_back( StateChange( PLAYERSELECT, PLAYERSELECT, m_pScoreBack, INSTANT, false, PLAYERSELECT, 0.5f, 0.0f, -150, 448, -150, 448 ) );
 
 	m_vStates.push_back( StateChange( LEVELSELECT, LEVELSELECT, m_pTitle, INSTANT, false, HIGH, 1.0f, 2.0f, -1024, -768, -1024, -768 ) );
-//	m_vStates.push_back( StateChange( LEVELSELECT, LEVELSELECT, m_pLevelMainScreen, INSTANT, false, LEVELSELECT, 1.0f, 0.0f, -756, -650, -756, -650, 0 ) );
 	m_vStates.push_back( StateChange( LEVELSELECT, LEVELSELECT, m_pLevelInfoBar, INSTANT, false, LEVELSELECT, 1.0f, 0.0f, -756, 250, -756, 250, 0 ) );
 	m_vStates.push_back( StateChange( LEVELSELECT, LEVELSELECT, m_pScoreBack, INSTANT, false, LEVELSELECT, 0.5f, 0.0f, 150, 540, 150, 540 ) );
 	m_vStates.push_back( StateChange( LEVELSELECT, LEVELSELECT, m_pLevelGo, INSTANT, false, LEVELSELECT, 0.5f, 0.0f, 470, 540, 470, 540 ) );
@@ -255,6 +254,7 @@ CMenuState::CMenuState( int iState, int iScore1, int iScore2, int iScore3, int i
 		}
 	}
 
+	m_iPlayersSelected = 0;
 	m_iSelectedLevel = -1;
 	FILE *pFile = fopen("media/scripts/universe.txt", "rt");
 	if ( pFile )
@@ -322,6 +322,7 @@ CMenuState::~CMenuState()
 	delete m_pMenuMultiplayer;
 	delete m_pMenuTopscore;
 	delete m_pMenuExit;
+	delete m_pMenuRestart;
 	delete m_pCursor;
 
 	delete m_pScoreBack;
@@ -339,7 +340,6 @@ CMenuState::~CMenuState()
 
 	delete m_pTutorialBorder;
 
-	delete m_pLevelMainScreen;
 	delete m_pLevelInfoBar;
 	delete m_pLevelGo;
 	delete m_pLevelCursor;
@@ -675,7 +675,32 @@ void CMenuState::Update(float fTime)
 						m_vStates[a].m_fAlpha = 0.5f;
 				}
 			}
-			if ( state == SCORE || state == TUTORIAL )
+			if ( state == SCORE )
+			{
+				int icursorX = (cursorX * 2 - 1024);
+				int icursorY = (cursorY * 2 - 768);
+				if ( m_vStates[a].m_pImage == m_pScoreBack || m_vStates[a].m_pImage == m_pMenuRestart )
+				{
+					if ( icursorX > m_vStates[a].m_iStartX && icursorX < m_vStates[a].m_iStartX + m_vStates[a].m_pImage->GetSize().w * 2 )
+					{
+						if ( icursorY > m_vStates[a].m_iStartY && icursorY < m_vStates[a].m_iStartY + m_vStates[a].m_pImage->GetSize().h * 2 )
+						{
+							if ( m_vStates[a].m_fAlpha != 1.0f )
+							{
+								m_vStates[a].m_fAlpha = 1.0f;
+								CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Menu_button_mouseon.wav", RT_SOUND);
+								if ( pSound )
+									pSound->Play(true);
+							}
+						}
+						else
+							m_vStates[a].m_fAlpha = 0.5f;
+					}
+					else
+						m_vStates[a].m_fAlpha = 0.5f;
+				}
+			}
+			if ( state == TUTORIAL )
 			{
 				int icursorX = (cursorX * 2 - 1024);
 				int icursorY = (cursorY * 2 - 768);
@@ -974,6 +999,11 @@ bool CMenuState::PushButton()
 				newState = GAMEMENU;
 				m_iActivePlayer = 1;
 			}
+			if ( m_vStates[i].m_pImage == m_pMenuRestart && newState == state && state == SCORE )
+			{
+				m_bRunning = false;
+				return true;
+			}
 			if ( m_vStates[i].m_pImage == m_pScoreBack && newState == state && state == LEVELSELECT )
 			{
 				newState = PLAYERSELECT;
@@ -1168,7 +1198,7 @@ void CMenuState::PushKeyboard( int x, int y )
 std::string CMenuState::GetSelectedLevel()
 {
 	if ( m_iSelectedLevel < 0 )
-		return SETS->LEVEL;
+		return "";
 	return "media/scripts/" + m_vLevelNodes[m_iSelectedLevel]->m_szTarget + ".txt";
 }
 

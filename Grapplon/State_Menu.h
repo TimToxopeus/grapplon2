@@ -79,6 +79,7 @@ protected:
 	CAnimatedTexture *m_pMenuMultiplayer;
 	CAnimatedTexture *m_pMenuTopscore;
 	CAnimatedTexture *m_pMenuExit;
+	CAnimatedTexture *m_pMenuRestart;
 	CAnimatedTexture *m_pCursor;
 
 	CAnimatedTexture *m_pScoreBack;
@@ -94,7 +95,6 @@ protected:
 
 	CAnimatedTexture *m_pTutorialBorder;
 
-	CAnimatedTexture *m_pLevelMainScreen;
 	CAnimatedTexture *m_pLevelInfoBar;
 	CAnimatedTexture *m_pLevelGo;
 	CAnimatedTexture *m_pLevelCursor;
