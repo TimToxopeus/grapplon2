@@ -102,7 +102,7 @@ CMenuState::CMenuState( int iState, int iScore1, int iScore2, int iScore3, int i
 	for ( int i = 0; i<10; i++ )
 	{
 		m_szNames[i] = "";
-		m_iScores[i] = -1;
+		m_iScores[i] = 0;
 	}
 	LoadScores();
 
@@ -184,7 +184,8 @@ CMenuState::CMenuState( int iState, int iScore1, int iScore2, int iScore3, int i
 
 	m_pTutorialBorder = new CAnimatedTexture("media/scripts/texture_controls_bg.txt");
 
-	m_pCredits = new CAnimatedTexture("media/scripts/texture_title.txt");
+	m_pCredits1 = new CAnimatedTexture("media/scripts/texture_credits1.txt");
+	m_pCredits2 = new CAnimatedTexture("media/scripts/texture_credits2.txt");
 
 	m_vStates.push_back( StateChange( 0, 2, m_pSplash1, FADE_IN, true, 0, 0.0f, 2.0f, -1024, -768, -1024, -768 ) );
 	m_vStates.push_back( StateChange( 1, 2, m_pSplash1, FADE_OUT, true, 1, 0.0f, 2.0f, -1024, -768, -1024, -768 ) );
@@ -242,7 +243,9 @@ CMenuState::CMenuState( int iState, int iScore1, int iScore2, int iScore3, int i
 	m_vStates.push_back( StateChange( TUTORIAL, TUTORIAL, m_pTutorialBorder, INSTANT, false, TUTORIAL, 1.0f, 0.0f, -885, -560, -885, -560 ) );
 	m_vStates.push_back( StateChange( TUTORIAL, TUTORIAL, m_pScoreBack, INSTANT, false, TUTORIAL, 0.5f, 0.0f, -150, 480, -150, 480 ) );
 
-	m_vStates.push_back( StateChange( CREDITS, CREDITS, m_pCredits, MOVE_UP, true, CREDITS, 1.0f, 2.0f, -1024, 768, -1024, -2304 ) );
+	m_vStates.push_back( StateChange( CREDITS, CREDITS, m_pCredits1, MOVE_UP2, false, CREDITS, 1.0f, 20.0f, -726, 768, -726, -10078 ) );
+	m_vStates.push_back( StateChange( CREDITS, CREDITS, m_pCredits2, MOVE_UP2, false, CREDITS, 1.0f, 20.0f, -726, 5807, -726, -4271 ) );
+	m_vStates.push_back( StateChange( CREDITS, CREDITS, m_pCredits2, MOVE_UP2, true, CREDITS, 0.0f, 25.0f, 1024, 5040, 1024, -4470 ) );
 
 	m_pAVIKit = new AVIKit("media/controls.avi", false);
 	if ( m_pAVIKit )
@@ -343,7 +346,8 @@ CMenuState::~CMenuState()
 	delete m_pSelectHowMany;
 
 	delete m_pTutorialBorder;
-	delete m_pCredits;
+	delete m_pCredits1;
+	delete m_pCredits2;
 
 	delete m_pLevelInfoBar;
 	delete m_pLevelGo;
@@ -633,12 +637,25 @@ void CMenuState::Update(float fTime)
 
 			m_vStates[a].m_fTimeLeft -= fTime;
 			float ratio = m_vStates[a].m_fTimeLeft / m_vStates[a].m_fTime;
-
-			float ratioSquared = ratio * ratio;
 			int dX = m_vStates[a].m_iStartX - m_vStates[a].m_iGoalX;
 			int dY = m_vStates[a].m_iStartY - m_vStates[a].m_iGoalY;
-			m_vStates[a].m_iX = m_vStates[a].m_iGoalX + (int)(dX * ratioSquared);
-			m_vStates[a].m_iY = m_vStates[a].m_iGoalY + (int)(dY * ratioSquared);
+
+			if ( m_vStates[a].m_eStyle == MOVE_UP && ratio >= 0.0f )
+			{
+				float ratioSquared = ratio * ratio;
+				m_vStates[a].m_iX = m_vStates[a].m_iGoalX + (int)(dX * ratioSquared);
+				m_vStates[a].m_iY = m_vStates[a].m_iGoalY + (int)(dY * ratioSquared);
+			}
+			else if ( m_vStates[a].m_eStyle == MOVE_UP2 && ratio >= 0.0f )
+			{
+				m_vStates[a].m_iX = m_vStates[a].m_iGoalX + (int)(dX * ratio);
+				m_vStates[a].m_iY = m_vStates[a].m_iGoalY + (int)(dY * ratio);
+			}
+			else
+			{
+				m_vStates[a].m_iX = m_vStates[a].m_iGoalX;
+				m_vStates[a].m_iY = m_vStates[a].m_iGoalY;
+			}
 
 			if ( m_vStates[a].m_eStyle == FADE_IN )
 				m_vStates[a].m_fAlpha = 1.0f - ratio;
@@ -1016,7 +1033,14 @@ bool CMenuState::PushButton()
 			}
 			if ( m_vStates[i].m_pImage == m_pScoreBack && newState == state && state == LEVELSELECT )
 			{
-				newState = PLAYERSELECT;
+				if ( m_iCurrentUniverseIndex == 0 )
+				{
+					newState = PLAYERSELECT;
+				}
+				else
+				{
+					m_iCurrentUniverseIndex = 0;//GetIndexByName( m_vLevelNodes[m_iCurrentUniverseIndex]->m_szParent );
+				}
 				m_iActivePlayer = 1;
 			}
 			if ( m_vStates[i].m_pImage == m_pLevelGo && newState == state && state == LEVELSELECT )

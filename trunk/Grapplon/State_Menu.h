@@ -25,6 +25,7 @@ enum StateStyle
 	FADE_IN,
 	FADE_OUT,
 	MOVE_UP,
+	MOVE_UP2,
 	PULSE,
 };
 
@@ -96,7 +97,8 @@ protected:
 	CAnimatedTexture *m_pSelectHowMany;
 
 	CAnimatedTexture *m_pTutorialBorder;
-	CAnimatedTexture *m_pCredits;
+	CAnimatedTexture *m_pCredits1;
+	CAnimatedTexture *m_pCredits2;
 
 	CAnimatedTexture *m_pLevelInfoBar;
 	CAnimatedTexture *m_pLevelGo;

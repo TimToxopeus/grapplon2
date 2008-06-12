@@ -29,7 +29,7 @@ private:
 	CAnimatedTexture *m_pRespawnImage;
 	CAnimatedTexture *m_pPUFrozenImage;
 	CAnimatedTexture *m_pElectricImage;
-
+	CAnimatedTexture *m_pRespawnRing;
 
 	Vector explosionPos;
 
