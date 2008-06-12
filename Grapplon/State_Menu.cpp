@@ -1278,11 +1278,13 @@ void CMenuState::HandleButtonPress( wiimote_t* pWiimoteEvent )
 				m_iCurrentUniverseIndex = GetIndexByName( m_vLevelNodes[m_iCurrentUniverseIndex]->m_szParent );
 			}
 		}
-		if ( state == SCORE )
+		else if ( state == SCORE )
 			state = GAMEMENU;
-		if ( state == PLAYERSELECT )
+		else if ( state == PLAYERSELECT )
 			state = GAMEMENU;
-		if ( state == LEVELSELECT )
+		else if ( state == LEVELSELECT )
+			state = GAMEMENU;
+		else if ( state == TUTORIAL )
 			state = GAMEMENU;
 	}
 
