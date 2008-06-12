@@ -1,0 +1,9 @@
+[object]
+width = 331
+height = 163
+animations = idle
+
+[idle]
+file = "media/images/level_system01.png"
+frames = 1
+speed = 1
