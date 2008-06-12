@@ -14,6 +14,7 @@ pu_speed  = 30
 pu_speed  = 30
 pu_gelly = 10
 pu_shield = 5
+background = 0
 
 [sun]
 name = black_hole

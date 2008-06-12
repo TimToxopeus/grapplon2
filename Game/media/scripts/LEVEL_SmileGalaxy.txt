@@ -12,6 +12,7 @@ pu_speed  = 35
 pu_health  = 30
 pu_gelly = 15
 pu_shield = 15
+background = 0
 
 [ice]
 name = sun

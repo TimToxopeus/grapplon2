@@ -3,8 +3,8 @@ width = 4000
 height = 3000
 boundaryforce = 20000000
 initspawn4 = 1500 800
-initspawn3 = -1500 -800
-initspawn1 = -1500 800
+initspawn1 = -1500 -800
+initspawn3 = -1500 800
 initspawn2 = 1500 -800
 max_power_up = 3
 pu_freeze  = 10
@@ -12,6 +12,7 @@ pu_speed  = 15
 pu_health  = 10
 pu_gelly = 15
 pu_shield = 5
+background = 1
 
 [sun]
 name = sun
