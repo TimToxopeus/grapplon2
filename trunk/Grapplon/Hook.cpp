@@ -96,9 +96,16 @@ void CHook::SetVisibility(float alpha)
 		chainLinks[i]->SetAlpha(alpha);
 	}
 
-
-
 }
+
+void CHook::SetFreezeTime(float time){
+
+	//m_fFreezeTime = time;
+	//for(unsigned int i = 0; i < chainLinks.size(); i++){
+	//	chainLinks[i]->SetFreezeTime(time);
+	//}
+	
+};
 
 void CHook::SetGrasped(PhysicsData* toGrasp)
 {
@@ -179,8 +186,49 @@ void CHook::Eject()
 	CODEManager::Instance()->JointAttach(m_pLastChainJoint, chainLinks[SETS->LINK_AMOUNT * 2 - 1]->GetBody(), m_oPhysicsData.body);
 	CODEManager::Instance()->JointSetHingeAnchor(m_pLastChainJoint, lastChainPos);
 
+	Vector forward = m_pOwner->GetForwardVector();
+	Vector objPos = m_pOwner->GetPosition();
+	
+	if(SETS->AUTO_AIM_ANGLE_HOOK > 0)
+	{
+		std::vector<PhysicsData*>& asteroids = CODEManager::Instance()->m_vAsteroids;
+		std::vector<PhysicsData*>& powerups = CODEManager::Instance()->m_vPowerUps;
+		Vector lBorder = forward.Rotate2(SETS->AUTO_AIM_ANGLE_HOOK);
+		Vector rBorder = forward.Rotate2(-SETS->AUTO_AIM_ANGLE_HOOK);
+		Vector pPos;
+
+		for(unsigned int i = 0; i < asteroids.size(); i++)
+		{
+			pPos = asteroids[i]->m_pOwner->GetPosition();
+
+			if( pPos.SignedDistance( objPos, objPos + lBorder ) >= 0.0f &&
+				pPos.SignedDistance( objPos, objPos + rBorder ) <= 0.0f &&
+				(pPos - objPos).Length() < 500)
+			{
+				forward = pPos - objPos;
+				forward.Normalize();
+				break;
+			}
+		}
+
+		for(unsigned int i = 0; i < powerups.size(); i++)
+		{
+			pPos = powerups[i]->m_pOwner->GetPosition();
+
+			if( pPos.SignedDistance( objPos, objPos + lBorder ) >= 0.0f &&
+				pPos.SignedDistance( objPos, objPos + rBorder ) <= 0.0f &&
+				(pPos - objPos).Length() < 500)
+			{
+				forward = pPos - objPos;
+				forward.Normalize();
+				break;
+			}
+		}
+
+	}
+
 	// Shoot the hook forward
-	Vector shootForce = m_pOwner->GetForwardVector() * SETS->EJECT_FORCE;
+	Vector shootForce = forward * SETS->EJECT_FORCE;
 	AddForce( shootForce );
 
 	CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/hook_throw.wav", RT_SOUND);
