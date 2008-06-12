@@ -3,6 +3,8 @@
 #include "Vector.h"
 #include "AnimatedTexture.h"
 #include "PlayerObject.h"
+#include "ResourceManager.h"
+#include "Sound.h"
 #include <map>
 
 CWormHole::CWormHole(PlanetaryData &data, int index) 
@@ -27,8 +29,12 @@ CWormHole::CWormHole(PlanetaryData &data, int index)
 
 CWormHole::~CWormHole(){}
 
-void CWormHole::ThrowObject(CBaseObject* object){
+void CWormHole::ThrowObject(CBaseObject* object)
+{
 	m_pToThrow = object;
+	CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Boost.wav", RT_SOUND);
+	if ( pSound )
+		pSound->Play();
 }
 
 void CWormHole::CollideWith(CBaseObject *pOther, Vector &pos)
