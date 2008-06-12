@@ -11,6 +11,7 @@ pu_speed  = 35
 pu_health  = 20
 pu_gelly = 35
 pu_shield = 10
+background = 2
 
 [sun]
 name = sun1
