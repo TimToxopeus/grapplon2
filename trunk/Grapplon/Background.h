@@ -23,7 +23,7 @@ private:
 	std::vector<Star> m_vStars;
 
 public:
-	CBackground();
+	CBackground(int imageNr);
 	~CBackground();
 
 	virtual void Update( float fTime );
