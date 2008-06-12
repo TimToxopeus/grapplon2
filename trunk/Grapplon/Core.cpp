@@ -28,6 +28,8 @@ CCore::CCore()
 	m_pSoundManager = NULL;
 	m_pParticleSystemManagerNear = NULL;
 	m_pParticleSystemManagerFar = NULL;
+	m_szLastPlayedLevel = "";
+	m_iLastAmountOfPlayers = 0;
 }
 
 CCore::~CCore()
@@ -87,6 +89,8 @@ bool CCore::SystemsInit()
 		m_pActiveState = new CGameState();
 		((CGameState *)m_pActiveState)->Init( SETS->PLAYERS );
 		CLoadingScreen::Instance()->StopRendering();
+		m_szLastPlayedLevel = SETS->LEVEL;
+		m_iLastAmountOfPlayers = SETS->PLAYERS;
 	}
 	m_bRunningValid = true;
 	m_pWiimoteManager->RegisterListener( m_pActiveState, -1 );
@@ -254,7 +258,16 @@ void CCore::Run()
 			if ( m_bMenu )
 			{
 				int players = ((CMenuState *)m_pActiveState)->GetPlayersSelected();
+				if ( players == 0 )
+					players = m_iLastAmountOfPlayers;
+				if ( players != m_iLastAmountOfPlayers )
+					m_iLastAmountOfPlayers = players;
+
 				std::string selectedLevel = ((CMenuState *)m_pActiveState)->GetSelectedLevel();
+				if ( selectedLevel == "" )
+					selectedLevel = m_szLastPlayedLevel;
+				if ( selectedLevel != m_szLastPlayedLevel )
+					m_szLastPlayedLevel = selectedLevel;
 
 				m_bRunningValid = false;
 				delete m_pActiveState;

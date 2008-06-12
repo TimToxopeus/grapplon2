@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SDL.h>
+#include <string>
 
 /*
 // These are now forward declared.
@@ -38,6 +39,9 @@ private:
 
 	bool m_bMenu;
 	bool m_bRunningValid;
+
+	std::string m_szLastPlayedLevel;
+	int m_iLastAmountOfPlayers;
 
 public:
 	static CCore *Instance() { if ( !m_pInstance ) m_pInstance = new CCore(); return m_pInstance; }
