@@ -1,3 +1,0 @@
-texture_level_main_screen00.txt
-texture_level_universe00.txt texture_level_info_universe00.txt 510 139 universe_00.txt
-texture_level_universe01.txt texture_level_info_universe01.txt 231 288 universe_01.txt

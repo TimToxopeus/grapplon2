@@ -1,6 +1,0 @@
-texture_level_main_screen02.txt
-texture_level_twosun.txt texture_level_info_twosun.txt 150 100 level_2sun.txt
-texture_level_smile.txt texture_level_info_smile.txt 539 74 level_SmileGalaxy.txt
-texture_level_chaos.txt texture_level_info_chaos.txt 178 367 level_ChaosGalaxy.txt
-texture_level_broken.txt texture_level_info_broken.txt 307 263 level_brokengalaxy.txt
-texture_level_tail.txt texture_level_info_tail.txt 553 288 level_Tail.txt
