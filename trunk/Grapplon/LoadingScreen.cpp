@@ -82,7 +82,9 @@ void CLoadingScreen::StopRendering()
 	if ( m_pThread )
 	{
 		int status;
+		CLogManager::Instance()->LogMessage( "Waiting for loading thread to terminate." );
 		SDL_WaitThread( m_pThread, &status );
+		CLogManager::Instance()->LogMessage( "Loading thread to terminated." );
 		m_pThread = NULL;
 		if ( !wglMakeCurrent(currentDC, currentContext) )
 			CLogManager::Instance()->LogMessage( "Error returning the renderer to the main thread" );
