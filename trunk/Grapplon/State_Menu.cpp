@@ -1237,8 +1237,7 @@ void CMenuState::HandleButtonPress( wiimote_t* pWiimoteEvent )
 		}
 	}
 
-	if (IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_A) ||
-		IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_B))
+	if (IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_A))
 	{
 		m_pCursor->SetAnimation(1);
 
@@ -1265,6 +1264,26 @@ void CMenuState::HandleButtonPress( wiimote_t* pWiimoteEvent )
 					m_iCurrentUniverseIndex = index;
 			}
 		}
+	}
+	else if ( IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_B) )
+	{
+		if ( state == LEVELSELECT )
+		{
+			if ( m_iCurrentUniverseIndex == 0 )
+			{
+				state = PLAYERSELECT;
+			}
+			else
+			{
+				m_iCurrentUniverseIndex = GetIndexByName( m_vLevelNodes[m_iCurrentUniverseIndex]->m_szParent );
+			}
+		}
+		if ( state == SCORE )
+			state = GAMEMENU;
+		if ( state == PLAYERSELECT )
+			state = GAMEMENU;
+		if ( state == LEVELSELECT )
+			state = GAMEMENU;
 	}
 
 	if ( !IS_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_A) && !IS_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_B))
