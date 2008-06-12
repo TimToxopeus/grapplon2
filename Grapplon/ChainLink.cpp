@@ -38,6 +38,11 @@ CChainLink::~CChainLink()
 	delete m_pFrozenImage;
 }
 
+void CChainLink::SetFreezeTime(float time){
+	//m_fFreezeTime = time;
+};
+
+
 void CChainLink::Update( float fTime )
 {
 	CBaseMovableObject::Update(fTime);

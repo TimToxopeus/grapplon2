@@ -16,6 +16,7 @@ ERP = 0.9											 					 Waarde om robuustheid van ODE te beinvloeden (NIET AA
 HookAirDrag = 2								 					 Airdrag van de haak (wanneer uitgeslagen)
 HookMass = 0.5									 					 Massa van de haak (wanneer uitgeslagen
 AutoAimAngle = 20							 					 Hoek van auto-aim (x2, dus wanneer je 10 opgeeft dan krijg je een auto-aim-hoek van 20 graden)
+AutoAimAngleHook = 40							 			 Hoek van auto-aim (x2, dus wanneer je 10 opgeeft dan krijg je een auto-aim-hoek van 20 graden)
 FreezeTime = 5
 AsterWallBounces = -1										 Aantal keren dat een asteroid tegen de muur mag bouncen voordat deze het veld verlaat
 WBounceToggleTime = 1										 Aantal seconden tussen tellende 2 bounces (dit zorgt ervoor dat 2 hele snelle bounces als 1 bounce tellen)

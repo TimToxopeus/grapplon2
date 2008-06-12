@@ -90,7 +90,7 @@ public:
 
 	int			BUOY_AMOUNT;
 	int			BUOY_DISTANCE;
-
+	float		AUTO_AIM_ANGLE_HOOK;
 	bool  Init();
 	
 };

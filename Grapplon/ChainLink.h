@@ -18,4 +18,5 @@ public:
 	virtual void Update( float fTime );
 	virtual void Render();
 
+	void SetFreezeTime(float time);
 };
