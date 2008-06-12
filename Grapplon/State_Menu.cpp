@@ -980,7 +980,7 @@ bool CMenuState::PushButton()
 		{
 			if ( m_vStates[i].m_pImage == m_pMenuSingleplayer && state == GAMEMENU )
 			{
-				//m_bRunning = false;
+				video_position = 0;
 				newState = TUTORIAL;
 				m_iActivePlayer = 1;
 				if ( m_iAVIid == -1 )
