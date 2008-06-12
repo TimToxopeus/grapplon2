@@ -6,10 +6,10 @@ GENERAL
 width = 3200
 height = 2700
 boundaryforce = 20000000
-initspawn1 = -1500 500
-initspawn2 = 1500 -500
-initspawn3 = -1500 -500
-initspawn4 = 1500 500
+initspawn4 = -1500 500
+initspawn3 = 1500 -500
+initspawn1 = -1500 -500
+initspawn2 = 1500 500
 max_power_up = 3
 pu_freeze  = 5
 pu_health  = 35
