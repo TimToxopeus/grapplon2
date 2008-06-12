@@ -83,6 +83,7 @@ void CLoadingScreen::StopRendering()
 	{
 		int status;
 		CLogManager::Instance()->LogMessage( "Waiting for loading thread to terminate." );
+		SDL_CondSignal( m_pEngineCondition );
 		SDL_WaitThread( m_pThread, &status );
 		CLogManager::Instance()->LogMessage( "Loading thread to terminated." );
 		m_pThread = NULL;
