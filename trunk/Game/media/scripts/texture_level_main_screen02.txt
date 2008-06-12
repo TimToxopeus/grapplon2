@@ -4,6 +4,6 @@ height = 439
 animations = idle
 
 [idle]
-file = "media/images/level_main_screen.png"
+file = "media/images/level_screen_02.png"
 frames = 1
 speed = 1
