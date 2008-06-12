@@ -9,7 +9,7 @@
 CSpeedUpPowerUp::CSpeedUpPowerUp(void)
 {
 	m_ePowerUpType = SPEED_UP;
-	m_pImage->SetAnimation(0);
+	m_pImage = new CAnimatedTexture("media/scripts/texture_powerup_speedup.txt");
 }
 
 CSpeedUpPowerUp::~CSpeedUpPowerUp(void)
