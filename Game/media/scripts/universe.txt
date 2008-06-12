@@ -1,13 +1,13 @@
+universe      null     0   0   texture_level_universe_01    null                   null
+galaxy1button universe 245 156 texture_level_system01       galaxy1                texture_level_info_universe00
+galaxy2button universe 543 275 texture_level_system02       galaxy2                texture_level_info_universe01
+
 galaxy1       null     0   0   texture_level_main_screen01  null                   texture_level_info_universe00
 system1       galaxy1  115 81  texture_level_black_hole     level_blackholemayhem  texture_level_info_black_hole
 system2       galaxy1  610 320 texture_level_battle         level_BattleOfElements texture_level_info_battle
 system3       galaxy1  424 62  texture_level_wind           level_WindGalaxy       texture_level_info_wind
 system4       galaxy1  288 341 texture_level_dodgeball      level_DodgeBall        texture_level_info_doors
 system5       galaxy1  378 219 texture_level_sun            level_SolarGalaxy      texture_level_info_sun
-
-universe      null     0   0   texture_universe_01          null                   null
-galaxy1button universe 10  100 texture_universe_01_galaxy1  galaxy1                texture_level_info_universe00
-galaxy2button universe 10  100 texture_universe_01_galaxy2  galaxy2                texture_level_info_universe01
 
 galaxy2       universe 0   0   texture_level_main_screen02  null                   texture_level_info_universe01
 system6       galaxy2  115 81  texture_level_twosun         level_2sun             texture_level_info_twosun
