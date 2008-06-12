@@ -126,6 +126,7 @@ bool CUniverse::Load( std::string file )
 
 void CUniverse::ReadUniverse()
 {
+	m_iBackgroundNr = 0;
 	std::string in = ReadLine();
 	while ( !feof(pFile) && in != "" )
 	{
@@ -133,6 +134,7 @@ void CUniverse::ReadUniverse()
 
 		if		( tokens[0]	== "width" )			m_fWidth			= (float) atof(tokens[2].c_str());
 		else if ( tokens[0]	== "height" )			m_fHeight			= (float) atof(tokens[2].c_str());
+		else if ( tokens[0]	== "background" )		m_iBackgroundNr		=		  atoi(tokens[2].c_str());
 		else if ( tokens[0] == "boundaryforce" )	m_fBoundaryForce	= (float) atof(tokens[2].c_str());
 		else if ( tokens[0] == "respawnarea" ) {
 			RespawnArea area;

@@ -63,7 +63,8 @@ public:
 	float m_fHeight;
 	float m_fBoundaryForce;
 	int	  m_iMaxPowerUp;
-	
+	int	  m_iBackgroundNr;
+
 	std::vector<RespawnArea> m_vRespawnAreas;
 	std::list<PowerUpSetting> m_lIdlePowerUps;
 	std::list<PowerUpSetting> m_lPlacedPowerUps;

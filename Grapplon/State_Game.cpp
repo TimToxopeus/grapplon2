@@ -84,7 +84,7 @@ bool CGameState::Init( int iPlayers, std::string level )
 	m_pHUD = new CHUD();
 	m_pHUD->SetPlayers( m_pPlayers[0], m_pPlayers[1], m_pPlayers[2], m_pPlayers[3] );
 
-	m_pBackground = new CBackground();
+	m_pBackground = new CBackground(m_pUniverse->m_iBackgroundNr);
 
 //	m_pPlayers[0]->SetDepth( 1.0f );
 

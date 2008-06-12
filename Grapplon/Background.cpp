@@ -4,13 +4,14 @@
 
 #include "GameSettings.h"
 
-CBackground::CBackground()
+CBackground::CBackground(int imageNr)
 {
 	SetDepth( -1000.0f );
 	m_pSpace = new CAnimatedTexture("media/scripts/texture_bkg_space.txt");
 	m_pNebula = new CAnimatedTexture("media/scripts/texture_bkg_movinglayer.txt");
 	m_pStar = new CAnimatedTexture("media/scripts/texture_bkg_star.txt");
 	m_fNebulaOffset = -1024.0f;
+	m_pSpace->SetAnimation(imageNr);
 }
 
 CBackground::~CBackground()
