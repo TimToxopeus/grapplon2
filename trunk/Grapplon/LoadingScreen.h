@@ -10,12 +10,13 @@ private:
 	~CLoadingScreen();
 
 	SDL_Thread *m_pThread;
+	SDL_mutex *m_pMutex;
+	SDL_cond *m_pThreadCondition, *m_pEngineCondition;
 	bool m_bRendering;
+	int m_iContext;
 
 	CAnimatedTexture *m_pBackground;
 	CAnimatedTexture *m_pSpinning;
-
-	int m_iContextState;
 
 public:
 	static CLoadingScreen *Instance() { if ( !m_pInstance ) m_pInstance = new CLoadingScreen(); return m_pInstance; }
@@ -29,9 +30,9 @@ public:
 
 	void Render(float fTime);
 
-	void RequestContext();
-	void ReturnContext();
-	void CheckContext();
+	void ThreadClaimContext();
+	void ThreadReleaseContext();
 
-	void SetContext( int iContext ) { m_iContextState = iContext; }
+	void EngineClaimContext();
+	void EngineReleaseContext();
 };
