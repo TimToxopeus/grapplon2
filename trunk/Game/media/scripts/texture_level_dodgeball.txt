@@ -1,6 +1,6 @@
 [object]
-width = 128
-height = 128
+width = 170
+height = 170
 animations = idle
 
 [idle]
