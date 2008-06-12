@@ -2,10 +2,10 @@
 width = 3400
 height = 2500
 boundaryforce = 20000000
-initspawn1 = 1600 1000
-initspawn2 = -1600 1000
-initspawn3 = -1600 -1000
-initspawn4 = 1600 -1000
+initspawn4 = 1600 1000
+initspawn3 = -1600 1000
+initspawn1 = -1600 -1000
+initspawn2 = 1600 -1000
 max_power_up = 3
 pu_freeze  = 10
 pu_speed  = 35

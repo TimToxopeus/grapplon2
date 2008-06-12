@@ -2,10 +2,10 @@
 width = 2800
 height = 2500
 boundaryforce = 20000000
-initspawn1 = 1700 200
-initspawn2 = -1700 200
-initspawn3 = -1700 -200
-initspawn4 = 1700 -200
+initspawn4 = 1700 200
+initspawn3 = -1700 200
+initspawn1 = -1700 -200
+initspawn2 = 1700 -200
 max_power_up = 3
 pu_freeze  = 5
 pu_speed  = 35
@@ -13,17 +13,17 @@ pu_health  = 30
 pu_gelly = 15
 pu_shield = 15
 
-[sun]
+[ice]
 name = sun
-mass = 1000000
-image = sun
-imageglow = sun_glow
-grav = 300
+mass = 10000000
+image = ice_sun
+imageglow = ice_sun_glow
+grav = 35
 radius = 340
-tempradius = 575
-pos = 0 150
+tempradius = 650
 scale = 2.0
-emitter = "media/scripts/particle_fire_emitter.txt", far, 0, 0
+pos = 0 150
+emitter = "media/scripts/particle_ice_emitter.txt", far, 0, 0
 damagemult = 1.1
 
 [sun]
@@ -56,80 +56,80 @@ tempradius = 1
 rotation = 40
 emitter = "media/scripts/particle_black_emitter.txt", far, 0, 0
 
-[ice]
-name = ice_planet1
+[sun]
+name = fire_planet1
 pos = 0 1500
 mass = 300000
-image = ice_planet_02
-imageglow = ice_planet_glow
+image = fire_planet
+imageglow = fire_glow
 imageorbit = orbit_circle
 grav = 100
 angle = 90
 scale = 1.2
 radius = 145
 tempradius = 320
-emitter = "media/scripts/particle_iceplanet2_emitter.txt", far, 0, 0
-damagemult = 0.1
+emitter = "media/scripts/particle_fireplanet3_emitter.txt", far, 0, 0
+damagemult = 0.6
 
-[ice]
-name = ice_planet2
+[sun]
+name = fire_planet2
 pos = 750 1400
 mass = 300000
-image = ice_planet_02
-imageglow = ice_planet_glow
+image = fire_planet
+imageglow = fire_glow
 imageorbit = orbit_circle
 grav = 100
 angle = 90
 scale = 1.2
 radius = 145
 tempradius = 320
-emitter = "media/scripts/particle_iceplanet2_emitter.txt", far, 0, 0
-damagemult = 0.1
+emitter = "media/scripts/particle_fireplanet3_emitter.txt", far, 0, 0
+damagemult = 0.6
 
-[ice]
-name = ice_planet3
+[sun]
+name = fire_planet3
 pos = -750 1400
 mass = 300000
-image = ice_planet_02
-imageglow = ice_planet_glow
+image = fire_planet
+imageglow = fire_glow
 imageorbit = orbit_circle
 grav = 100
 angle = 90
 scale = 1.2
 radius = 145
 tempradius = 320
-emitter = "media/scripts/particle_iceplanet2_emitter.txt", far, 0, 0
-damagemult = 0.1
+emitter = "media/scripts/particle_fireplanet3_emitter.txt", far, 0, 0
+damagemult = 0.6
 
-[ice]
-name = ice_planet6
+[sun]
+name = fire_planet6
 pos = -1500 1100
 mass = 300000
-image = ice_planet_02
-imageglow = ice_planet_glow
+image = fire_planet
+imageglow = fire_glow
 imageorbit = orbit_circle
 grav = 100
 angle = 90
 scale = 1.2
 radius = 145
 tempradius = 320
-emitter = "media/scripts/particle_iceplanet2_emitter.txt", far, 0, 0
-damagemult = 0.1
+emitter = "media/scripts/particle_fireplanet3_emitter.txt", far, 0, 0
+damagemult = 0.6
 
-[ice]
-name = ice_planet7
+[sun]
+name = fire_planet7
 pos = 1500 1100
 mass = 300000
-image = ice_planet_02
-imageglow = ice_planet_glow
+image = fire_planet
+imageglow = fire_glow
 imageorbit = orbit_circle
 grav = 100
 angle = 90
 scale = 1.2
 radius = 145
 tempradius = 320
-emitter = "media/scripts/particle_iceplanet2_emitter.txt", far, 0, 0
-damagemult = 0.1
+emitter = "media/scripts/particle_fireplanet3_emitter.txt", far, 0, 0
+damagemult = 0.6
 
 [asteroid]
 name = asteroid5
