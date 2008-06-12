@@ -93,7 +93,7 @@ void CLoadingScreen::Render( float fTime )
 
 	target = m_pSpinning->GetSize();
 	target.w += target.w; target.h += target.h;
-	target.x = -80; target.y = 300;
+	target.x = -80; target.y = 100;
 	m_pSpinning->UpdateFrame( fTime );
 	pRenderer->RenderQuad( target, m_pSpinning, 0, 1 );
 

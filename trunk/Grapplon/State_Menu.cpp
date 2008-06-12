@@ -183,6 +183,8 @@ CMenuState::CMenuState( int iState, int iScore1, int iScore2, int iScore3, int i
 	m_pCursor = new CAnimatedTexture("media/scripts/texture_cursor.txt");
 	m_pLevelCursor = new CAnimatedTexture("media/scripts/texture_level_cursor.txt");
 
+	m_pTutorialBorder = new CAnimatedTexture("media/scripts/texture_controls_bg.txt");
+
 	m_vStates.push_back( StateChange( 0, 2, m_pSplash1, FADE_IN, true, 0, 0.0f, 2.0f, -1024, -768, -1024, -768 ) );
 	m_vStates.push_back( StateChange( 1, 2, m_pSplash1, FADE_OUT, true, 1, 0.0f, 2.0f, -1024, -768, -1024, -768 ) );
 	m_vStates.push_back( StateChange( 2, 4, m_pSplash2, FADE_IN, true, 2, 0.0f, 2.0f, -1024, -768, -1024, -768 ) );
@@ -236,7 +238,8 @@ CMenuState::CMenuState( int iState, int iScore1, int iScore2, int iScore3, int i
 	m_vStates.push_back( StateChange( LEVELSELECT, LEVELSELECT, m_pLevelGo, INSTANT, false, LEVELSELECT, 0.5f, 0.0f, 470, 540, 470, 540 ) );
 
 	m_vStates.push_back( StateChange( TUTORIAL, TUTORIAL, m_pTitle, INSTANT, false, HIGH, 1.0f, 2.0f, -1024, -768, -1024, -768 ) );
-	m_vStates.push_back( StateChange( TUTORIAL, TUTORIAL, m_pScoreBack, INSTANT, false, TUTORIAL, 0.5f, 0.0f, -150, 540, -150, 540 ) );
+	m_vStates.push_back( StateChange( TUTORIAL, TUTORIAL, m_pTutorialBorder, INSTANT, false, TUTORIAL, 1.0f, 0.0f, -885, -560, -885, -560 ) );
+	m_vStates.push_back( StateChange( TUTORIAL, TUTORIAL, m_pScoreBack, INSTANT, false, TUTORIAL, 0.5f, 0.0f, -150, 480, -150, 480 ) );
 
 	m_pAVIKit = new AVIKit("media/controls.avi", false);
 	if ( m_pAVIKit )
@@ -333,6 +336,8 @@ CMenuState::~CMenuState()
 
 	delete m_pSelect;
 	delete m_pSelectHowMany;
+
+	delete m_pTutorialBorder;
 
 	delete m_pLevelMainScreen;
 	delete m_pLevelInfoBar;
@@ -516,7 +521,7 @@ void CMenuState::Render()
 			int w = xres;
 			int h = yres;
 
-			glTranslatef( 20.0f, -64.0f, 0.0f );
+			glTranslatef( 0.0f, -24.0f, 0.0f );
 
 			// Draw the quad
 			glBegin(GL_QUADS);
@@ -537,7 +542,7 @@ void CMenuState::Render()
 				glVertex3f((float)w, (float)h, 0.0f);
 			glEnd();
 
-			glTranslatef( -20.0f, 64.0f, 0.0f );
+			glTranslatef( 0.0f, 24.0f, 0.0f );
 		}
 	}
 

@@ -92,6 +92,8 @@ protected:
 	CAnimatedTexture *m_pSelect;
 	CAnimatedTexture *m_pSelectHowMany;
 
+	CAnimatedTexture *m_pTutorialBorder;
+
 	CAnimatedTexture *m_pLevelMainScreen;
 	CAnimatedTexture *m_pLevelInfoBar;
 	CAnimatedTexture *m_pLevelGo;
