@@ -14,6 +14,8 @@
 #define PLAYERSELECT 19
 #define LEVELSELECT 20
 #define TUTORIAL 21
+#define CREDITS 26
+#define EXIT 27
 #define HIGH 25
 #define IR_AVG 1
 
@@ -94,6 +96,7 @@ protected:
 	CAnimatedTexture *m_pSelectHowMany;
 
 	CAnimatedTexture *m_pTutorialBorder;
+	CAnimatedTexture *m_pCredits;
 
 	CAnimatedTexture *m_pLevelInfoBar;
 	CAnimatedTexture *m_pLevelGo;
