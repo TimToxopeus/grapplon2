@@ -410,26 +410,44 @@ void CMenuState::Render()
 			}
 		}
 
-		target.x = 20 - (m_szInputName.length() * 56) / 2;
+		target.x = -176;
 		target.w = target.h = 48;
 		target.y = -170;
 
-		for ( unsigned int i = 0; i<m_szInputName.length(); i++ )
+		SDL_Rect underscore;
+		underscore.y = -170 + 41;
+		underscore.w = 32;
+		underscore.h = 7;
+
+		SDL_Color blue;
+		blue.r = 73;
+		blue.g = 50;
+		blue.b = 244;
+
+		for ( unsigned int i = 0; i<7; i++ )
 		{
-			int frame = m_szInputName[i] - 97;
-			if ( frame < 0 )
+			if ( i < m_szInputName.length() )
 			{
-				if ( m_szInputName[i] == ',' )
-					frame = 26;
-				if ( m_szInputName[i] == '.' )
-					frame = 27;
-				if ( m_szInputName[i] == '-' )
-					frame = 28;
-				if ( m_szInputName[i] == '!' )
-					frame = 29;
+				int frame = m_szInputName[i] - 97;
+				if ( frame < 0 )
+				{
+					if ( m_szInputName[i] == ',' )
+						frame = 26;
+					if ( m_szInputName[i] == '.' )
+						frame = 27;
+					if ( m_szInputName[i] == '-' )
+						frame = 28;
+					if ( m_szInputName[i] == '!' )
+						frame = 29;
+				}
+				m_pScoreFont_Text->SetFrame( frame );
+				RenderQuad( target, m_pScoreFont_Text, 0, 1 );
 			}
-			m_pScoreFont_Text->SetFrame( frame );
-			RenderQuad( target, m_pScoreFont_Text, 0, 1 );
+			else
+			{
+				underscore.x = target.x + 8;
+				RenderQuad( underscore, NULL, 0, blue, 1 );
+			}
 			target.x += 56;
 		}
 	}
@@ -1113,20 +1131,20 @@ void CMenuState::PushKeyboard( int x, int y )
 	}
 	if ( icursorX > 364 && icursorX < 620 && icursorY > 225 && icursorY < 317 )
 	{
-		if ( m_szInputName.length() < 3 )
-			return;
-
-		// Add to text file:
-		int i = 9;
-		while ( m_iScores[i - 1] < m_iNewScores[m_iActivePlayer - 1] && i > 0)
+		if ( m_szInputName.length() != 0 )
 		{
-			m_iScores[i] = m_iScores[i - 1];
-			m_szNames[i] = m_szNames[i - 1];
-			i--;
+			// Add to text file:
+			int i = 9;
+			while ( m_iScores[i - 1] < m_iNewScores[m_iActivePlayer - 1] && i > 0)
+			{
+				m_iScores[i] = m_iScores[i - 1];
+				m_szNames[i] = m_szNames[i - 1];
+				i--;
+			}
+			m_iScores[i] = m_iNewScores[m_iActivePlayer - 1];
+			m_szNames[i] = m_szInputName;
+			SaveScores();
 		}
-		m_iScores[i] = m_iNewScores[m_iActivePlayer - 1];
-		m_szNames[i] = m_szInputName;
-		SaveScores();
 
 		m_iNewScores[m_iActivePlayer - 1] = -1;
 		if ( m_iNewScores[0] > m_iScores[9] || m_iNewScores[1] > m_iScores[9] || m_iNewScores[2] > m_iScores[9] || m_iNewScores[3] > m_iScores[9] )
