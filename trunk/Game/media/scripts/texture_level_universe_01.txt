@@ -1,0 +1,9 @@
+[object]
+width = 756
+height = 439
+animations = idle
+
+[idle]
+file = "media/images/level_main_screen.png"
+frames = 1
+speed = 1
