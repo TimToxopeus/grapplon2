@@ -612,7 +612,7 @@ void CPlayerObject::OnDie( CBaseObject *m_pKiller )
 	{
 		x = rand()%((int) universe->m_fWidth*2) -  (int) universe->m_fWidth;
 		y = rand()%((int) universe->m_fHeight*2) - (int) universe->m_fHeight;
-	} while ( pRenderer->ObjectsInRange( x, y, 200 ) );
+	} while ( pRenderer->ObjectsInRange( x, y, 400 ) );
 
 	respawnDisplacement = Vector( (float)x, (float)y, 0 ) - GetPosition();
 	diePosition = GetPosition();

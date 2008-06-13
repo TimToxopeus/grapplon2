@@ -56,6 +56,8 @@ void CBaseObject::Update( float fTime )
 		m_fInvincibleTime -= fTime;
 		if ( m_fInvincibleTime <= 0.0f )
 			m_oPhysicsData.m_bAffectedByGravity = true;
+		else
+			m_oPhysicsData.m_bAffectedByGravity = false;
 	}	
 
 	m_pImage->UpdateFrame( fTime );
