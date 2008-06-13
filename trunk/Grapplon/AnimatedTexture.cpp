@@ -167,7 +167,7 @@ void CAnimatedTexture::ReadAnimation(std::string anim)
 	// Animation name not found, read until end of animation info block, then exit function
 	if ( index == -1 )
 	{
-		CLogManager::Instance()->LogMessage("Incorrect animation name!");
+		CLogManager::Instance()->LogMessage("Incorrect animation name! " + anim + " (" + m_szScriptFile + ")");
 		while ( !feof( pFile ) && in != "" )
 			in = ReadLine();
 		return;
