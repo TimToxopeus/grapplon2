@@ -19,7 +19,7 @@ CFreezePowerUp::~CFreezePowerUp(void)
 
 void CFreezePowerUp::CollideWith(CBaseObject* pOther, Vector &pos)
 {
-	if(pOther->getType() == SHIP)
+	if(pOther->getType() == SHIP && this->m_bIsGrabable)
 	{
 		std::vector<PhysicsData*>& players = CODEManager::Instance()->m_vPlayers;
 		std::vector<PhysicsData*>::iterator it = players.begin();
