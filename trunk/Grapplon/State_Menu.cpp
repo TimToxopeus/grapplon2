@@ -7,6 +7,11 @@
 #include "GameSettings.h"
 #include "Vector.h"
 #include <math.h>
+#include "WiimoteManager.h"
+
+#define MOUSEON "media/sounds/Hook_attach.wav"
+#define FORWARD "media/sounds/Hook_throw.wav"
+#define BACK "media/sounds/Hook_retract.wav"
 
 LevelNode::LevelNode()
 {
@@ -230,8 +235,8 @@ CMenuState::CMenuState( int iState, int iScore1, int iScore2, int iScore3, int i
 	m_vStates.push_back( StateChange( PLAYERSELECT, PLAYERSELECT, m_pTitle, INSTANT, false, HIGH, 1.0f, 2.0f, -1024, -768, -1024, -768 ) );
 	m_vStates.push_back( StateChange( PLAYERSELECT, PLAYERSELECT, m_pSelectHowMany, INSTANT, false, PLAYERSELECT, 1.0f, 0.0f, -484, -400, -484, -400, 0 ) );
 	m_vStates.push_back( StateChange( PLAYERSELECT, PLAYERSELECT, m_pSelect, INSTANT, false, PLAYERSELECT, 1.0f, 0.0f, -875, -250, -875, -250, 0 ) );
-	m_vStates.push_back( StateChange( PLAYERSELECT, PLAYERSELECT, m_pSelect, INSTANT, false, PLAYERSELECT, 1.0f, 0.0f, -275, -250, -275, -250, 1 ) );
-	m_vStates.push_back( StateChange( PLAYERSELECT, PLAYERSELECT, m_pSelect, INSTANT, false, PLAYERSELECT, 1.0f, 0.0f, 325, -250, 325, -250, 2 ) );
+	m_vStates.push_back( StateChange( PLAYERSELECT, PLAYERSELECT, m_pSelect, INSTANT, false, PLAYERSELECT, 1.0f, 0.0f, -275, -250, -275, -250, 1 + (CWiimoteManager::Instance()->GetActiveWiimotes() >= 3 ? 2 : 0) ) );
+	m_vStates.push_back( StateChange( PLAYERSELECT, PLAYERSELECT, m_pSelect, INSTANT, false, PLAYERSELECT, 1.0f, 0.0f, 325, -250, 325, -250, 2 + (CWiimoteManager::Instance()->GetActiveWiimotes() >= 3 ? 2 : 0) ) );
 	m_vStates.push_back( StateChange( PLAYERSELECT, PLAYERSELECT, m_pScoreBack, INSTANT, false, PLAYERSELECT, 0.5f, 0.0f, -150, 448, -150, 448 ) );
 
 	m_vStates.push_back( StateChange( LEVELSELECT, LEVELSELECT, m_pTitle, INSTANT, false, HIGH, 1.0f, 2.0f, -1024, -768, -1024, -768 ) );
@@ -692,7 +697,7 @@ void CMenuState::Update(float fTime)
 							if ( m_vStates[a].m_fAlpha != 1.0f )
 							{
 								m_vStates[a].m_fAlpha = 1.0f;
-								CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Hook_attach.wav", RT_SOUND);
+								CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource(MOUSEON, RT_SOUND);
 								if ( pSound )
 									pSound->Play(true);
 							}
@@ -717,7 +722,7 @@ void CMenuState::Update(float fTime)
 							if ( m_vStates[a].m_fAlpha != 1.0f )
 							{
 								m_vStates[a].m_fAlpha = 1.0f;
-								CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Hook_attach.wav", RT_SOUND);
+								CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource(MOUSEON, RT_SOUND);
 								if ( pSound )
 									pSound->Play(true);
 							}
@@ -742,7 +747,7 @@ void CMenuState::Update(float fTime)
 							if ( m_vStates[a].m_fAlpha != 1.0f )
 							{
 								m_vStates[a].m_fAlpha = 1.0f;
-								CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Hook_attach.wav", RT_SOUND);
+								CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource(MOUSEON, RT_SOUND);
 								if ( pSound )
 									pSound->Play(true);
 							}
@@ -768,7 +773,7 @@ void CMenuState::Update(float fTime)
 							if ( frame != 1 )
 							{
 								m_vStates[a].m_pImage->SetFrame(1);
-								CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Hook_attach.wav", RT_SOUND);
+								CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource(MOUSEON, RT_SOUND);
 								if ( pSound )
 									pSound->Play(true);
 							}
@@ -793,7 +798,7 @@ void CMenuState::Update(float fTime)
 							if ( m_vStates[a].m_fAlpha != 1.0f )
 							{
 								m_vStates[a].m_fAlpha = 1.0f;
-								CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Hook_attach.wav", RT_SOUND);
+								CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource(MOUSEON, RT_SOUND);
 								if ( pSound )
 									pSound->Play(true);
 							}
@@ -818,7 +823,7 @@ void CMenuState::Update(float fTime)
 							if ( m_vStates[a].m_fAlpha != 1.0f )
 							{
 								m_vStates[a].m_fAlpha = 1.0f;
-								CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Hook_attach.wav", RT_SOUND);
+								CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource(MOUSEON, RT_SOUND);
 								if ( pSound )
 									pSound->Play(true);
 							}
@@ -915,20 +920,15 @@ int CMenuState::HandleSDLEvent(SDL_Event event)
 		}
 		else if ( state < SCOREINPUT || state == PLAYERSELECT || state == LEVELSELECT || state == TUTORIAL )
 		{
-			bool pushed = PushButton();
-			if ( pushed )
-			{
-				CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Hook_throw.wav", RT_SOUND);
-				for ( unsigned i = 0; i<m_vStates.size(); i++ )
-				{
-					if ( m_vStates[i].m_pImage == m_pScoreBack )
-						pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Hook_retract.wav", RT_SOUND);
-					else
-						pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Hook_throw.wav", RT_SOUND);
-				}
-				if ( pSound )
-					pSound->Play(true);
-			}
+			int pushed = PushButton();
+			CSound *pSound = NULL;
+			if ( pushed == 1 )
+				pSound = (CSound *)CResourceManager::Instance()->GetResource(FORWARD, RT_SOUND);
+			else if ( pushed == 2 )
+				pSound = (CSound *)CResourceManager::Instance()->GetResource(BACK, RT_SOUND);
+			if ( pSound )
+				pSound->Play(true);
+
 			if ( state == LEVELSELECT && !pushed )
 			{
 //				m_iSelectedLevel = -1;
@@ -976,8 +976,9 @@ void CMenuState::NextState()
 	}
 }
 
-bool CMenuState::PushButton()
+int CMenuState::PushButton()
 {
+	bool backPressed = false;
 	int newState = state;
 	int icursorX = (cursorX * 2 - 1024);
 	int icursorY = (cursorY * 2 - 768);
@@ -1032,11 +1033,12 @@ bool CMenuState::PushButton()
 			{
 				newState = GAMEMENU;
 				m_iActivePlayer = 1;
+				backPressed = true;
 			}
 			if ( m_vStates[i].m_pImage == m_pMenuRestart && newState == state && state == SCORE )
 			{
 				m_bRunning = false;
-				return true;
+				return 1;
 			}
 			if ( m_vStates[i].m_pImage == m_pScoreBack && newState == state && state == LEVELSELECT )
 			{
@@ -1051,28 +1053,32 @@ bool CMenuState::PushButton()
 					m_iCurrentUniverseIndex = 0;
 				}
 				m_iActivePlayer = 1;
+				backPressed = true;
 			}
 			if ( m_vStates[i].m_pImage == m_pLevelGo && newState == state && state == LEVELSELECT )
 			{
 				if ( m_iSelectedLevel != -1 )
 				{
 					m_bRunning = false;
-					return true;
+					return 1;
 				}
 			}
 			if ( m_vStates[i].m_pImage == m_pSelect && state == PLAYERSELECT )
 			{
-				m_iPlayersSelected = m_vStates[i].m_iAnimation + 2;
-				newState = LEVELSELECT;
-				m_iActivePlayer = 1;
+				if ( m_vStates[i].m_iAnimation <= 2 )
+				{
+					m_iPlayersSelected = m_vStates[i].m_iAnimation + 2;
+					newState = LEVELSELECT;
+					m_iActivePlayer = 1;
+				}
 			}
 		}
 	}
 	if ( state == newState )
-		return false;
+		return (backPressed ? 2 : 0);
 
 	state = newState;
-	return true;
+	return (backPressed ? 2 : 1);
 }
 
 void CMenuState::PrintScore( int pos, std::string szName, int iScore )
@@ -1186,7 +1192,7 @@ void CMenuState::PushKeyboard( int x, int y )
 					int t = j + i * 10;
 					char tokens[31] = "qwertyuiopasdfghjkl!zxcvbnm,.-";
 					m_szInputName += tokens[t];
-					CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Menu_button_mouseclick.wav", RT_SOUND);
+					CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource(FORWARD, RT_SOUND);
 					if ( pSound )
 						pSound->Play(true);
 					return;
@@ -1198,7 +1204,7 @@ void CMenuState::PushKeyboard( int x, int y )
 	if ( icursorX > -640 && icursorX < -248 && icursorY > 225 && icursorY < 317 )
 	{
 		m_szInputName = m_szInputName.substr(0, m_szInputName.length()-1);
-		CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Menu_button_mouseclick.wav", RT_SOUND);
+		CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource(BACK, RT_SOUND);
 		if ( pSound )
 			pSound->Play(true);
 	}
@@ -1314,16 +1320,17 @@ void CMenuState::HandleButtonPress( wiimote_t* pWiimoteEvent )
 	{
 		m_pCursor->SetAnimation(1);
 
-		bool pushed = PushButton();
-		if ( pushed )
-		{
-			CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Menu_button_mouseclick.wav", RT_SOUND);
-			if ( pSound )
-				pSound->Play(true);
-		}
+		int pushed = PushButton();
+		CSound *pSound = NULL;
+		if ( pushed == 1 )
+			pSound = (CSound *)CResourceManager::Instance()->GetResource(FORWARD, RT_SOUND);
+		else if ( pushed == 2 )
+			pSound = (CSound *)CResourceManager::Instance()->GetResource(BACK, RT_SOUND);
+		if ( pSound )
+			pSound->Play(true);
+
 		if ( state == LEVELSELECT && !pushed && !IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_B) )
 		{
-//			m_iSelectedLevel = -1;
 			int icursorX = (cursorX * 2 - 1024);
 			int icursorY = (cursorY * 2 - 768);
 			HandleLevelSelect( icursorX, icursorY );
@@ -1340,6 +1347,13 @@ void CMenuState::HandleButtonPress( wiimote_t* pWiimoteEvent )
 	}
 	else if ( IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_B) )
 	{
+		if ( state != GAMEMENU )
+		{
+			CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource(BACK, RT_SOUND);
+			if ( pSound )
+				pSound->Play(true);
+		}
+
 		if ( state == LEVELSELECT )
 		{
 			if ( m_iCurrentUniverseIndex == 0 )
@@ -1374,10 +1388,19 @@ bool CMenuState::HandleLevelSelect( int x, int y )
 	{
 		if ( m_vLevelNodes[i]->m_szParent == m_vLevelNodes[m_iCurrentUniverseIndex]->m_szName && m_vLevelNodes[i]->IsClicked( x, y ) )
 		{
+			CSound *pSound = NULL;
 			if ( m_vLevelNodes[i]->m_szTarget.substr(0, 6) == "level_" )
+			{
 				m_iSelectedLevel = i;
+				pSound = (CSound *)CResourceManager::Instance()->GetResource(FORWARD, RT_SOUND);
+			}
 			else
+			{
 				m_iCurrentUniverseIndex = GetIndexByName( m_vLevelNodes[i]->m_szTarget );
+				pSound = (CSound *)CResourceManager::Instance()->GetResource(FORWARD, RT_SOUND);
+			}
+			if ( pSound )
+				pSound->Play(true);
 			break;
 		}
 	}
