@@ -125,7 +125,7 @@ protected:
 
 	std::vector<StateChange> m_vStates;
 
-	bool PushButton();
+	int PushButton();
 	void PrintScore( int pos, std::string szName, int iScore );
 
 	std::vector<LevelNode *> m_vLevelNodes;
