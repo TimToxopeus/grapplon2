@@ -8,8 +8,11 @@ initspawn1 = 500 500
 initspawn2 = -500 -500
 initspawn3 = -400 900
 initspawn4 = -600 -800
-max_power_up = 1
-pu_freeze  = 100
+max_power_up = 4
+pu_speed  = 25
+pu_speed  = 25
+pu_speed  = 25
+pu_speed  = 25
 
 [ice]
 name = sun

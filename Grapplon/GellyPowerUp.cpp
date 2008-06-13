@@ -18,7 +18,7 @@ CGellyPowerUp::~CGellyPowerUp(void)
 
 void CGellyPowerUp::CollideWith(CBaseObject* pOther, Vector &pos)
 {
-	if(pOther->getType() == SHIP)
+	if(pOther->getType() == SHIP && this->m_bIsGrabable)
 	{
 		dynamic_cast<CPlayerObject*>(pOther)->TookJellyPowerUp();
 
