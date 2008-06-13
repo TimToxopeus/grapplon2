@@ -5,6 +5,6 @@ animations = idle
 
 [idle]
 file = "media/images/countdown_go.png"
-rows = 5
-frames = 15
+rows = 6
+frames = 18
 speed = 20
