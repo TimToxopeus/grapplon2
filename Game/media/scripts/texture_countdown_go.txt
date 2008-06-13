@@ -8,3 +8,4 @@ file = "media/images/countdown_go.png"
 rows = 6
 frames = 18
 speed = 20
+loop = 0
