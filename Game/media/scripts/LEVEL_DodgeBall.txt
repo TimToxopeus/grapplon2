@@ -259,7 +259,7 @@ scale = 1.0
 rotation = 0
 exit1 = 90 1000000
 exit2 = 90 -1000000
-damagemult = 0.001
+damagemult = 0
 
 [wormhole]
 name = wormhole2
@@ -274,7 +274,7 @@ scale = 1.0
 rotation = 0
 exit1 = 90 -1000000
 exit2 = 90 1000000
-damagemult = 0.001
+damagemult = 0
 
 [wormhole]
 name = wormhole3
@@ -289,7 +289,7 @@ scale = 1.0
 rotation = 0
 exit1 = 90 1000000
 exit2 = 90 -1000000
-damagemult = 0.001
+damagemult = 0
 
 [wormhole]
 name = wormhole4
@@ -304,7 +304,7 @@ scale = 1.0
 rotation = 0
 exit1 = 90 -1000000
 exit2 = 90 1000000
-damagemult = 0.001
+damagemult = 0
 
 [wormhole]
 name = wormhole5
@@ -319,7 +319,7 @@ scale = 1.0
 rotation = 0
 exit1 = 90 1000000
 exit2 = 90 -1000000
-damagemult = 0.001
+damagemult = 0
 
 [wormhole]
 name = wormhole6
@@ -334,7 +334,7 @@ scale = 1.0
 rotation = 0
 exit1 = 90 -1000000
 exit2 = 90 1000000
-damagemult = 0.001
+damagemult = 0
 
 --------------------------------------------------------------------------------------------------------------------
 Blackholes
