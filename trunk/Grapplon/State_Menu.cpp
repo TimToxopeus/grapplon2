@@ -236,8 +236,8 @@ CMenuState::CMenuState( int iState, int iScore1, int iScore2, int iScore3, int i
 	m_vStates.push_back( StateChange( PLAYERSELECT, PLAYERSELECT, m_pTitle, INSTANT, false, HIGH, 1.0f, 2.0f, -1024, -768, -1024, -768 ) );
 	m_vStates.push_back( StateChange( PLAYERSELECT, PLAYERSELECT, m_pSelectHowMany, INSTANT, false, PLAYERSELECT, 1.0f, 0.0f, -484, -400, -484, -400, 0 ) );
 	m_vStates.push_back( StateChange( PLAYERSELECT, PLAYERSELECT, m_pSelect, INSTANT, false, PLAYERSELECT, 1.0f, 0.0f, -875, -250, -875, -250, 0 ) );
-	m_vStates.push_back( StateChange( PLAYERSELECT, PLAYERSELECT, m_pSelect, INSTANT, false, PLAYERSELECT, 1.0f, 0.0f, -275, -250, -275, -250, 1 + (CWiimoteManager::Instance()->GetActiveWiimotes() >= 3 ? 2 : 0) ) );
-	m_vStates.push_back( StateChange( PLAYERSELECT, PLAYERSELECT, m_pSelect, INSTANT, false, PLAYERSELECT, 1.0f, 0.0f, 325, -250, 325, -250, 2 + (CWiimoteManager::Instance()->GetActiveWiimotes() >= 3 ? 2 : 0) ) );
+	m_vStates.push_back( StateChange( PLAYERSELECT, PLAYERSELECT, m_pSelect, INSTANT, false, PLAYERSELECT, 1.0f, 0.0f, -275, -250, -275, -250, 1 ) );// + (CWiimoteManager::Instance()->GetActiveWiimotes() >= 3 ? 2 : 0) ) );
+	m_vStates.push_back( StateChange( PLAYERSELECT, PLAYERSELECT, m_pSelect, INSTANT, false, PLAYERSELECT, 1.0f, 0.0f, 325, -250, 325, -250, 2 ) );//+ (CWiimoteManager::Instance()->GetActiveWiimotes() >= 3 ? 2 : 0) ) );
 	m_vStates.push_back( StateChange( PLAYERSELECT, PLAYERSELECT, m_pScoreBack, INSTANT, false, PLAYERSELECT, 0.5f, 0.0f, -150, 448, -150, 448 ) );
 
 	m_vStates.push_back( StateChange( LEVELSELECT, LEVELSELECT, m_pTitle, INSTANT, false, HIGH, 1.0f, 2.0f, -1024, -768, -1024, -768 ) );
