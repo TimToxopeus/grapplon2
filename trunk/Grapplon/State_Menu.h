@@ -116,6 +116,7 @@ protected:
 	GLuint m_iAVIid;
 
 	bool m_bNext;
+	bool m_bReplayable;
 
 	int cursorX, cursorY;
 	int cursorXAvg[IR_AVG], cursorYAvg[IR_AVG];
@@ -161,4 +162,6 @@ public:
 
 	int GetPlayersSelected() { return m_iPlayersSelected; }
 	std::string GetSelectedLevel();
+
+	void AllowReplay() { m_bReplayable = true; }
 };

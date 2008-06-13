@@ -287,6 +287,7 @@ void CCore::Run()
 				m_bRunningValid = false;
 				delete m_pActiveState;
 				m_pActiveState = new CMenuState(SCORE, iScores[0], iScores[1], iScores[2], iScores[3]);
+				((CMenuState *)m_pActiveState)->AllowReplay();
 				m_bRunningValid = true;
 			}
 
