@@ -1,6 +1,6 @@
 [universe]
-width = 2800
-height = 2500
+width = 3000
+height = 3000
 boundaryforce = 20000000
 initspawn4 = 1700 200
 initspawn3 = -1700 200
@@ -134,18 +134,7 @@ damagemult = 0.6
 
 [asteroid]
 name = asteroid5
-orbit = sun 2200 100
-mass = 40
-image = asteroid02
-grav = 0
-angle = 50
-rotation = 15
-radius = 50
-damagemult = 3.5
-
-[asteroid]
-name = asteroid1
-orbit = sun 2250 100
+orbit = sun 2500 100
 mass = 40
 image = asteroid02
 grav = 0
@@ -155,67 +144,133 @@ radius = 50
 damagemult = 3.5
 
 [asteroid]
-name = asteroid2
-orbit = sun 2350 100
+name = asteroid1
+orbit = sun 2500 100
 mass = 40
 image = asteroid02
 grav = 0
-angle = 170
+angle = 45
+rotation = 15
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = asteroid2
+orbit = sun 2500 100
+mass = 40
+image = asteroid02
+grav = 0
+angle = 90
 rotation = 35
 radius = 50
 damagemult = 3.5
 
 [asteroid]
 name = asteroid3
-orbit = sun 2480 100
+orbit = sun 2500 100
 mass = 40
 image = asteroid02
 grav = 0
-angle = 250
+angle = 135
 rotation = 5
 radius = 50
 damagemult = 3.5
 
 [asteroid]
 name = asteroid4
-orbit = sun 2450 100
+orbit = sun 2500 100
 mass = 40
 image = asteroid02
 grav = 0
-angle = 330
+angle = 180
 rotation = 10
 radius = 50
 damagemult = 3.5
 
 [asteroid]
 name = asteroid6
-orbit = sun 2300 100
+orbit = sun 2500 100
 mass = 40
 image = asteroid02
 grav = 0
-angle = 30
+angle = 225
 rotation = 10
 radius = 50
 damagemult = 3.5
 
 [asteroid]
 name = asteroid7
-orbit = sun 2300 100
+orbit = sun 2500 100
 mass = 40
 image = asteroid02
 grav = 0
-angle = 150
+angle = 270
 rotation = 15
 radius = 50
 damagemult = 3.5
 
 [asteroid]
-name = asteroid7
-orbit = sun 2400 100
+name = asteroid7-1
+orbit = sun 2500 100
 mass = 40
 image = asteroid02
 grav = 0
-angle = 250
+angle = 315
+rotation = 15
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = asteroid8
+orbit = sun 700 100
+mass = 40
+image = asteroid02
+grav = 0
+angle = 0
+rotation = 15
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = asteroid9
+orbit = sun 700 100
+mass = 40
+image = asteroid02
+grav = 0
+angle = 72
+rotation = 15
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = asteroid10
+orbit = sun 700 100
+mass = 40
+image = asteroid02
+grav = 0
+angle = 144
+rotation = 15
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = asteroid11
+orbit = sun 700 100
+mass = 40
+image = asteroid02
+grav = 0
+angle = 216
+rotation = 15
+radius = 50
+damagemult = 3.5
+
+[asteroid]
+name = asteroid12
+orbit = sun 700 100
+mass = 40
+image = asteroid02
+grav = 0
+angle = 288
 rotation = 15
 radius = 50
 damagemult = 3.5
