@@ -3,7 +3,7 @@ rik 45000
 tim 42500
 roy 40000
 tim 36000
-monkey 35000
+mick 35000
 roy 30000
 rik 25000
 player 10000
