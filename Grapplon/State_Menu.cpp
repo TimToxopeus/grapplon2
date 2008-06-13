@@ -114,6 +114,7 @@ CMenuState::CMenuState( int iState, int iScore1, int iScore2, int iScore3, int i
 	m_fLevelCursorAngle = 0.0f;
 	m_fLevelCursorAlpha = 0.0f;
 	m_bLevelCursorIncrease = true;
+	m_bReplayable = false;
 
 	m_iActivePlayer = 1;
 	if ( iState == 0 )
@@ -373,6 +374,9 @@ void CMenuState::Render()
 	{
 		if ( m_vStates[a].m_iState == state || (m_vStates[a].m_iState < state && m_vStates[a].m_iStayRendered >= state) )
 		{
+			if ( m_vStates[a].m_pImage == m_pMenuRestart && !m_bReplayable )
+				continue;
+
 			target = m_vStates[a].m_pImage->GetSize();
 			target.w += target.w;
 			target.h += target.h;
@@ -713,7 +717,7 @@ void CMenuState::Update(float fTime)
 			{
 				int icursorX = (cursorX * 2 - 1024);
 				int icursorY = (cursorY * 2 - 768);
-				if ( m_vStates[a].m_pImage == m_pScoreBack || m_vStates[a].m_pImage == m_pMenuRestart )
+				if ( m_vStates[a].m_pImage == m_pScoreBack || (m_vStates[a].m_pImage == m_pMenuRestart && m_bReplayable) )
 				{
 					if ( icursorX > m_vStates[a].m_iStartX && icursorX < m_vStates[a].m_iStartX + m_vStates[a].m_pImage->GetSize().w * 2 )
 					{
@@ -1037,8 +1041,11 @@ int CMenuState::PushButton()
 			}
 			if ( m_vStates[i].m_pImage == m_pMenuRestart && newState == state && state == SCORE )
 			{
-				m_bRunning = false;
-				return 1;
+				if ( m_bReplayable )
+				{
+					m_bRunning = false;
+					return 1;
+				}
 			}
 			if ( m_vStates[i].m_pImage == m_pScoreBack && newState == state && state == LEVELSELECT )
 			{
