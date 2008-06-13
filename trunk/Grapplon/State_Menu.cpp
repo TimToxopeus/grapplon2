@@ -692,7 +692,7 @@ void CMenuState::Update(float fTime)
 							if ( m_vStates[a].m_fAlpha != 1.0f )
 							{
 								m_vStates[a].m_fAlpha = 1.0f;
-								CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Menu_button_mouseon.wav", RT_SOUND);
+								CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Hook_attach.wav", RT_SOUND);
 								if ( pSound )
 									pSound->Play(true);
 							}
@@ -717,7 +717,7 @@ void CMenuState::Update(float fTime)
 							if ( m_vStates[a].m_fAlpha != 1.0f )
 							{
 								m_vStates[a].m_fAlpha = 1.0f;
-								CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Menu_button_mouseon.wav", RT_SOUND);
+								CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Hook_attach.wav", RT_SOUND);
 								if ( pSound )
 									pSound->Play(true);
 							}
@@ -742,7 +742,7 @@ void CMenuState::Update(float fTime)
 							if ( m_vStates[a].m_fAlpha != 1.0f )
 							{
 								m_vStates[a].m_fAlpha = 1.0f;
-								CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Menu_button_mouseon.wav", RT_SOUND);
+								CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Hook_attach.wav", RT_SOUND);
 								if ( pSound )
 									pSound->Play(true);
 							}
@@ -768,7 +768,7 @@ void CMenuState::Update(float fTime)
 							if ( frame != 1 )
 							{
 								m_vStates[a].m_pImage->SetFrame(1);
-								CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Menu_button_mouseon.wav", RT_SOUND);
+								CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Hook_attach.wav", RT_SOUND);
 								if ( pSound )
 									pSound->Play(true);
 							}
@@ -793,7 +793,7 @@ void CMenuState::Update(float fTime)
 							if ( m_vStates[a].m_fAlpha != 1.0f )
 							{
 								m_vStates[a].m_fAlpha = 1.0f;
-								CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Menu_button_mouseon.wav", RT_SOUND);
+								CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Hook_attach.wav", RT_SOUND);
 								if ( pSound )
 									pSound->Play(true);
 							}
@@ -818,7 +818,7 @@ void CMenuState::Update(float fTime)
 							if ( m_vStates[a].m_fAlpha != 1.0f )
 							{
 								m_vStates[a].m_fAlpha = 1.0f;
-								CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Menu_button_mouseon.wav", RT_SOUND);
+								CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Hook_attach.wav", RT_SOUND);
 								if ( pSound )
 									pSound->Play(true);
 							}
@@ -918,7 +918,14 @@ int CMenuState::HandleSDLEvent(SDL_Event event)
 			bool pushed = PushButton();
 			if ( pushed )
 			{
-				CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Menu_button_mouseclick.wav", RT_SOUND);
+				CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Hook_throw.wav", RT_SOUND);
+				for ( unsigned i = 0; i<m_vStates.size(); i++ )
+				{
+					if ( m_vStates[i].m_pImage == m_pScoreBack )
+						pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Hook_retract.wav", RT_SOUND);
+					else
+						pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Hook_throw.wav", RT_SOUND);
+				}
 				if ( pSound )
 					pSound->Play(true);
 			}
