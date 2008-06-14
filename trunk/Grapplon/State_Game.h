@@ -25,6 +25,8 @@ private:
 	CBackground *m_pBackground;
 	CHUD *m_pHUD;
 
+	void LoadCommonImages();
+
 public:
 	CGameState();
 	virtual ~CGameState();
