@@ -1,3 +1,4 @@
+tim 86835
 wiimaster 40000
 pirate 38000
 blue 36500
@@ -7,4 +8,3 @@ monkey 25000
 ape 20000
 me 15000
 player 10000
-noob 1000

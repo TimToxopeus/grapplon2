@@ -104,6 +104,8 @@ bool CGameState::Init( int iPlayers, std::string level )
 	if ( pSound )
 		pSound->Play();
 
+	LoadCommonImages();
+
 	return true;
 }
 
@@ -400,4 +402,18 @@ bool CGameState::IsPaused()
 			return true;
 		}
 	}
+}
+
+void CGameState::LoadCommonImages()
+{
+	CResourceManager *pRMan = CResourceManager::Instance();
+	pRMan->GetResource( "media/images/explosion_large.png", RT_TEXTURE );
+	pRMan->GetResource( "media/images/explosion_particle.png", RT_TEXTURE );
+	pRMan->GetResource( "media/images/explosion_small.png", RT_TEXTURE );
+	pRMan->GetResource( "media/images/explosion_vaporize.png", RT_TEXTURE );
+	pRMan->GetResource( "media/images/hit.png", RT_TEXTURE );
+	pRMan->GetResource( "media/images/electric_green.png", RT_TEXTURE );
+	pRMan->GetResource( "media/images/electric_red.png", RT_TEXTURE );
+	pRMan->GetResource( "media/images/electric_blue.png", RT_TEXTURE );
+	pRMan->GetResource( "media/images/timefreeze.png", RT_TEXTURE );
 }
