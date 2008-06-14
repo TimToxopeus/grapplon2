@@ -55,4 +55,5 @@ public:
 	bool ShouldQuit();
 
 	IStateManager *GetActiveState() { return m_pActiveState; }
+	int GetAmountOfPlayers() { return m_iLastAmountOfPlayers; }
 };
