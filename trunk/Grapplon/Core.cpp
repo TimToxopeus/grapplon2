@@ -219,7 +219,7 @@ void CCore::Run()
 				}
 			}
 			if ( m_pRenderer ) m_pRenderer->Update( timeSinceLastUpdate );
-			u2 = (float)(SDL_GetTicks() - lastUpdate) / 1000.0f;
+				u2 = (float)(SDL_GetTicks() - lastUpdate) / 1000.0f;
 
 			stime += timeSinceLastUpdate;
 			frames++;
