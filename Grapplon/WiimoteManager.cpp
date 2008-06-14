@@ -67,7 +67,8 @@ void CWiimoteManager::HandleWiimoteEvents()
 	if ( wiiuse_poll(m_pWiimotes, 4) )
 	{
 		int i = 0;
-		for ( i = 0; i<4; ++i )
+		int t = CCore::Instance()->GetAmountOfPlayers();
+		for ( i = 0; i<t; ++i )
 		{
 //			if ( m_pWiimotes[i]->event == WIIUSE_EVENT )
 				DispatchEvent( m_pWiimotes[i], i );
