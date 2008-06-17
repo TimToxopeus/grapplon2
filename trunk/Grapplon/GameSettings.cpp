@@ -81,6 +81,7 @@ CGameSettings::CGameSettings()
 	MUSIC_SPEEDUP_TIME		= -1;
 	MUSIC_SPEEDUP_MULT		= -1;
 	AUTO_AIM_ANGLE_HOOK		= -1;
+	ODE_THREAD				= false;
 
 	Init();
 }
@@ -165,6 +166,7 @@ bool CGameSettings::Init()
 		else if ( tokens[0] == "MusicSpeedUpMult" )		{ MUSIC_SPEEDUP_MULT	= (float)atof( tokens[2].c_str() );	}
 		else if ( tokens[0] == "BuoyAmount" )			{ BUOY_AMOUNT			=		 atoi( tokens[2].c_str() );	}
 		else if ( tokens[0] == "BuoyDistance" )			{ BUOY_DISTANCE			=		 atoi( tokens[2].c_str() );	}
+		else if ( tokens[0] == "OdeThread" )			{ ODE_THREAD			=		 (tokens[2] == "1"); }
 
 
 	MUSIC_SPEEDUP_TIME		= -1;

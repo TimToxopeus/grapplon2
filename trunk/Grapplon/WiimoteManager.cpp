@@ -121,11 +121,15 @@ int CWiimoteManager::CheckForWiimotes()
 
 			wiiuse_rumble(m_pWiimotes[0], 1);
 			wiiuse_rumble(m_pWiimotes[1], 1);
+			wiiuse_rumble(m_pWiimotes[2], 1);
+			wiiuse_rumble(m_pWiimotes[3], 1);
 
 			Sleep(200);
 
 			wiiuse_rumble(m_pWiimotes[0], 0);
 			wiiuse_rumble(m_pWiimotes[1], 0);
+			wiiuse_rumble(m_pWiimotes[2], 0);
+			wiiuse_rumble(m_pWiimotes[3], 0);
 
 			m_iStatusWait = iConnected;
 			for ( int i = 0; i<iConnected; i++ )
