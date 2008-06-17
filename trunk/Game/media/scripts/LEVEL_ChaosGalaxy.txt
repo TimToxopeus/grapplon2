@@ -48,7 +48,7 @@ angle2 = 320
 zoomradius = 1800
 exit1 = -100000 -100000
 exit2 = -100000 -100000
-damagemult = 0.001
+damagemult = 0
 
 [wormhole]
 name = wormhole2
@@ -66,7 +66,7 @@ angle2 = 0
 zoomradius = 1800
 exit1 = -100000 -100000
 exit2 = -100000 -100000
-damagemult = 0.001
+damagemult = 0
 
 [wormhole]
 name = wormhole3
@@ -84,7 +84,7 @@ angle2 = 72
 zoomradius = 1800
 exit1 = -100000 -100000
 exit2 = -100000 -100000
-damagemult = 0.001
+damagemult = 0
 
 [wormhole]
 name = wormhole4
@@ -102,7 +102,7 @@ angle2 = 144
 zoomradius = 1800
 exit1 = -100000 -100000
 exit2 = -100000 -100000
-damagemult = 0.001
+damagemult = 0
 
 [wormhole]
 name = wormhole5
@@ -120,7 +120,7 @@ angle2 = 216
 zoomradius = 1800
 exit1 = -100000 -100000
 exit2 = -100000 -100000
-damagemult = 0.001
+damagemult = 0
 
 [wormhole]
 name = wormhole6
@@ -138,7 +138,7 @@ angle2 = 288
 zoomradius = 1800
 exit1 = -100000 -100000
 exit2 = -100000 -100000
-damagemult = 0.001
+damagemult = 0
 
 [asteroid]
 name = asteroid1
@@ -216,4 +216,3 @@ angle = 200
 rotation = 33
 radius = 50
 damagemult = 3.5
-
