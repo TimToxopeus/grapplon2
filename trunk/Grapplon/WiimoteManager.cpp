@@ -64,6 +64,15 @@ void CWiimoteManager::HandleWiimoteEvents()
 //	if ( m_iLastCheck + 1000 < SDL_GetTicks() )
 //		CheckForWiimotes();
 
+	unsigned int time = SDL_GetTicks();
+	for ( int i = 0; i<4; i++ )
+	{
+		if ( time < m_iRumbleTimes[i] )
+			wiiuse_rumble( m_pWiimotes[i], 1 );
+		else
+			wiiuse_rumble( m_pWiimotes[i], 0 );
+	}
+
 	if ( wiiuse_poll(m_pWiimotes, 4) )
 	{
 		int i = 0;
@@ -300,4 +309,9 @@ bool CWiimoteManager::HasNunchuk()
 		}
 	}
 	return true;
+}
+
+void CWiimoteManager::Rumble( int iWiimote )
+{
+	m_iRumbleTimes[iWiimote] = SDL_GetTicks() + 200;
 }
