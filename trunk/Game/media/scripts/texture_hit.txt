@@ -7,5 +7,5 @@ animations = idle
 file = "media/images/hit.png"
 frames = 12
 rows = 3
-speed = 10
+speed = 20
 loop = 0
