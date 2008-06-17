@@ -5,7 +5,7 @@
 
 class CAnimatedTexture;
 
-enum ObjectType { UNSET = 0, STATE, HUD, PARTICLESYSTEM, SHIP, HOOK, ORDINARY, ASTEROID, SUN, ICE, BROKEN, CHAINLINK, FIRE, POWERUP, WORMHOLE, ELECTRO };
+enum ObjectType { UNSET = 0, MENUSTATE, GAMESTATE, HUD, PARTICLESYSTEM, SHIP, HOOK, ORDINARY, ASTEROID, SUN, ICE, BROKEN, CHAINLINK, FIRE, POWERUP, WORMHOLE, ELECTRO };
 
 class IActiveObject
 {
@@ -45,8 +45,10 @@ public:
 		default:
 		case UNSET:
 			return "UNSET";
-		case STATE:
-			return "STATE";
+		case GAMESTATE:
+			return "GAMESTATE";
+		case MENUSTATE:
+			return "MENUSTATE";
 		case HUD:
 			return "HUD";
 		case PARTICLESYSTEM:

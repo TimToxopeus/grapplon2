@@ -16,7 +16,7 @@
 #include "LoadingScreen.h"
 
 CCore *CCore::m_pInstance = NULL;
-bool m_bThreaded = true;
+bool g_bThreaded = true;
 
 CCore::CCore()
 {
@@ -81,6 +81,7 @@ bool CCore::SystemsInit()
 	m_bMenu = SETS->MENU_ON;
 	if ( m_bMenu )
 	{
+		m_iLastAmountOfPlayers = 1;
 		m_pActiveState = new CMenuState();
 	}
 	else
@@ -175,7 +176,7 @@ void CCore::Run()
 	// Start handling Wiimote events
 	CLogManager::Instance()->LogMessage("Starting Wiimote thread.");
 	m_pWiimoteManager->StartEventThread();
-	if ( m_bThreaded )
+	if ( g_bThreaded )
 		m_pODEManager->StartEventThread();
 
 	// Ensure nunchuk is working
@@ -210,7 +211,7 @@ void CCore::Run()
 			float u1, u2, u3, r;
 			if ( m_pSoundManager ) m_pSoundManager->Update( timeSinceLastUpdate );
 			u1 = (float)(SDL_GetTicks() - lastUpdate) / 1000.0f;
-			if ( !m_bThreaded )
+			if ( !g_bThreaded )
 			{
 				if ( !((CGameState *)m_pActiveState)->IsPaused() )
 				{
@@ -243,7 +244,7 @@ void CCore::Run()
 			CLoadingScreen::Instance()->StartRendering();
 			m_pRenderer->UnregisterAll();
 
-			if ( m_bThreaded )
+			if ( g_bThreaded )
 				m_pODEManager->StopEventThread();
 			CODEManager::Destroy();
 			m_pODEManager = CODEManager::Instance();
@@ -272,7 +273,6 @@ void CCore::Run()
 				m_bRunningValid = false;
 				delete m_pActiveState;
 				m_pActiveState = new CGameState();
-				m_bRunningValid = true;
 
 				((CGameState *)m_pActiveState)->Init( players, selectedLevel );
 				m_pODEManager->m_pUniverse = ((CGameState *)m_pActiveState)->GetUniverse();
@@ -288,13 +288,13 @@ void CCore::Run()
 				delete m_pActiveState;
 				m_pActiveState = new CMenuState(SCORE, iScores[0], iScores[1], iScores[2], iScores[3]);
 				((CMenuState *)m_pActiveState)->AllowReplay();
-				m_bRunningValid = true;
 			}
 
-			if ( m_bThreaded )
+			if ( g_bThreaded )
 				m_pODEManager->StartEventThread();
 			m_pWiimoteManager->RegisterListener( m_pActiveState, -1 );
 			m_bMenu = !m_bMenu;
+			m_bRunningValid = true;
 			CLoadingScreen::Instance()->StopRendering();
 		}
 	}
@@ -302,7 +302,7 @@ void CCore::Run()
 	// Stop handling Wiimote events
 	CLogManager::Instance()->LogMessage("Stopping Wiimote thread.");
 	m_pWiimoteManager->StopEventThread();
-	if ( m_bThreaded )
+	if ( g_bThreaded )
 		m_pODEManager->StopEventThread();
 }
 
@@ -321,4 +321,17 @@ bool CCore::ShouldQuit()
 	if ( m_pActiveState )
 		return m_pActiveState->ShouldQuit();
 	return false;
+}
+
+bool CCore::IsPaused()
+{
+	if ( m_bRunningValid )
+	{
+		if ( m_pActiveState->getType() == GAMESTATE )
+		{
+			CGameState *state = (CGameState *)m_pActiveState;
+			return state->IsPaused();
+		}
+	}
+	return true;
 }
