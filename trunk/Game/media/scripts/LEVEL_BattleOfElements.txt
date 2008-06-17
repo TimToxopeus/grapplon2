@@ -12,6 +12,7 @@ pu_health  = 20
 pu_gelly = 35
 pu_shield = 10
 background = 2
+screenmargin = 200
 
 [sun]
 name = sun1
