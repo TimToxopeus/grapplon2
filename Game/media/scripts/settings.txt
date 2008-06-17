@@ -1,5 +1,5 @@
-Level = media/scripts/LEVEL_windgalaxy.txt    Level
-MenuOn = 1
+Level = media/scripts/LEVEL_test.txt    Level
+MenuOn = 0
 Players = 2																  Aantal spelers
 Fullscreen = 0
 PitchAccelOut = 40						 					 Accelaratie nodig om haak uit te slaan. Als 0, dan kun je alleen uitslaan met de A-knop

@@ -10,9 +10,9 @@ initspawn3 = -400 900
 initspawn4 = -600 -800
 max_power_up = 4
 pu_speed  = 25
-pu_speed  = 25
-pu_speed  = 25
-pu_speed  = 25
+pu_shield  = 25
+pu_shield  = 25
+pu_shield  = 25
 
 [ice]
 name = sun
