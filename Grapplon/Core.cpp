@@ -16,7 +16,7 @@
 #include "LoadingScreen.h"
 
 CCore *CCore::m_pInstance = NULL;
-bool g_bThreaded = true;
+bool g_bThreaded = SETS->ODE_THREAD;
 
 CCore::CCore()
 {
