@@ -31,6 +31,9 @@ CWiimoteManager::CWiimoteManager()
 	m_bSetup = false;
 	m_bNunchuks[0] = m_bNunchuks[1] = m_bNunchuks[2] = m_bNunchuks[3] = false;
 	m_bQuit = false;
+
+	for ( int i = 0; i<4; i++ )
+		m_iRumbleTimes[i] = 0;
 }
 
 // Clean up wiimote manager
