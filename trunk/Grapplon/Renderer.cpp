@@ -293,7 +293,7 @@ bool CRenderer::ObjectsInRange( int x, int y, int radius )
 		IActiveObject *act = m_vActiveObjects[i];
 		CBaseObject *obj = NULL;
 
-		if ( act->getType() != STATE && act->getType() != CHAINLINK && act->getType() != PARTICLESYSTEM && act->getType() != HUD && act->getType() != UNSET )
+		if ( act->getType() != GAMESTATE && act->getType() != MENUSTATE && act->getType() != CHAINLINK && act->getType() != PARTICLESYSTEM && act->getType() != HUD && act->getType() != UNSET )
 		{
 			obj = (CBaseObject *)act;
 			Vector dist = obj->GetPosition() - pos;

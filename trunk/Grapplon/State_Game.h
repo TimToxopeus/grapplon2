@@ -25,6 +25,8 @@ private:
 	CBackground *m_pBackground;
 	CHUD *m_pHUD;
 
+	int m_iPlayerPaused;
+
 	void LoadCommonImages();
 
 public:

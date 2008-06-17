@@ -22,6 +22,7 @@
 #include "Vector.h"
 
 #define SOUNDTIME 250
+extern bool g_bThreaded;
 
 SDL_mutex *g_pODEMutex = NULL;
 CODEManager *CODEManager::m_pInstance = NULL;
@@ -38,7 +39,7 @@ int ODEManagerThread(void *data)
 		SDL_mutexP( g_pODEMutex );
 		time = SDL_GetTicks();
 		float timeSinceLastUpdate = (float)(time - lastUpdate) / 1000.0f;
-		if ( !((CGameState *)pCore->GetActiveState())->IsPaused() )
+		if ( !CCore::Instance()->IsPaused() )
 		{
 			pODE->Update(timeSinceLastUpdate);
 		}
@@ -624,7 +625,10 @@ void CODEManager::AddToBuffer( ODEEvent ode_event )
 
 void CODEManager::BodyAddForce(dBodyID body, Vector force )
 {
-	SDL_mutexP( g_pODEMutex );
+	if ( g_bThreaded )
+		SDL_mutexP( g_pODEMutex );
+
+	CLogManager::Instance()->LogMessage("BodyAddForce");
 /*	if ( m_pThread )
 	{
 		ODEEvent ode_event;
@@ -636,14 +640,19 @@ void CODEManager::BodyAddForce(dBodyID body, Vector force )
 	}
 	else
 	{*/
+	//if ( !CCore::Instance()->IsPaused() )
 		dBodyAddForce( body, force[0], force[1], force[2] );
 	//}
-	SDL_mutexV( g_pODEMutex );
+	if ( g_bThreaded )
+		SDL_mutexV( g_pODEMutex );
 }
 
 void CODEManager::BodySetForce(dBodyID body, Vector force )
 {
-	SDL_mutexP( g_pODEMutex );
+	if ( g_bThreaded )
+		SDL_mutexP( g_pODEMutex );
+
+	CLogManager::Instance()->LogMessage("BodySetForce");
 /*	if ( m_pThread )
 	{
 		ODEEvent ode_event;
@@ -655,14 +664,19 @@ void CODEManager::BodySetForce(dBodyID body, Vector force )
 	}
 	else
 	{*/
+	//if ( !CCore::Instance()->IsPaused() )
 		dBodySetForce( body, force[0], force[1], force[2] );
 	//}
-	SDL_mutexV( g_pODEMutex );
+	if ( g_bThreaded )
+		SDL_mutexV( g_pODEMutex );
 }
 
 void CODEManager::BodySetPosition( dBodyID body, Vector position )
 {
-	SDL_mutexP( g_pODEMutex );
+	if ( g_bThreaded )
+		SDL_mutexP( g_pODEMutex );
+
+	CLogManager::Instance()->LogMessage("BodySetPosition");
 /*	if ( m_pThread )
 	{
 		ODEEvent ode_event;
@@ -674,14 +688,19 @@ void CODEManager::BodySetPosition( dBodyID body, Vector position )
 	}
 	else
 	{*/
+	//if ( !CCore::Instance()->IsPaused() )
 		dBodySetPosition( body, position[0], position[1], position[2] );
 	//}
-	SDL_mutexV( g_pODEMutex );
+	if ( g_bThreaded )
+		SDL_mutexV( g_pODEMutex );
 }
 
 void CODEManager::JointAttach( dJointID joint, dBodyID body1, dBodyID body2 )
 {
-	SDL_mutexP( g_pODEMutex );
+	if ( g_bThreaded )
+		SDL_mutexP( g_pODEMutex );
+
+	CLogManager::Instance()->LogMessage("JointAttach");
 /*	if ( m_pThread )
 	{
 		ODEEvent ode_event;
@@ -694,14 +713,19 @@ void CODEManager::JointAttach( dJointID joint, dBodyID body1, dBodyID body2 )
 	}
 	else
 	{*/
+	//if ( !CCore::Instance()->IsPaused() )
 		dJointAttach( joint, body1, body2 );
 	//}
-	SDL_mutexV( g_pODEMutex );
+	if ( g_bThreaded )
+		SDL_mutexV( g_pODEMutex );
 }
 
 void CODEManager::JointSetHingeAnchor( dJointID joint, Vector pos )
 {
-	SDL_mutexP( g_pODEMutex );
+	if ( g_bThreaded )
+		SDL_mutexP( g_pODEMutex );
+
+	CLogManager::Instance()->LogMessage("JointSetHingeAnchor");
 /*	if ( m_pThread )
 	{
 		ODEEvent ode_event;
@@ -713,14 +737,19 @@ void CODEManager::JointSetHingeAnchor( dJointID joint, Vector pos )
 	}
 	else
 	{*/
+	//if ( !CCore::Instance()->IsPaused() )
 		dJointSetHingeAnchor( joint, pos[0], pos[1], pos[2] );
 	//}
-	SDL_mutexV( g_pODEMutex );
+	if ( g_bThreaded )
+		SDL_mutexV( g_pODEMutex );
 }
 
 void CODEManager::BodySetLinVel( dBodyID body, Vector velocity )
 {
-	SDL_mutexP( g_pODEMutex );
+	if ( g_bThreaded )
+		SDL_mutexP( g_pODEMutex );
+
+	CLogManager::Instance()->LogMessage("BodySetLinVel");
 /*	if ( m_pThread )
 	{
 		ODEEvent ode_event;
@@ -732,14 +761,19 @@ void CODEManager::BodySetLinVel( dBodyID body, Vector velocity )
 	}
 	else
 	{*/
+	//if ( !CCore::Instance()->IsPaused() )
 		dBodySetLinearVel( body, velocity[0], velocity[1], velocity[2] );
 	//}
-	SDL_mutexV( g_pODEMutex );
+	if ( g_bThreaded )
+		SDL_mutexV( g_pODEMutex );
 }
 
 void CODEManager::BodySetAngVel( dBodyID body, Vector velocity )
 {
-	SDL_mutexP( g_pODEMutex );
+	if ( g_bThreaded )
+		SDL_mutexP( g_pODEMutex );
+
+	CLogManager::Instance()->LogMessage("BodySetAngVel");
 /*	if ( m_pThread )
 	{
 		ODEEvent ode_event;
@@ -751,14 +785,19 @@ void CODEManager::BodySetAngVel( dBodyID body, Vector velocity )
 	}
 	else
 	{*/
+	//if ( !CCore::Instance()->IsPaused() )
 		dBodySetAngularVel( body, velocity[0], velocity[1], velocity[2] );
 	//}
-	SDL_mutexV( g_pODEMutex );
+	if ( g_bThreaded )
+		SDL_mutexV( g_pODEMutex );
 }
 
 void CODEManager::BodySetMass( dBodyID body, dMass mass )
 {
-	SDL_mutexP( g_pODEMutex );
+	if ( g_bThreaded )
+		SDL_mutexP( g_pODEMutex );
+
+	CLogManager::Instance()->LogMessage("BodySetMass");
 /*	if ( m_pThread )
 	{
 		ODEEvent ode_event;
@@ -770,7 +809,9 @@ void CODEManager::BodySetMass( dBodyID body, dMass mass )
 	}
 	else
 	{*/
+	//if ( !CCore::Instance()->IsPaused() )
 		dBodySetMass( body, &mass );
 	//}
-	SDL_mutexV( g_pODEMutex );
+	if ( g_bThreaded )
+		SDL_mutexV( g_pODEMutex );
 }

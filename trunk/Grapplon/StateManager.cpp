@@ -2,7 +2,7 @@
 
 IStateManager::IStateManager()
 {
-	m_eType = STATE;
+	m_eType = UNSET;
 }
 
 IStateManager::~IStateManager()

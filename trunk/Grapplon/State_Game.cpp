@@ -39,6 +39,8 @@ CGameState::CGameState()
 
 	m_fMatchTimeLeft = 180.0f;
 	m_fCountDown = 3.0f;
+
+	m_eType = GAMESTATE;
 }
 
 bool CGameState::Init( int iPlayers, std::string level )
@@ -105,6 +107,8 @@ bool CGameState::Init( int iPlayers, std::string level )
 		pSound->Play();
 
 	LoadCommonImages();
+
+	m_iPlayerPaused = -1;
 
 	return true;
 }
@@ -346,6 +350,15 @@ bool CGameState::HandleWiimoteEvent( wiimote_t* pWiimoteEvent )
 				IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_B) )
 				m_bRunning = false;
 		}
+
+		if ( IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_MINUS) ||
+			IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_PLUS) )
+		{
+			if ( m_iPlayerPaused == -1 )
+				m_iPlayerPaused = pWiimoteEvent->unid;
+			else
+				m_iPlayerPaused = -1;
+		}
 	}
 	return false;
 }
@@ -394,7 +407,10 @@ bool CGameState::IsPaused()
 	{
 		if ( m_fMatchTimeLeft > 0.0f ) // We are still playing
 		{
-			return false;
+			if ( m_iPlayerPaused == -1 )
+				return false;
+			else
+				return true;
 		}
 		else
 		{
@@ -416,4 +432,5 @@ void CGameState::LoadCommonImages()
 	pRMan->GetResource( "media/images/electric_red.png", RT_TEXTURE );
 	pRMan->GetResource( "media/images/electric_blue.png", RT_TEXTURE );
 	pRMan->GetResource( "media/images/timefreeze.png", RT_TEXTURE );
+	pRMan->GetResource( "media/images/spark.png", RT_TEXTURE );
 }
