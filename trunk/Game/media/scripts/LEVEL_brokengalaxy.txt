@@ -37,14 +37,14 @@ damagemult = 2.0
 
 [electro]
 name = electro1
-mass = 1000000
+mass = 100000
 image = electric_planet
-imageglow = fire_glow
+imageglow = electric_planet_glow
 imageorbit = orbit_circle
 grav = 50
 radius = 145
 tempradius = 400
-orbit = sun 950 100
+orbit = sun 1150 100
 angle = 0
 scale = 1.5
 rotation = 16
@@ -52,12 +52,12 @@ damagemult = 1.0
 
 [ordinary]
 name = wind_planet1
-orbit = sun 950 100
+orbit = sun 1150 100
 mass = 350000
 image = wind_planet
 imageglow = windglow
 imageorbit = orbit_circle
-grav = -500
+grav = -300
 angle = 60
 scale = 1.5
 radius = 100
@@ -66,12 +66,12 @@ damagemult = 0.2
 
 [ordinary]
 name = wind_planet2
-orbit = sun 950 100
+orbit = sun 1150 100
 mass = 350000
 image = wind_planet
 imageglow = windglow
 imageorbit = orbit_circle
-grav = -500
+grav = -300
 angle = 120
 scale = 1.5
 radius = 100
@@ -79,14 +79,14 @@ damagemult = 0.2
 
 [electro]
 name = electro1
-mass = 1000000
+mass = 100000
 image = electric_planet
-imageglow = fire_glow
+imageglow = electric_planet_glow
 imageorbit = orbit_circle
 grav = 50
 radius = 145
 tempradius = 400
-orbit = sun 950 100
+orbit = sun 1150 100
 angle = 180
 scale = 1.5
 rotation = 16
@@ -94,12 +94,12 @@ damagemult = 1.0
 
 [ordinary]
 name = wind_planet3
-orbit = sun 950 100
+orbit = sun 1150 100
 mass = 350000
 image = wind_planet
 imageglow = windglow
 imageorbit = orbit_circle
-grav = -500
+grav = -300
 angle = 240
 scale = 1.5
 radius = 100
@@ -107,12 +107,12 @@ damagemult = 0.2
 
 [ordinary]
 name = wind_planet4
-orbit = sun 950 100
+orbit = sun 1150 100
 mass = 350000
 image = wind_planet
 imageglow = windglow
 imageorbit = orbit_circle
-grav = -500
+grav = -300
 angle = 300
 scale = 1.5
 radius = 100
@@ -274,7 +274,7 @@ mass = 40
 image = asteroid1
 grav = 0
 angle = 270
-rotation = 10
+rotation = -45
 radius = 50
 damagemult = 3.5
 
@@ -285,7 +285,7 @@ mass = 40
 image = asteroid1
 grav = 0
 angle = 45
-rotation = 10
+rotation = -30
 radius = 50
 damagemult = 3.5
 
@@ -296,7 +296,7 @@ mass = 40
 image = asteroid1
 grav = 0
 angle = 135
-rotation = 10
+rotation = 30
 radius = 50
 damagemult = 3.5
 
@@ -307,7 +307,7 @@ mass = 40
 image = asteroid1
 grav = 0
 angle = 225
-rotation = 10
+rotation = 25
 radius = 50
 damagemult = 3.5
 
@@ -318,7 +318,7 @@ mass = 40
 image = asteroid1
 grav = 0
 angle = 315
-rotation = 10
+rotation = -20
 radius = 50
 damagemult = 3.5
 
