@@ -1,58 +1,50 @@
 [emitter]
-direction = arc 25
+direction = arc 45
 maxparticles = 500
-particles = center 40, sidehard 30, sidesoft 30
+particles = center 30, yellow 20, left 25, right 25
 lifespan = 0
 spawnrate = 10
-radius = 5
+radius = 10
 
 [particle]
 name = "center"
 colour1 = 180 255 0
 lifespan = 2500
 size = 4
-behave = diagonal_center_hard, diagonal_center_soft
+behave = forward
 
 [particle]
-name = "sidehard"
+name = "yellow"
 colour1 = 18 157 0
-lifespan = 1500
-size = 5
-behave = diagonal_left_hard, diagonal_right_hard
+lifespan = 2500
+size = 4
+behave = forward
 
 [particle]
-name = "sidesoft"
+name = "left"
 colour1 = 90 255 0
 lifespan = 1500
-size = 5
-behave = diagonal_left_soft, diagonal_right_soft
+size = 4
+behave = forward, left
+
+[particle]
+name = "right"
+colour1 = 90 255 0
+lifespan = 1500
+size = 4
+behave = forward, right
 
 [behaviour]
-name = "diagonal_left_hard"
-velocity = 100
-move = 50
-
-[behaviour]
-name = "diagonal_left_soft"
-velocity = 75
-move = 50
-
-[behaviour]
-name = "diagonal_right_hard"
-velocity = 100
-move = -50
-
-[behaviour]
-name = "diagonal_right_soft"
-velocity = 75
-move = -50
-
-[behaviour]
-name = "diagonal_center_hard"
-velocity = 50
+name = "forward"
+velocity = 25
 move = 0
 
 [behaviour]
-name = "diagonal_center_soft"
-velocity = 75
-move = 0
+name = "left"
+velocity = 10
+move = -90
+
+[behaviour]
+name = "right"
+velocity = 10
+move = 90

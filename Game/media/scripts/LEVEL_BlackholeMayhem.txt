@@ -12,6 +12,7 @@ pu_speed  = 30
 pu_gelly = 10
 pu_shield = 5
 background = 1
+screenmargin = 1250
 
 [sun]
 name = black_hole

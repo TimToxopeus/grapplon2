@@ -13,6 +13,7 @@ pu_health  = 30
 pu_gelly = 15
 pu_shield = 15
 background = 0
+screenmargin = 1300
 
 [ice]
 name = sun
