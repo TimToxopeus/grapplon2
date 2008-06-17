@@ -9,6 +9,7 @@
 #include "Renderer.h"
 #include "LogManager.h"
 #include "Universe.h"
+#include "WiimoteManager.h"
 
 #include "ODEManager.h"
 #include "Vector.h"
@@ -796,6 +797,11 @@ void CPlayerObject::CollideWith( CBaseObject *pOther, Vector &pos)
 		}
 		
 		OnDie( pOther );
+	}
+
+	if ( damage > 0 && mult > 0 )
+	{
+		CWiimoteManager::Instance()->Rumble( m_iPlayer );
 	}
 
 	//CBaseObject::CollideWith(pOther, force);

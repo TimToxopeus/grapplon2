@@ -92,7 +92,7 @@ public:
 	void ResetStatus();
 	void AffectedByFreezePU();
 
-
+	int GetPlayerNr() { return m_iPlayer; }
 	void IncreaseElectro(float timePassed);
 
 	int GetPlayerID() { return m_iPlayer; }

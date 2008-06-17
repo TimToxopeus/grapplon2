@@ -42,6 +42,8 @@ private:
 
 	bool DispatchEvent( wiimote_t *pWiimoteEvent, int iWiimote );
 
+	unsigned int m_iRumbleTimes[4];
+
 public:
 	static CWiimoteManager *Instance() { if ( !m_pInstance ) m_pInstance = new CWiimoteManager(); return m_pInstance; }
 	static void Destroy() { if ( m_pInstance ) { delete m_pInstance; m_pInstance = 0; } }
@@ -58,4 +60,6 @@ public:
 	bool RegisterListener( IWiimoteListener *pListener, int iWiimote );
 	bool UnregisterListener( IWiimoteListener *pListener );
 	void UnregisterAll();
+
+	void Rumble( int iWiimote );
 };
