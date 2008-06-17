@@ -46,6 +46,8 @@ public:
 	void LoadTextureData();
 	void UpdateFrame( float fTime );
 
+	SDL_Rect GetOriginalSize(){ return m_vAnimations[m_iCurAnim].m_pTexture->GetSize(); };
+
 	Coords GetTextureCoords();
 	GLuint GetTexture() { return m_vAnimations[m_iCurAnim].m_pTexture->GetTexture(); }
 	SDL_Rect GetSize();

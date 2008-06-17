@@ -326,7 +326,14 @@ void CHook::Swing()
 	CSound *pSound = (CSound *)CResourceManager::Instance()->GetResource("media/sounds/Hook_Swing.wav", RT_SOUND);
 	float pitch = (GetLinVelocity() - m_pOwner->GetLinVelocity()).Length() / 1500 + 0.7f;
 	
-	
+	unsigned int curW = m_pOwner->m_pRadius->GetSize().w;
+	unsigned int orgW = m_pOwner->m_pRadius->GetOriginalSize().w;
+	float desiredW = orgW * pitch;
+
+	float scaleFactor = desiredW / curW;
+
+	m_pOwner->m_pRadius->Scale(scaleFactor + 0.5f);
+
 	pSound->SetPitch(pitch);
 	if ( pSound && !pSound->IsPlaying() ){
 		if(pitch > 1.0){
@@ -400,6 +407,12 @@ void CHook::Throw(bool playerDied)
 
 	if(!playerDied) m_pGrabbedObject->m_pOwner->AddForce(forward * (shipVel.Length() + hookVel.Length()) * SETS->THROW_FORCE);
 	m_pGrabbedObject = NULL;
+
+	unsigned int curW = m_pOwner->m_pRadius->GetSize().w;
+	unsigned int orgW = m_pOwner->m_pRadius->GetOriginalSize().w;
+	float scaleFactor = orgW / (float) curW;
+
+	m_pOwner->m_pRadius->Scale(scaleFactor * 2.3f);
 
 	m_eHookState = RETRACTING;
 }

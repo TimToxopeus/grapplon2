@@ -20,7 +20,6 @@ class CPlayerObject : public CBaseMovableObject, public IWiimoteListener
 {
 private:
 	float m_fShipVel;
-	CAnimatedTexture *m_pRadius;
 	CAnimatedTexture *m_pImageDamage;
 	CAnimatedTexture *m_pFrozenImage;
 	CAnimatedTexture *m_pExplosion;
@@ -69,6 +68,8 @@ public:
 
 	CPlayerObject( int iPlayer );
 	virtual ~CPlayerObject();
+
+	CAnimatedTexture *m_pRadius;
 
 	float m_fPUJellyTime;
 
