@@ -180,6 +180,9 @@ void CUniverse::ReadUniverse()
 													pu.chance			= atoi(tokens[2].c_str());
 			m_lIdlePowerUps.push_back(pu);
 		}
+		else if ( tokens[0] == "screenmargin" ) {
+			SETS->SCREEN_MARGIN = atoi(tokens[2].c_str());
+		}
 
 		in = ReadLine();
 	}
