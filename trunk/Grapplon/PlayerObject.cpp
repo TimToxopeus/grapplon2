@@ -320,7 +320,7 @@ void CPlayerObject::Render()
 		target.x = (int)GetX() - (target.w / 2);
 		target.y = (int)GetY() - (target.h / 2);
 
-		RenderQuad( target, m_pShieldImage, m_fAngle);
+		RenderQuad( target, m_pShieldImage, m_fAngle, 0.8f);
 	}
 
 	// Render collisies
