@@ -20,15 +20,33 @@ CAsteroid::CAsteroid(PlanetaryData &data)
 
 	m_eType = ASTEROID;
 	m_oPhysicsData.m_bAffectedByTemperature = true;
+	m_pExplosionParticle = new CAnimatedTexture("media/scripts/texture_explosion_asteroid.txt");
 }
 
-CAsteroid::~CAsteroid(){}
+CAsteroid::~CAsteroid()
+{
+	delete m_pExplosionParticle;
+}
 
 void CAsteroid::Render()
 {
 	int frame = (int) (4.5f * -m_fTemperatureTime / m_fTempTime) + 4;
 	m_pImage->SetFrame(frame);
-	CBaseObject::Render();
+
+	if ( m_fInvincibleTime > 0.0f )
+	{
+		SDL_Rect target;
+		target = m_pExplosionParticle->GetSize();
+		target.w += target.w;
+		target.h += target.h;
+		target.x = (int)GetX() - (target.w / 2);
+		target.y = (int)GetY() - (target.h / 2);
+		RenderQuad( target, m_pExplosionParticle, 0, 1 );
+	}
+	else
+	{
+		CBaseObject::Render();
+	}
 }
 
 void CAsteroid::OnPlanetCollide(CBaseObject *pOther)
@@ -48,7 +66,7 @@ void CAsteroid::OnPlanetCollide(CBaseObject *pOther)
 
 void CAsteroid::LeaveField()
 {
-	m_fRespawnTime = 2.0f;
+	m_fRespawnTime = 2.5f;
 	m_fInvincibleTime = 2.0f;
 	m_bIsGrabable = false;
 	//TODO: speel animatie voor 1 seconden;
@@ -62,10 +80,12 @@ void CAsteroid::Explode()
 	this->SetAngVelocity(zeroVec);
 	this->SetForce(zeroVec);
 
-	m_fRespawnTime = 2.0f;
+	m_fRespawnTime = 2.5f;
 	m_fInvincibleTime = 2.0f;
 	m_bIsGrabable = false;
+
 	//TODO: speel animatie van explosie voor 1 seconden
+	m_pExplosionParticle->SetFrame(0);
 }
 
 void CAsteroid::ReposAtArea(RespawnArea& area)
@@ -140,16 +160,20 @@ void CAsteroid::Respawn()
 
 void CAsteroid::Update( float fTime )
 {
+	if ( m_fInvincibleTime > 0.0f )
+		m_pExplosionParticle->UpdateFrame( fTime );
+
 	if(m_fBounceToggleTime > 0.0001f){
 		m_fBounceToggleTime -= fTime;
 	}
 
-	if(m_fRespawnTime > 0.0001f)					// Still respawning
+	if(m_fRespawnTime > 0.0f)					// Still respawning
 	{
 		m_fRespawnTime -= fTime;
 
-		if(m_fRespawnTime < 0.0001f) m_bIsGrabable = true;						// Timer over, grabable
-		if(m_fRespawnTime < 1.0f && m_fRespawnTime + fTime > 1.0f)	Respawn();	// Respawn at 1 seconds mark
+		if(m_fRespawnTime < 0.0f) m_bIsGrabable = true;						// Timer over, grabable
+		if(m_fRespawnTime < 1.0f && m_fRespawnTime + fTime > 1.0f)
+			Respawn();	// Respawn at 1 seconds mark
 	}
 
 	if(!m_bTempChangedThisFrame && m_eAsteroidState == NORMAL && m_fTemperatureTime != 0.0f)

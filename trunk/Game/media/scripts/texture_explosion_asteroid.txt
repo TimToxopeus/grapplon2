@@ -1,0 +1,11 @@
+[object]
+width = 104
+height = 88
+animations = particle
+
+[particle]
+file = "media/images/explosion_particle.png"
+frames = 30
+rows = 5
+speed = 20
+loop = 0
