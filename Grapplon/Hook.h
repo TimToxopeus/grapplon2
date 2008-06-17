@@ -33,7 +33,6 @@ public:
 
 	bool m_bIsRadialCorrected;					// Lies the hook on a fixed radius? (in swinging mode)
 
-
 	void SetVisibility(float alpha);
 	bool IsDisconnected() { return m_eHookState != CONNECTED; }
 	void Eject();								// Release the hook from the ship in order to grasp objects

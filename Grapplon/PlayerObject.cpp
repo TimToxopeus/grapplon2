@@ -577,6 +577,7 @@ void CPlayerObject::OnDie( CBaseObject *m_pKiller )
 	m_fEMPTime			= 0;
 	m_fElectroTime		= 0;
 	m_fRespawnTime		= 3;
+	m_fEMPTime			= 0;
 
 	m_pHook->SetInvincibleTime(4);
 	SetAlpha(0);
