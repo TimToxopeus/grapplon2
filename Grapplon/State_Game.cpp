@@ -354,10 +354,7 @@ bool CGameState::HandleWiimoteEvent( wiimote_t* pWiimoteEvent )
 		if ( IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_MINUS) ||
 			IS_JUST_PRESSED(pWiimoteEvent, WIIMOTE_BUTTON_PLUS) )
 		{
-			if ( m_iPlayerPaused == -1 )
-				m_iPlayerPaused = pWiimoteEvent->unid;
-			else
-				m_iPlayerPaused = -1;
+			m_bRunning = false;
 		}
 	}
 	return false;

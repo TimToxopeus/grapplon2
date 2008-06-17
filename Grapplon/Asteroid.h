@@ -3,6 +3,7 @@
 #include "Planet.h"
 #include "PlanetaryData.h"
 #include <time.h>
+#include "AnimatedTexture.h"
 
 class CPlayerObject;
 struct RespawnArea;
@@ -18,6 +19,8 @@ private:
 	void ReposAtOrbit();
 	bool m_bTempChangedThisFrame;
 	float m_fTempTime;
+
+	CAnimatedTexture *m_pExplosionParticle;
 
 public:
 	CAsteroid(PlanetaryData &data);
