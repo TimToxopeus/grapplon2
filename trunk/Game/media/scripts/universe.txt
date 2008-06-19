@@ -12,6 +12,6 @@ system5       galaxy1  378 219 texture_level_sun            level_SolarGalaxy   
 galaxy2       universe 0   0   texture_level_main_screen02  null                   texture_level_info_universe01
 system6       galaxy2  115 81  texture_level_twosun         level_2sun             texture_level_info_twosun
 system7       galaxy2  610 320 texture_level_smile          level_SmileGalaxy      texture_level_info_smile
-system8       galaxy2  424 62  texture_level_chaos          level_ChaosGalaxy      texture_level_info_chaos
+system8       galaxy3  424 62  texture_level_chaos          level_ChaosGalaxy      texture_level_info_chaos
 system9       galaxy2  288 341 texture_level_broken         level_brokengalaxy     texture_level_info_broken
 system0       galaxy2  378 219 texture_level_tail           level_Tail             texture_level_info_tail
