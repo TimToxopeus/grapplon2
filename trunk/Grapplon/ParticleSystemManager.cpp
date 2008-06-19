@@ -257,6 +257,7 @@ CParticleBehaviour CParticleSystemManager::ReadParticleBehaviour( std::string sz
 	bool bInBehaviour = false;
 
 	float fEffect, fVelocity;
+	fEffect = fVelocity = 0.0f;
 
 	while ( in != "<<<EOF>>>" )
 	{

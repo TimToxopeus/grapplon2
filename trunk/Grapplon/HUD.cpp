@@ -126,30 +126,25 @@ void CHUD::Update( float fTime )
 	{
 		if ( m_iWinner == -1 )
 		{
-			std::vector<int> m_vScores;
-			for ( int i = 0; i<4; i++ )
+			int iTopScore = m_pPlayers[0]->m_iScore;
+			int iWinner = 0;
+			for ( int i = 1; i<4; i++ )
+			{
 				if ( m_pPlayers[i] )
-					m_vScores.push_back( m_pPlayers[i]->m_iScore );
-			std::sort( m_vScores.begin(), m_vScores.end(), std::greater<int>() );
-
-			if ( m_vScores[0] == m_vScores[1] )
-			{
-				m_iWinner = 4; // DRAW
-			}
-			else
-			{
-				for ( int i = 0; i<4; i++ )
 				{
-					if ( m_pPlayers[i] )
+					if ( m_pPlayers[i]->m_iScore > iTopScore )
 					{
-						if ( m_vScores[0] == m_pPlayers[i]->m_iScore )
-						{
-							m_iWinner = i;
-							break;
-						}
+						iWinner = i;
+						iTopScore = m_pPlayers[i]->m_iScore;
+					}
+					else if ( m_pPlayers[i]->m_iScore == iTopScore )
+					{
+						iWinner = 4;
 					}
 				}
 			}
+			m_iWinner = iWinner;
+			
 			m_pPlayer->SetAnimation(m_iWinner);
 		}
 

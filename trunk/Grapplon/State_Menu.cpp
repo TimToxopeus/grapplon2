@@ -103,6 +103,7 @@ CMenuState::CMenuState( int iState, int iScore1, int iScore2, int iScore3, int i
 	of = -1;
 	m_iAVIid = -1;
 	m_pAVIKit = NULL;
+	video_position = 0;
 
 	for ( int i = 0; i<10; i++ )
 	{
