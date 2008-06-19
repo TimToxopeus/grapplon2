@@ -720,6 +720,8 @@ void CPlayerObject::CollideWith( CBaseObject *pOther, Vector &pos)
 	float mult = 1.0;
 	
 	ObjectType oType = pOther->getType();
+	if ( oType == WORMHOLE )
+		return;
 
 	if(oType == ICE || oType == ASTEROID || oType == SUN || oType == FIRE || oType == ORDINARY || oType == WORMHOLE || oType == ELECTRO)
 		mult = dynamic_cast<CPlanet*>(pOther)->m_fDamageMult;
