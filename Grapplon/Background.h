@@ -4,6 +4,8 @@
 #include <vector>
 
 class CAnimatedTexture;
+
+// Twinkle, twinkle, little star. :)
 struct Star
 {
 	Star(int x, int y, float timeLeft) { this->x = x; this->y = y; this->timeLeft = this->maxTime = timeLeft; }

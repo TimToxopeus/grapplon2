@@ -72,8 +72,10 @@ CODEManager::CODEManager()
 
 	m_pThread = NULL;
 	m_bForceThreadStop = false;
-	m_bBuffer = true;
-	m_iWritingToBuffer = 0;
+
+	// Outdated thread synchronization
+//	m_bBuffer = true;
+//	m_iWritingToBuffer = 0;
 
 	g_pODEMutex = SDL_CreateMutex();
 }
@@ -558,7 +560,8 @@ void CODEManager::StopEventThread()
 	}
 }
 
-void CODEManager::ProcessBuffer()
+// Outdated thread synchronization
+/*void CODEManager::ProcessBuffer()
 {
 	m_bBuffer = !m_bBuffer;
 	if ( m_bBuffer )
@@ -585,6 +588,7 @@ void CODEManager::ProcessBuffer()
 	}
 }
 
+// Outdated thread synchronization
 void CODEManager::HandleEvent( ODEEvent ode_event )
 {
 	if ( ode_event.type == 1 )
@@ -621,7 +625,7 @@ void CODEManager::AddToBuffer( ODEEvent ode_event )
 		m_vBuffer2.push_back( ode_event );
 	}
 	m_iWritingToBuffer = 0;
-}
+}*/
 
 void CODEManager::BodyAddForce(dBodyID body, Vector force )
 {
@@ -629,7 +633,7 @@ void CODEManager::BodyAddForce(dBodyID body, Vector force )
 		SDL_mutexP( g_pODEMutex );
 
 	CLogManager::Instance()->LogMessage("BodyAddForce");
-/*	if ( m_pThread )
+/*	if ( m_pThread ) // Outdated thread synchronization
 	{
 		ODEEvent ode_event;
 		ode_event.type = 1;
@@ -653,7 +657,7 @@ void CODEManager::BodySetForce(dBodyID body, Vector force )
 		SDL_mutexP( g_pODEMutex );
 
 	CLogManager::Instance()->LogMessage("BodySetForce");
-/*	if ( m_pThread )
+/*	if ( m_pThread ) // Outdated thread synchronization
 	{
 		ODEEvent ode_event;
 		ode_event.type = 2;
@@ -677,7 +681,7 @@ void CODEManager::BodySetPosition( dBodyID body, Vector position )
 		SDL_mutexP( g_pODEMutex );
 
 	CLogManager::Instance()->LogMessage("BodySetPosition");
-/*	if ( m_pThread )
+/*	if ( m_pThread ) // Outdated thread synchronization
 	{
 		ODEEvent ode_event;
 		ode_event.type = 3;
@@ -701,7 +705,7 @@ void CODEManager::JointAttach( dJointID joint, dBodyID body1, dBodyID body2 )
 		SDL_mutexP( g_pODEMutex );
 
 	CLogManager::Instance()->LogMessage("JointAttach");
-/*	if ( m_pThread )
+/*	if ( m_pThread ) // Outdated thread synchronization
 	{
 		ODEEvent ode_event;
 		ode_event.type = 4;
@@ -726,7 +730,7 @@ void CODEManager::JointSetHingeAnchor( dJointID joint, Vector pos )
 		SDL_mutexP( g_pODEMutex );
 
 	CLogManager::Instance()->LogMessage("JointSetHingeAnchor");
-/*	if ( m_pThread )
+/*	if ( m_pThread ) // Outdated thread synchronization
 	{
 		ODEEvent ode_event;
 		ode_event.type = 5;
@@ -750,7 +754,7 @@ void CODEManager::BodySetLinVel( dBodyID body, Vector velocity )
 		SDL_mutexP( g_pODEMutex );
 
 	CLogManager::Instance()->LogMessage("BodySetLinVel");
-/*	if ( m_pThread )
+/*	if ( m_pThread ) // Outdated thread synchronization
 	{
 		ODEEvent ode_event;
 		ode_event.type = 6;
@@ -774,7 +778,7 @@ void CODEManager::BodySetAngVel( dBodyID body, Vector velocity )
 		SDL_mutexP( g_pODEMutex );
 
 	CLogManager::Instance()->LogMessage("BodySetAngVel");
-/*	if ( m_pThread )
+/*	if ( m_pThread ) // Outdated thread synchronization
 	{
 		ODEEvent ode_event;
 		ode_event.type = 7;
@@ -798,7 +802,7 @@ void CODEManager::BodySetMass( dBodyID body, dMass mass )
 		SDL_mutexP( g_pODEMutex );
 
 	CLogManager::Instance()->LogMessage("BodySetMass");
-/*	if ( m_pThread )
+/*	if ( m_pThread ) // Outdated thread synchronization
 	{
 		ODEEvent ode_event;
 		ode_event.type = 8;

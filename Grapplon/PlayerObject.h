@@ -1,6 +1,6 @@
 #pragma once
 
-#include "BaseMovableObject.h"
+#include "BaseObject.h"
 #include "WiimoteListener.h"
 
 #include <ode/ode.h>
@@ -16,10 +16,12 @@ struct CollisionEffect
 	CBaseObject *m_pOther;
 };
 
-class CPlayerObject : public CBaseMovableObject, public IWiimoteListener
+class CPlayerObject : public CBaseObject, public IWiimoteListener
 {
 private:
 	float m_fShipVel;
+	float m_fVelocityForward;
+
 	CAnimatedTexture *m_pImageDamage;
 	CAnimatedTexture *m_pFrozenImage;
 	CAnimatedTexture *m_pExplosion;

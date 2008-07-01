@@ -12,7 +12,6 @@ CBaseObject::CBaseObject()
 	m_fAngle = 0.0f;
 	m_pImage = NULL;
 	SetDepth( -2.0f );
-	m_fGravitationalConstant = 0.0f;
 
 	CODEManager* ode = CODEManager::Instance(); 
 	//ode->CreatePhysicsData(this, &m_oPhysicsData);

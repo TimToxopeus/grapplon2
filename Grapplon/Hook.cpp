@@ -507,7 +507,7 @@ void CHook::Update( float fTime )
 		}
 	}
 
-	CBaseMovableObject::Update(fTime);
+	CBaseObject::Update(fTime);
 
 }
 
@@ -572,7 +572,7 @@ void CHook::Render()
 	if(m_pGrabbedObject != NULL) m_pGrabbedObject->m_pOwner->SetRotation(angle);
 
 
-	CBaseMovableObject::Render();
+	CBaseObject::Render();
 	if(m_pOwner->m_fFreezeTime > 0.0f)
 	{
 		SDL_Rect size, target;

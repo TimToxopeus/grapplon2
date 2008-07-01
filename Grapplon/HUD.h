@@ -7,6 +7,7 @@ class CAnimatedTexture;
 #include <string>
 #include <vector>
 
+// Score entry, for rendering score gains in the world
 struct Score
 {
 	int x, y;

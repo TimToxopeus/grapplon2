@@ -1,6 +1,6 @@
 #pragma once
 
-#include "BaseMovableObject.h"
+#include "BaseObject.h"
 #include <ode/ode.h>
 
 class CPlayerObject;
@@ -10,7 +10,7 @@ class CAnimatedTexture;
 enum HookState { CONNECTED, EJECTING, HOMING, GRASPING, SWINGING, THROWING, RETRACTING };
 
 
-class CHook : public CBaseMovableObject
+class CHook : public CBaseObject
 {
 private:
 	CPlayerObject *m_pOwner;					// The player

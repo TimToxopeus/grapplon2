@@ -19,13 +19,13 @@ private:
 
 	float m_fMatchTimeLeft;
 	float m_fCountDown;
-	float m_fBuoyAngle;
+	float m_fBuoyAngle; // Current angle of the buoys
 	CAnimatedTexture* m_pBuoyImage;
 
 	CBackground *m_pBackground;
 	CHUD *m_pHUD;
 
-	int m_iPlayerPaused;
+	int m_iPlayerPaused; // Which player paused the game?
 
 	void LoadCommonImages();
 

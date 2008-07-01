@@ -39,6 +39,6 @@ public:
 	CParticle *m_pPrev;
 	CParticle *m_pNext;
 
-	CParticle *Clone();
+	CParticle *Clone(); // Factory functionality
 	SDL_Color GetColor();
 };

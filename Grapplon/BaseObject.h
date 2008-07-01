@@ -10,12 +10,11 @@ class CAnimatedTexture; // Forward declaration
 class CBaseObject : public IActiveObject
 {
 protected:
-	PhysicsData m_oPhysicsData;
-	float m_fSecondaryScale;
+	PhysicsData m_oPhysicsData; // Physics data information
+	float m_fSecondaryScale; // Secondary scaling value // TODO: Fix scaling, it's a bit messy right now!!
 	float m_fAngle;
-	float m_fGravitationalConstant;
-	Vector frontForce;
-	CAnimatedTexture *m_pImage;
+	Vector frontForce; // Force acting in front direction; Thread synchronization variable
+	CAnimatedTexture *m_pImage; // Image of the object
 	float m_fInvincibleTime;
 	int m_iHitpoints, m_iMaxHitpoints;
 
@@ -54,8 +53,8 @@ public:
 
 	Vector GetForwardVector();
 
-	virtual void CollideWith( CBaseObject *pOther, Vector &pos);
-	virtual void OnDie( CBaseObject *m_pKiller );
+	virtual void CollideWith( CBaseObject *pOther, Vector &pos); // Collision event function - Warning, highly likely this is called outside the main thread!!
+	virtual void OnDie( CBaseObject *m_pKiller ); // Death event function - Warning, highly likely this is called outside the main thread!!
 	virtual void IncreaseTemp( float timePassed ) {};
 	virtual void IncreaseElectro( float timePassed ) {};
 	int GetHitpoints() { return m_iHitpoints; };
