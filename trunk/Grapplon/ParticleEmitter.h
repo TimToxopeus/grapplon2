@@ -9,13 +9,15 @@
 #include <vector>
 #include <map>
 
+// Emitter type, dictates direction of particles
 enum EmitterType
 {
-	NONE,
-	LINE,
-	ARC
+	NONE, // Random direction away from center
+	LINE, // Straight line away from center
+	ARC // A specific angle subset from the circle around the center
 };
 
+// Factory base
 struct ParticleFactoryEntry
 {
 	CParticle *m_pParticle;

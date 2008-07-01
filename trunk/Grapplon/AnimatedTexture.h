@@ -3,11 +3,13 @@
 #include "Texture.h"
 #include <vector>
 
+// Texture coords
 struct Coords
 {
 	float x, y, w, h;
 };
 
+// Animation entry
 struct Animation
 {
 	std::string m_szName;
@@ -37,8 +39,8 @@ private:
 	void ReadAnimation( std::string anim );
 	std::string ReadLine();
 
-	float m_fOverrideHeight;
-	bool m_bLoaded, m_bValid;
+	float m_fOverrideHeight; // HUD Override value
+	bool m_bLoaded, m_bValid; // Error checking flags
 
 public:
 	CAnimatedTexture( std::string name );
@@ -58,6 +60,6 @@ public:
 	unsigned int GetFrame() { return m_iCurFrame; }
 
 	void OverrideHeight( float fHeight ) { m_fOverrideHeight = fHeight; } // HUD ONLY!!
-	bool IsFinished() { return (m_vAnimations[m_iCurAnim].m_iFrames == m_iCurFrame + 1); }
+	bool IsFinished() { return (m_vAnimations[m_iCurAnim].m_iFrames == m_iCurFrame + 1); } // Finished animation playback?
 	int GetAnimCount() { return m_vAnimations.size(); }
 };

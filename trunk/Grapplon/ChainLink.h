@@ -1,11 +1,11 @@
 #pragma once
 
-#include "BaseMovableObject.h"
+#include "BaseObject.h"
 #include <ode/ode.h>
 
 class CPlayerObject;
 
-class CChainLink : public CBaseMovableObject
+class CChainLink : public CBaseObject
 {
 private:
 	CPlayerObject *m_pOwner;

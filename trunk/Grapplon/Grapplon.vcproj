@@ -200,10 +200,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\BaseMovableObject.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\BaseObject.cpp"
 				>
 			</File>
@@ -237,10 +233,6 @@
 			</File>
 			<File
 				RelativePath=".\LogManager.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\NPCObject.cpp"
 				>
 			</File>
 			<File
@@ -466,10 +458,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\BaseMovableObject.h"
-				>
-			</File>
-			<File
 				RelativePath=".\BaseObject.h"
 				>
 			</File>
@@ -499,10 +487,6 @@
 			</File>
 			<File
 				RelativePath=".\LogManager.h"
-				>
-			</File>
-			<File
-				RelativePath=".\NPCObject.h"
 				>
 			</File>
 			<File

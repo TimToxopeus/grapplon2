@@ -7,6 +7,7 @@
 #include <vector>
 #include <string>
 
+// Menu IDs
 #define ABMENU 9
 #define GAMEMENU 16
 #define SCORE 17
@@ -17,8 +18,9 @@
 #define CREDITS 26
 #define EXIT 27
 #define HIGH 25
-#define IR_AVG 1
+#define IR_AVG 1 // LEGACY INFRA RED CODE
 
+// Types of state styles
 enum StateStyle
 {
 	INSTANT = 0,
@@ -29,29 +31,31 @@ enum StateStyle
 	PULSE,
 };
 
+// State change object
 class StateChange
 {
 public:
 	StateChange( int iState, int iSkipState, CAnimatedTexture *pImage, StateStyle eStyle, bool bIncState, int iStayRendered, float fStartAlpha, float fTime, int iStartX, int iStartY, int iGoalX, int iGoalY, int iAnimation = 0 );
 
-	int m_iState, m_iSkipState;
-	CAnimatedTexture *m_pImage;
+	int m_iState, m_iSkipState; // State this belongs to, and the state to skip to on skip button press
+	CAnimatedTexture *m_pImage; // Image
 	StateStyle m_eStyle;
-	bool m_bIncState;
-	int m_iStayRendered;
+	bool m_bIncState;			// Increase state counter at end of state change cycle?
+	int m_iStayRendered;		// Till which state this object is still rendered
 
 	float m_fAlpha;
 	float m_fTime, m_fTimeLeft;
 
-	int m_iX, m_iY;
+	int m_iX, m_iY;				// Current position
 	int m_iStartX, m_iStartY;
 	int m_iGoalX, m_iGoalY;
 
-	int m_iAnimation;
+	int m_iAnimation; // Specific image animation
 
 	bool IsClicked( int x, int y );
 };
 
+// Level node on the level selection screen
 class LevelNode
 {
 public:

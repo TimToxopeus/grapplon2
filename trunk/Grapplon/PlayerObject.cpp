@@ -25,6 +25,7 @@ CPlayerObject::CPlayerObject( int iPlayer )
 	m_iPlayer = iPlayer, 
 	m_eType = SHIP;
 	m_fShipVel = SETS->SHIP_VELOCITY;
+	m_fVelocityForward = 50.0f;
 
 	m_fEMPTime			= 0;
 	m_fElectroTime		= 0;
@@ -254,7 +255,7 @@ void CPlayerObject::Render()
 		RenderQuad( target, m_pElectricImage, m_fAngle);
 	
 	} else {
-		CBaseMovableObject::Render();		// Render schip
+		CBaseObject::Render();		// Render schip
 	}
 	// Render EMP-State
 
@@ -525,7 +526,7 @@ void CPlayerObject::Update( float fTime )
 		m_fEMPTime = SETS->EMP_TIME;
 	} 
 
-	CBaseMovableObject::Update( fTime );
+	CBaseObject::Update( fTime );
 
 }
 

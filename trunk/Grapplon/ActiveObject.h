@@ -5,19 +5,20 @@
 
 class CAnimatedTexture;
 
+// Object type
 enum ObjectType { UNSET = 0, MENUSTATE, GAMESTATE, HUD, PARTICLESYSTEM, SHIP, HOOK, ORDINARY, ASTEROID, SUN, ICE, BROKEN, CHAINLINK, FIRE, POWERUP, WORMHOLE, ELECTRO };
 
 class IActiveObject
 {
 private:
-	float m_fDepth;
+	float m_fDepth; // Render depth, for back-to-front ordering
 	float m_fScale;
 
 protected:
 	ObjectType m_eType;
 	std::string ObjectTypeStr;
 	float m_fAlpha;
-	bool m_bDeleteMe;
+	bool m_bDeleteMe; // Object deletion flag
 
 public:
 	IActiveObject();
@@ -38,7 +39,7 @@ public:
 	virtual void SetAlpha( float fAlpha ) { m_fAlpha = fAlpha; }
 
 	virtual ObjectType getType() { return m_eType; }
-	std::string getTypeStr()
+	std::string getTypeStr() // Type to string function, for debugging purposes.
 	{
 		switch ( m_eType )
 		{

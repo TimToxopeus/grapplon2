@@ -40,12 +40,12 @@ CChainLink::~CChainLink()
 
 void CChainLink::Update( float fTime )
 {
-	CBaseMovableObject::Update(fTime);
+	CBaseObject::Update(fTime);
 }
 
 void CChainLink::Render()
 {
-	CBaseMovableObject::Render();
+	CBaseObject::Render();
 	if(m_pOwner->m_fFreezeTime > 0.0f)
 	{
 		SDL_Rect size, target;

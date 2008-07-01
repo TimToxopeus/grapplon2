@@ -3,15 +3,6 @@
 #include <SDL.h>
 #include <string>
 
-/*
-// These are now forward declared.
-#include "ResourceManager.h"
-#include "WiimoteManager.h"
-#include "State_Game.h"
-#include "ODEManager.h"
-#include "Renderer.h"
-*/
-
 // Forward declarations
 class CResourceManager;
 class CWiimoteManager;
@@ -40,6 +31,7 @@ private:
 	bool m_bMenu;
 	bool m_bRunningValid;
 
+	// Last played information
 	std::string m_szLastPlayedLevel;
 	int m_iLastAmountOfPlayers;
 

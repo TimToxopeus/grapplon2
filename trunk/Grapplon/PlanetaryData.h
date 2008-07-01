@@ -14,6 +14,7 @@ enum OrbitStyle
 
 struct PlanetaryData
 {
+	// Position
 	Vector position;
 	Vector position2;
 	Vector exitVector1;
@@ -21,6 +22,7 @@ struct PlanetaryData
 	dJointID orbitJoint;
 	dJointID orbitJoint2;
 
+	// Data
 	std::string name;
 	std::string orbit;
 	std::string orbit2;
@@ -41,11 +43,11 @@ struct PlanetaryData
 	int orbitLength2;
 	float orbitSpeed;
 	float orbitSpeed2;
-	int asteroidcount;
-	int radius;
-	int tempradius;
-	float damageMult;
-	float scale;
+	int asteroidcount;	// Amount of asteroids in orbit
+	int radius;			// Collision radius
+	int tempradius;		// Distance to which temperature affects asteroids
+	float damageMult;	// Damage multiplier
+	float scale;		// Planet scale
 	int rotation;
 	float zoomradius;
 

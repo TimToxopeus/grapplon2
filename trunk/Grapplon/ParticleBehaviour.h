@@ -13,5 +13,6 @@ public:
 	float m_fVelocity;
 	float m_fEffect;
 
+	// Calculates desired direction
 	Vector ComputeDirection( Vector direction );
 };
